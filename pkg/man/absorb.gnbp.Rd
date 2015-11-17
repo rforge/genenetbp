@@ -1,0 +1,67 @@
+\name{absorb.gnbp}
+\alias{absorb.gnbp}
+\title{
+Absorb evidence and infer a genotype-phenotype network
+}
+\description{
+Absorb a single piece or a spectrum of evidence for one or more continuous nodes in a compiled RHugin domain, obtain the updated beliefs and the Jeffrey's signed information. 
+}
+\usage{
+absorb.gnbp(gp, node, evidence)
+}
+\arguments{
+  \item{gp}{
+an object of class "gpfit". Output from \code{fit.gnbp}. 
+}
+
+  \item{node}{
+a character vector specifying the names of the continuous nodes for which the evidence is to be absorbed.
+}
+  \item{evidence}{
+a matrix or a numeric vector of evidence. number of rows of the matrix or the length of the vector should be equal to the length of node. 
+}
+}
+
+\value{
+absorb.gnbp returns an object of class "gnbp". The functions summary and print can be used for objects of class "gnbp". An object of class "gnbp" is a list containing the following components
+
+\item{gp}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
+\item{node}{a character vector specifying the nodes for which evidence was been absorbed}
+\item{marginal}{a list of marginal probabilities for continuous (pheno) and discrete nodes (geno)}
+\item{belief}{a list of updated beliefs for continuous (pheno) and discrete nodes (geno)}
+\item{JSI}{a matrix of Jeffrey's signed information}
+
+The marginal, beliefs and JSI are calculated for only \emph{d}-connected nodes
+
+}
+
+\author{
+Janhavi Moharil<janhavim@buffalo.edu>
+
+Rachael Hageman-Blair<hageman@buffalo.edu> 
+}
+
+\seealso{
+\code{\link{gen.evidence}}
+}
+\examples{
+
+data(mouse)
+
+## Simple example : Fit a bayesian network to genotype-phenotype data 
+network<-fit.gnbp(geno,pheno,alpha=0.1)
+
+## Absorb a single evidence for a single node
+absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5))
+
+## Absorb a sequence of evidence for a single node
+network<-fit.gnbp(geno,pheno,alpha=0.1)
+absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5))
+
+##Absorb sequence of evidence for multiple nodes generated using \link{gen.evidence}
+network<-fit.gnbp(geno,pheno,alpha=0.1)
+evidence<-gen.evidence(network,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
+absorb.gnbp(network,node=rownames(evidence),evidence=evidence)
+
+
+}

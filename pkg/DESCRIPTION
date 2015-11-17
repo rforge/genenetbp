@@ -1,0 +1,11 @@
+Package: geneNetBP
+Type: Package
+Title: The geneNetBP package
+Version: 1.0.0
+Date: 2015-11-10
+Author: Janhavi Moharil <janhavim@buffalo.edu>
+Maintainer: Janhavi Moharil <janhavim@buffalo.edu>
+Depends: R (>= 3.1.0),RHugin,scales,Rgraphviz
+Description: geneNetBP is a package that learns genotype-phenotype networks from Quantitative Trait Loci (QTL) data and provides functions for visualization of network changes after absorbing evidence.
+License: GPL-2
+
