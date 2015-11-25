@@ -27,6 +27,6 @@ to urinary albumin excretion." \emph{Journal of the American Society of Nephrolo
 \examples{
 # load the data and fit a genotype-phenotype network
 data(mouse)
-fit.gnbp(geno,pheno)
+\dontrun{fit.gnbp(geno,pheno)}
 }
 \keyword{datasets}

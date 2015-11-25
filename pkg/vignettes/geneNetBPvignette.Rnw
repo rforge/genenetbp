@@ -40,8 +40,17 @@ head(pheno,n=3)
 \noindent The simplest example of fitting a CG-BN to mouse QTL data is given below. This example uses default parameters.\\
 
 <<A,results=verbatim>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 library(geneNetBP)
 fit.gnbp(geno,pheno)
+  }
 @
 
 \noindent The learnt network structure is returned as RHugin domain in the first element \code{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \code{read.rhd} and \code{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
@@ -49,13 +58,31 @@ fit.gnbp(geno,pheno)
 \noindent The inferred network structure is very sensitive to the significance level (specified as \code{alpha}) and hence it is recommended to try out different values of the argument \code{alpha}. Note that the argument \code{alpha} is for use with RHugin package i.e. the function fit.geneNetBP will pass on \code{alpha} to RHugin functions.For example,
 
 <<B,results=verbatim>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 fit.gnbp(geno,pheno,alpha = 0.1)
+}
 @
 
 \noindent The inferred network structure can be visualized by the generic plot method for RHugin domain, however it has minimal graphic capabilities. Refer to RHugin manual for more help on the plot method. We will plot the network using Rgraphviz package that has several ways of rendering customized graphs. Good news is that the RHugin package has a function to coerce the RHugin domain into a graph object of class "graphNEL".
 
+
 \begin{center}
 <<B1,fig=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##convert the RHugin domain to a graph object
 BNgraph<-as.graph.RHuginDomain(network$gp)
@@ -64,6 +91,7 @@ attrs<-list()
 attrs$node$fontsize<-30
 ## plot method for graph objects
 plot(BNgraph,attrs=attrs) 
+}
 @
 \end{center}
 
@@ -79,10 +107,19 @@ plot(BNgraph,attrs=attrs)
 \noindent To generate a spectrum of evidence for \emph{Tlr12} within $\pm$$2$ standard deviations of it's marginal distribution, we input the inferred network to \code{gen.evidence}\\
 
 <<C,results=verbatim,print=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ##Fit network
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
+}
 @
 
 
@@ -103,10 +140,19 @@ is used to demonstrate the direction of change after the absorption of evidence.
 \noindent 1. Absorb a single evidence for a single node\\
 
 <<F,results=verbatim>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ## Fit network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 ## Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+}
 @
 
 \noindent Note that the function absorb.gnbp requires the argument \code{evidence} to be of class matrix or a numeric vector. If only a single value of evidence is to be entered, this can be done by simply using the function matrix(), as above.\\
@@ -120,10 +166,19 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 \noindent 2. Absorb a sequence of evidence for a single node
 
 <<G,results=hide>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ## Fit network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 ##Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
+}
 @
 
 
@@ -135,10 +190,19 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
 
 \begin{center}
 <<I,results = hide, fig=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ## Fit, absorb and plot a genotype-phenotype network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 plot(x=network)
+}
 @
 \end{center}
 
@@ -150,10 +214,19 @@ plot(x=network)
 
 \begin{center}
 <<J,results=hide, fig=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 col.palette<-list(pos_high="darkgreen", pos_low= "palegreen2", 
                     neg_high="wheat1", neg_low = "red",
                     dsep_col="white",qtl_col="grey",node_abs_col="yellow") 
 plot(x=network,col.palette=col.palette)
+}
 @
 \end{center}
 
@@ -163,12 +236,21 @@ plot(x=network,col.palette=col.palette)
 
 \begin{center}
 <<K,results=hide, fig=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ##Fit network
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
 network<-absorb.gnbp(network,node="Tlr12",evidence=evidence)
 plot(x=network,y="belief",ncol=20)
+}
 @
 \end{center}
 
@@ -181,6 +263,14 @@ plot(x=network,y="belief",ncol=20)
 \noindent First create a list of known edges from parent to child. 
 
 <<L,results=hide>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ## Load the toy dataset
 data(toy)
 ## Create a list of edges ("from (parent)", "to (child)")
@@ -195,18 +285,28 @@ edgelist[[7]]<-cbind("Q3","X3")
 edgelist[[8]]<-cbind("X2","X5")
 edgelist[[9]]<-cbind("X2","X6")
 edgelist[[10]]<-cbind("X4","X6")
+}
 @
 
 \noindent in \code{fit.gnbp} provide the edgelist and set learn = FALSE. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.
 
 \begin{center}
 <<M,results=verbatim,fig=TRUE>>=
+if(!suppressWarnings(require("RHugin"))) 
+  {
+     stop(paste("This package uses RHugin, but you do not currently have it installed. ",
+            "You can get it by visiting [http://rhugin.r-forge.r-project.org/] and",
+            "following the instructions there."))
+  }
+if(suppressWarnings(require("RHugin"))) 
+  {
 ##Fit network
 network<-fit.gnbp(toygeno,toypheno,learn=FALSE,edgelist=edgelist)
 ##Generate evidence
 evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
 network<-absorb.gnbp(network,node="X2",evidence=evidence)
 plot(x=network,y="JSI",ncol=17)
+}
 @
 \end{center}
 

@@ -49,7 +49,9 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 \examples{
 ## Fit, absorb and plot a genotype-phenotype network
 data(mouse)
+\dontrun{
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 plot(x=network)
+}
 }

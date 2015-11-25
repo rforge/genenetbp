@@ -48,6 +48,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 
 data(mouse)
 
+\dontrun{
 ## Simple example : Fit a bayesian network to genotype-phenotype data 
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 
@@ -62,6 +63,6 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5))
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 evidence<-gen.evidence(network,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
 absorb.gnbp(network,node=rownames(evidence),evidence=evidence)
-
+}
 
 }
