@@ -1,8 +1,8 @@
 % \VignetteIndexEntry{An R Package for belief propagation in genotype-phenotype networks}
 \documentclass[12pt, a4paper]{article}
 
-\title{Belief Propagation in Genotype-Phenotype Networks using the \bold{geneNetBP} package}
-\author{Janhavi Moharil\\\smaller Department of Biostatistics\\\smaller University at Buffalo}
+\title{Belief Propagation in Genotype-Phenotype Networks using the geneNetBP package}
+\author{Janhavi Moharil\\ Department of Biostatistics\\ University at Buffalo}
 
 \begin{document}
 \SweaveOpts{concordance=FALSE}
@@ -25,7 +25,7 @@ P\left(Y \mid  Q_i={g}, X_i = x_i \right)=N\left(\alpha(g) + \beta(g)^{T}x_i, \g
 \end{equation}
 where the mean is a regression that depends on both discrete and continuous parents, but the variance depends only on the discrete parents (genotype states).  The parameters of the CG-BN and subsequently the marginal distributions are inferred from the data under the constraints of the topology and the Markov condition using the PC-algorithm in \emph{RHugin} package.\\  
 
-\textbf{\emph{Mouse dataset:}} The \emph{Mus} \emph{Musculus} Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{geno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{pheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
+\textbf{\emph{Mouse dataset:}} The \emph{Mus} \emph{Musculus} Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \emph{geno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \emph{pheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
 
 \noindent Load the dataset and view the first 3 observations:
 
