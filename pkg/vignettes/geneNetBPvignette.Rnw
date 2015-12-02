@@ -240,7 +240,7 @@ edgelist[[8]]<-cbind("X2","X5")
 edgelist[[9]]<-cbind("X2","X6")
 edgelist[[10]]<-cbind("X4","X6")
 @
-}
+
 
 \noindent in \emph{fit.gnbp} provide the edgelist and set learn = FALSE. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.
 
