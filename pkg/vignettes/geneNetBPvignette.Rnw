@@ -67,7 +67,7 @@ fit.gnbp(geno,pheno,alpha = 0.1)
 \begin{center}
 
 \dontrun{
-<<B1,fig=TRUE>>=
+<<B1,fig=FALSE>>=
 if(require("RHugin",quietly=TRUE))
 {
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
@@ -167,7 +167,7 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
 
 \begin{center}
 \dontrun{
-<<I,results = hide, fig=TRUE>>=
+<<I,results = hide, fig=FALSE>>=
 if(require("RHugin",quietly=TRUE))
 {
 ## Fit, absorb and plot a genotype-phenotype network
@@ -187,7 +187,7 @@ plot(x=network)
 
 \begin{center}
 \dontrun{
-<<J,results=hide, fig=TRUE>>=
+<<J,results=hide, fig=FALSE>>=
 if(require("RHugin",quietly=TRUE))
 {
 col.palette<-list(pos_high="darkgreen", pos_low= "palegreen2", 
@@ -206,7 +206,7 @@ plot(x=network,col.palette=col.palette)
 \begin{center}
 
 \dontrun{
-<<K,results=hide, fig=TRUE>>=
+<<K,results=hide, fig=FALSE>>=
 if(require("RHugin",quietly=TRUE))
 {
 ##Fit network
@@ -252,7 +252,7 @@ edgelist[[10]]<-cbind("X4","X6")
 
 \begin{center}
 \dontrun{
-<<M,results=verbatim,fig=TRUE>>=
+<<M,results=verbatim,fig=FALSE>>=
 if(require("RHugin",quietly=TRUE))
 {
 ##Fit network
