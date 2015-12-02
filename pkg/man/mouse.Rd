@@ -10,7 +10,7 @@
 \usage{
 data(mouse)
 }
-\format{The data set \code{mouse} contains the following variables:
+\format{The data set \emph{mouse} contains the following variables:
 \itemize{
 \item{geno}{  a data frame of 173 observations of 5 variables. All column vectors are of class factor}
 \item{pheno}{ a data frame of 173 observations of 14 variables. All column vectors are of class numeric }

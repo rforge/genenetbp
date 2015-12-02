@@ -25,19 +25,19 @@ fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1e-04,maxi
   \item{tol}{a positive numeric value (optional) specifying the tolerance for EM algorithm to learn conditional probability tables (for use with RHugin). Default value is 1e-04. See \link[RHugin]{learn.cpt} for details.
 
 }
-\item{maxit}{a positive integer value (optional) specifying the maximum number of iterations of EM algorithm to learn conditional probability tables (for use with RHugin). See \code{learn.cpt} for details.
+\item{maxit}{a positive integer value (optional) specifying the maximum number of iterations of EM algorithm to learn conditional probability tables (for use with RHugin). See \emph{learn.cpt} for details.
 }
 
 
 }
 \details{The function fit.gnbp fits a conditional gaussian bayesian network at the specified level of significance alpha, to genotype-phenotype (QTL) data by the PC algorithm implemented in the RHugin package. The conditional probability tables are learnt for each node in the domain by the EM algorithm implemented in the RHugin package. 
 
-Edges between the genotypes at SNP markers are not allowed and the genotypes are constrained to precede the phenotypes. The phenotypes should be either all numeric or all discrete. The function does not currently support mixture of discrete and continuous phenotypes. Additional domain knowledge in terms of edges should be provided as a list of constraints, the structure of which is described in detail in \code{learn.structure}. Briefly, the constraints argument is a list of two elements: directed and undirected. Each of these elements in turn should be a list with two elements: required and forbidden. The elements of required and forbidden must be a character vector of length two specifying the names of the nodes. See \code{learn.cpt} for details.
+Edges between the genotypes at SNP markers are not allowed and the genotypes are constrained to precede the phenotypes. The phenotypes should be either all numeric or all discrete. The function does not currently support mixture of discrete and continuous phenotypes. Additional domain knowledge in terms of edges should be provided as a list of constraints, the structure of which is described in detail in \emph{learn.structure}. Briefly, the constraints argument is a list of two elements: directed and undirected. Each of these elements in turn should be a list with two elements: required and forbidden. The elements of required and forbidden must be a character vector of length two specifying the names of the nodes. See \emph{learn.cpt} for details.
 }
 \value{
 Returns an object of class "gpfit". 
-\code{gp} - a pointer to a compiled RHugin domain. There is a cpt table associated with each node in the network.
-\code{gp_nodes} - a data frame containing information about nodes for use with other functions
+\emph{gp} - a pointer to a compiled RHugin domain. There is a cpt table associated with each node in the network.
+\emph{gp_nodes} - a data frame containing information about nodes for use with other functions
 }
 
 \author{
@@ -47,7 +47,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 }
 
 \seealso{
-\code{\link{absorb.gnbp}}
+\emph{\link{absorb.gnbp}}
 }
 
 \examples{

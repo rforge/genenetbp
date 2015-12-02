@@ -11,7 +11,7 @@ absorb.gnbp(gp, node, evidence)
 }
 \arguments{
   \item{gp}{
-an object of class "gpfit". Output from \code{fit.gnbp}. 
+an object of class "gpfit". Output from \emph{fit.gnbp}. 
 }
 
   \item{node}{
@@ -42,7 +42,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 }
 
 \seealso{
-\code{\link{gen.evidence}}
+\emph{\link{gen.evidence}}
 }
 \examples{
 

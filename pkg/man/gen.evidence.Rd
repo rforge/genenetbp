@@ -36,7 +36,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 }
 
 \seealso{
-\code{\link{absorb.gnbp}},\code{\link{fit.gnbp}}
+\emph{\link{absorb.gnbp}},\emph{\link{fit.gnbp}}
 }
 \examples{
 

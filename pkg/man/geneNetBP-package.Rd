@@ -14,9 +14,9 @@ Version: \tab 1.0\cr
 Date: \tab 2015-11-10\cr
 License: \tab GPL-2\cr
 }
-This package implements structure learning and conditional probability learning methods from RHugin package to Quantative Trait Loci (QTL) data and provides functions to query and visualize the network beliefs. The function \link{fit.gnbp} can be used to learn conditional gaussian bayesian networks from genotype-phenotype data. The main function for absorbing evidence and quantifying the changes in beliefs is \link{absorb.gnbp}. A \code{plot} method is available for visualizing network beliefs.
+This package implements structure learning and conditional probability learning methods from RHugin package to Quantative Trait Loci (QTL) data and provides functions to query and visualize the network beliefs. The function \link{fit.gnbp} can be used to learn conditional gaussian bayesian networks from genotype-phenotype data. The main function for absorbing evidence and quantifying the changes in beliefs is \link{absorb.gnbp}. A \emph{plot} method is available for visualizing network beliefs.
 
-All functions in the package work on RHugin domains. Since Hugin domains are external pointers and cannot be saved in R workspace, the RHugin package provides functions \code{read.rhd} and \code{write.rhd} for loading and saving the Hugin domains. See RHugin documentation for more information. 
+All functions in the package work on RHugin domains. Since Hugin domains are external pointers and cannot be saved in R workspace, the RHugin package provides functions \emph{read.rhd} and \emph{write.rhd} for loading and saving the Hugin domains. See RHugin documentation for more information. 
 
 A vignette illustrating the use of geneNetBP is available. 
 
@@ -40,6 +40,6 @@ Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2015). Belief
 }
 
 \seealso{
-\code{{RHugin}}
+\emph{{RHugin}}
 }
 
