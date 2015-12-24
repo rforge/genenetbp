@@ -8,6 +8,6 @@ Maintainer: Janhavi Moharil <janhavim@buffalo.edu>
 Depends: R (>= 3.1.0),scales,Rgraphviz
 Suggests: RHugin
 Additional_repositories: https://r-forge.r-project.org/
-Description: geneNetBP is a package that learns genotype-phenotype networks from Quantitative Trait Loci (QTL) data and provides functions for visualization of network changes after absorbing evidence.
+Description: The package geneNetBP provides functions to learn genotype-phenotype networks from Quantitative Trait Loci (QTL) data and visualize network changes after absorbing evidence.
 License: GPL-2
 
