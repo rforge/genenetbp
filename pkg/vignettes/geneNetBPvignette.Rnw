@@ -31,8 +31,8 @@ where the mean is a regression that depends on both discrete and continuous pare
 
 <<dataset,results=verbatim>>=
 data(mouse,package="geneNetBP")
-head(geno,n=3)
-head(pheno,n=3)
+head(mousegeno,n=3)
+head(mousepheno,n=3)
 @
 
 \noindent Note that there are 3 possible genotype states MM (homozygous) denoted by 1, H (heterozygous) by 2 and SS (homozygous) by 3. The genotypes are categorical variables and hence all columns in data frame \emph{geno} have to be of class factor while the phenotypes are continuous variables with all columns in data frame \emph{pheno} of class numeric.\\ 
@@ -41,7 +41,7 @@ head(pheno,n=3)
 
 <<A,results=verbatim,eval=FALSE>>=
 library(geneNetBP)
-fit.gnbp(geno,pheno)
+fit.gnbp(mousegeno,mousepheno)
 @
 
 \noindent The learnt network structure is returned as RHugin domain in the first element \emph{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \emph{read.rhd} and \emph{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
@@ -49,7 +49,7 @@ fit.gnbp(geno,pheno)
 \noindent The inferred network structure is very sensitive to the significance level (specified as \emph{alpha}) and hence it is recommended to try out different values of the argument \emph{alpha}. Note that the argument \emph{alpha} is for use with RHugin package i.e. the function fit.geneNetBP will pass on \emph{alpha} to RHugin functions.For example,
 
 <<B,results=verbatim,eval=FALSE>>=
-fit.gnbp(geno,pheno,alpha = 0.1)
+fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 @
 
 
@@ -58,7 +58,7 @@ fit.gnbp(geno,pheno,alpha = 0.1)
 \begin{center}
 
 <<B1,fig=FALSE,eval=FALSE>>=
-network<-fit.gnbp(geno,pheno,alpha = 0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 ##convert the RHugin domain to a graph object
 BNgraph<-as.graph.RHuginDomain(network$gp)
 ##set node font size
@@ -85,7 +85,7 @@ plot(BNgraph,attrs=attrs)
 
 <<C,results=verbatim,print=TRUE,eval=FALSE>>=
 ##Fit network
-network<-fit.gnbp(geno,pheno,alpha = 0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
 @
@@ -109,7 +109,7 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 <<F,results=verbatim,eval=FALSE>>=
 ## Fit network
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 ## Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 @
@@ -128,7 +128,7 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 
 <<G,results=hide,eval=FALSE>>=
 ## Fit network
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 ##Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
 @
@@ -145,7 +145,7 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
 
 <<I,results = hide, fig=TRUE,eval=FALSE>>=
 ## Fit, absorb and plot a genotype-phenotype network
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 plot(x=network)
 @
@@ -178,7 +178,7 @@ plot(x=network,col.palette=col.palette)
 
 <<K,results=hide, fig=TRUE,eval=FALSE>>=
 ##Fit network
-network<-fit.gnbp(geno,pheno,alpha = 0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
 network<-absorb.gnbp(network,node="Tlr12",evidence=evidence)
