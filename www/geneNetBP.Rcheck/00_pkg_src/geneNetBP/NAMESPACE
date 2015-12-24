@@ -1,5 +1,0 @@
-exportPattern("^[^\\.]")
-export(fit.gnbp,gen.evidence,absorb.gnbp,plot.gnbp)
-import(Rgraphviz)
-import(scales)
-S3method("plot","gnbp")
