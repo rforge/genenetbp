@@ -40,11 +40,8 @@ head(pheno,n=3)
 \noindent The simplest example of fitting a CG-BN to mouse QTL data is given below. This example uses default parameters.\\
 
 <<A,results=verbatim,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 library(geneNetBP)
 fit.gnbp(geno,pheno)
-}
 @
 
 \noindent The learnt network structure is returned as RHugin domain in the first element \emph{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \emph{read.rhd} and \emph{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
@@ -52,10 +49,7 @@ fit.gnbp(geno,pheno)
 \noindent The inferred network structure is very sensitive to the significance level (specified as \emph{alpha}) and hence it is recommended to try out different values of the argument \emph{alpha}. Note that the argument \emph{alpha} is for use with RHugin package i.e. the function fit.geneNetBP will pass on \emph{alpha} to RHugin functions.For example,
 
 <<B,results=verbatim,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 fit.gnbp(geno,pheno,alpha = 0.1)
-}
 @
 
 
@@ -64,8 +58,6 @@ fit.gnbp(geno,pheno,alpha = 0.1)
 \begin{center}
 
 <<B1,fig=FALSE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##convert the RHugin domain to a graph object
 BNgraph<-as.graph.RHuginDomain(network$gp)
@@ -74,7 +66,6 @@ attrs<-list()
 attrs$node$fontsize<-30
 ## plot method for graph objects
 plot(BNgraph,attrs=attrs) 
-}
 @
 
 \end{center}
@@ -93,13 +84,10 @@ plot(BNgraph,attrs=attrs)
 
 
 <<C,results=verbatim,print=TRUE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ##Fit network
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
-}
 @
 
 
@@ -120,13 +108,10 @@ is used to demonstrate the direction of change after the absorption of evidence.
 \noindent 1. Absorb a single evidence for a single node\\
 
 <<F,results=verbatim,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ## Fit network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 ## Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
-}
 @
 
 
@@ -142,13 +127,10 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 
 
 <<G,results=hide,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ## Fit network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 ##Absorb evidence
 absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
-}
 @
 
 
@@ -162,13 +144,10 @@ absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
 \begin{center}
 
 <<I,results = hide, fig=TRUE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ## Fit, absorb and plot a genotype-phenotype network
 network<-fit.gnbp(geno,pheno,alpha=0.1)
 network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 plot(x=network)
-}
 @
 
 \end{center}
@@ -182,13 +161,10 @@ plot(x=network)
 \begin{center}
 
 <<J,results=hide, fig=TRUE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 col.palette<-list(pos_high="darkgreen", pos_low= "palegreen2", 
                     neg_high="wheat1", neg_low = "red",
                     dsep_col="white",qtl_col="grey",node_abs_col="yellow") 
 plot(x=network,col.palette=col.palette)
-}
 @
 
 \end{center}
@@ -201,15 +177,12 @@ plot(x=network,col.palette=col.palette)
 
 
 <<K,results=hide, fig=TRUE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ##Fit network
 network<-fit.gnbp(geno,pheno,alpha = 0.1)
 ##Generate evidence
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
 network<-absorb.gnbp(network,node="Tlr12",evidence=evidence)
 plot(x=network,y="belief",ncol=20)
-}
 @
 
 \end{center}
@@ -246,15 +219,12 @@ edgelist[[10]]<-cbind("X4","X6")
 
 \begin{center}
 <<M,results=verbatim,fig=FALSE,eval=FALSE>>=
-if(require("RHugin",quietly=TRUE))
-{
 ##Fit network
 network<-fit.gnbp(toygeno,toypheno,learn=FALSE,edgelist=edgelist)
 ##Generate evidence
 evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
 network<-absorb.gnbp(network,node="X2",evidence=evidence)
 plot(x=network,y="JSI",ncol=17)
-}
 @
 \end{center}
 

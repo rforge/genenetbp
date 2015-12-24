@@ -6,10 +6,10 @@
 The evidence for a node in an RHugin domain is generated as a linear sequence within the specified standard deviation from the marginal mean of the node. The evidence can be given as an input to \link{absorb.gnbp}
 }
 \usage{
-gen.evidence(network, node, std = 2, length.out = 10, std.equal = TRUE)
+gen.evidence(gpfit, node, std = 2, length.out = 10, std.equal = TRUE)
 }
 \arguments{
-  \item{network}{an RHugin domain that is compiled and has cpt tables for each node in the domain. 
+  \item{gpfit}{an object of class "gpfit" obtained by using fit.gnbp
 }
   \item{node}{
 a character string specifying the name of a continuous node in the domain
@@ -36,7 +36,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 }
 
 \seealso{
-\emph{\link{absorb.gnbp}},\emph{\link{fit.gnbp}}
+\code{\link{absorb.gnbp}},\code{\link{fit.gnbp}}
 }
 \examples{
 

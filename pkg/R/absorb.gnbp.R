@@ -1,21 +1,10 @@
-absorb.gnbp=function(gp,node,evidence)
+absorb.gnbp=function(gpfit,node,evidence)
 
 {
-  ## get node attributes
-#   Data<-get.cases(network)
-#   
-#   class_nodes=matrix(nrow=(dim(Data)[2])-1,ncol=3)
-#   
-#   for (i in 1:(dim(Data)[2])-1)
-#   {
-#     class_nodes[i,]=c(colnames(Data)[i],class(Data[,i]),length(levels(Data[,i])))
-#   }
-#   
-#   colnames(class_nodes)=c("node","class","levels")
-#   
-  
-  class_nodes=gp$gp_nodes
-  network<-gp$gp
+  ## get node attributes and network
+  class_nodes=gpfit$gp_nodes
+  network<-gpfit$gp
+  type<-gpfit$gp_flag
   
   ## get d-connected nodes
   dnodes<-get.dconnected.nodes(network,node)
@@ -25,18 +14,38 @@ absorb.gnbp=function(gp,node,evidence)
   ## get marginal distribution
   marginal<-.get.marginal.bn(network,dnodes)
   
+  
+  
   ## check if class of evidence is matrix
   if(class(evidence)!="matrix")
-    stop("In function(absorb.gpBP),'evidence' must be a matrix")
+    stop("In function(absorb.gpBP),'evidence' must be of class matrix")
   
-  ## create matrices to store results
-  JSI=matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2])
-  belief_mean=matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2])
-  belief_var=matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2])
-  # create variables for belief frequencies 
-  belief_freq_list=list()
-  belief_freq=vector()
+  ## create matrices to store phenotype results
+  if (type == "cg")  
+  {
+    JSI=matrix(nrow=length(dnodes[which(dnodes[,4]=="pheno" & dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2])
+    belief_mean=matrix(nrow=length(dnodes[which(dnodes[,4]=="pheno"& dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2])
+    belief_var=matrix(nrow=length(dnodes[which(dnodes[,4]=="pheno"& dnodes[,2]=="numeric"),1]),ncol=dim(evidence)[2]) 
+  }
   
+  if (type == "db") 
+  {
+    FC=matrix(nrow=length(dnodes[which(dnodes[,4]=="pheno"& dnodes[,2]=="factor"),1]),ncol=dim(evidence)[2])
+    pheno_state=matrix(nrow=length(dnodes[which(dnodes[,4]=="pheno"& dnodes[,2]=="factor"),1]),ncol=dim(evidence)[2])
+    belief_pheno_freq_list=list()
+    belief_pheno_freq=vector()
+  }
+  
+  ## create variables to store genotype results
+    belief_geno_freq_list=list()
+    belief_geno_freq=vector()
+  
+  ## index dconnected genotypes & phenotypes
+  Y<-which(dnodes[,4]=="geno" & dnodes[,2]=="factor")
+  X<-which(dnodes[,4]=="pheno" & dnodes[,2]=="numeric")
+  Z<-which(dnodes[,4]=="pheno" & dnodes[,2]=="factor")
+
+  ## Absorb evidence and calculate JSI/FC
   for (i in 1:dim(evidence)[2])
   {
    
@@ -50,18 +59,43 @@ absorb.gnbp=function(gp,node,evidence)
     ## get belief
     belief<-.get.belief.bn(network,dnodes)
 
-    ## calculate KL divergence
+    if (type == "cg")
+    {
+    ## calculate JSI
     JSI[,i]<-.get.jsi(marginal,belief,dnodes) 
     
-    belief_mean[,i]<-belief[dnodes[which(dnodes[,2]=="numeric"),1],1]
-    belief_var[,i]<-belief[dnodes[which(dnodes[,2]=="numeric"),1],2]
+    ## extract beliefs
+    belief_mean[,i]<-belief[X,1]
+    belief_var[,i]<-belief[X,2]
+    }
     
-    if(length(which(dnodes[,2]=="factor"))!=0)
-         belief_freq = cbind(belief_freq,matrix(belief[dnodes[which(dnodes[,2]=="factor"),1],3:ncol(belief)],
-                                         nrow=length(dnodes[which(dnodes[,2]=="factor"),1]),
-                                         ncol=as.numeric(max(class_nodes[,3])),
-                                         dimnames=(list(dnodes[which(dnodes[,2]=="factor"),1],
-                                                        colnames(belief)[3:ncol(belief)]))))
+    if (type == "db")
+    {
+      ## calculate FC
+      FC_temp<-.get.FC(marginal,belief,dnodes)
+     
+      ## extract FC
+      FC[,i]<- FC_temp[,2]
+      
+      ## extract the state with maximum probability
+      pheno_state[,i]<-FC_temp[,1]
+      
+      ## extract beliefs
+      if(length(Z)!=0)
+        belief_pheno_freq = cbind(belief_pheno_freq,matrix(belief[dnodes[Z,1],3:ncol(belief)],
+                                                         nrow=length(dnodes[Z,1]),
+                                                         ncol=as.numeric(max(dnodes[,3])),
+                                                         dimnames=(list(dnodes[Z,1],
+                                                                      colnames(belief)[3:ncol(belief)]))))
+    }
+        
+      ## extract genotype beliefs
+      if(length(Y)!=0)
+           belief_geno_freq = cbind(belief_geno_freq,matrix(belief[dnodes[Y,1],3:ncol(belief)],
+                                           nrow=length(dnodes[Y,1]),
+                                           ncol=as.numeric(max(dnodes[,3])),
+                                           dimnames=(list(dnodes[Y,1],
+                                                          colnames(belief)[3:ncol(belief)]))))
     
     ##retract the evidence
     retract(network)
@@ -69,50 +103,116 @@ absorb.gnbp=function(gp,node,evidence)
   
  
   ## annotate rows and columns
-
-  rownames(JSI)=dnodes[which(dnodes[,2]=="numeric"),1]
-  rownames(belief_mean)=dnodes[which(dnodes[,2]=="numeric"),1]
-  rownames(belief_var)=dnodes[which(dnodes[,2]=="numeric"),1]
-
-  
-if(length(belief_freq)!=0)  
-{
-  
-  
-  for (j in 1:as.numeric(max(class_nodes[,3])))
+  if (type == "cg")
   {
-    belief_freq_temp = matrix(belief_freq[,seq(j,ncol(belief_freq),by=as.numeric(max(class_nodes[,3])))],
-                              nrow=nrow(belief_freq),
-                              ncol=dim(evidence)[2],
-                              dimnames=list(rownames(belief_freq),NULL))
-    
-    name<-paste("state",j,sep="")
-    belief_freq_list[[name]]= belief_freq_temp
+    rownames(JSI)=dnodes[X,1]
+    rownames(belief_mean)=dnodes[X,1]
+    rownames(belief_var)=dnodes[X,1]
   }
-  
- genomarginal<- matrix(marginal[dnodes[which(dnodes[,2]=="factor"),1],3:ncol(marginal)],
-         nrow = length(dnodes[which(dnodes[,2]=="factor"),1]),
-         ncol = as.numeric(max(class_nodes[,3])),
-         dimnames = list(dnodes[which(dnodes[,2]=="factor"),1],colnames(marginal)[3:ncol(marginal)]))
-  
-  
-}
-else
-{
-  belief_freq_list<-NULL
-  genomarginal<-NULL
-}
 
-  
+  if (type == "db")
+  {
+    rownames(FC)=dnodes[Z,1]
+    rownames(pheno_state)=dnodes[Z,1]
+    
+    FC=list(FC=FC,pheno_state=pheno_state)
+    
+    for (j in 1:as.numeric(max(dnodes[Z,3])))
+    {
+      belief_pheno_freq_temp = matrix(belief_pheno_freq[,seq(j,ncol(belief_pheno_freq),by=as.numeric(max(dnodes[Z,3])))],
+                                     nrow=nrow(belief_pheno_freq),
+                                     ncol=dim(evidence)[2],
+                                     dimnames=list(rownames(belief_pheno_freq),NULL))
+      
+      name<-paste("state",j,sep="")
+      belief_pheno_freq_list[[name]]= belief_pheno_freq_temp
+    }
+    
+    phenomarginal<- matrix(marginal[dnodes[Z,1],3:ncol(marginal)],
+                          nrow = length(dnodes[Z,1]),
+                          ncol = as.numeric(max(dnodes[Z,3])),
+                          dimnames = list(dnodes[Z,1],colnames(marginal)[3:ncol(marginal)]))
+  }
+    
+  ## create a list for belief genotype frequencies
+  if(length(belief_geno_freq)!=0)  
+  {
+    
+    
+    for (j in 1:as.numeric(max(dnodes[Y,3])))
+    {
+      belief_geno_freq_temp = matrix(belief_geno_freq[,seq(j,ncol(belief_geno_freq),by=as.numeric(max(dnodes[Y,3])))],
+                                nrow=nrow(belief_geno_freq),
+                                ncol=dim(evidence)[2],
+                                dimnames=list(rownames(belief_geno_freq),NULL))
+      
+      name<-paste("state",j,sep="")
+      belief_geno_freq_list[[name]]= belief_geno_freq_temp
+    }
+    
+   genomarginal<- matrix(marginal[dnodes[Y,1],3:ncol(marginal)],
+           nrow = length(dnodes[Y,1]),
+           ncol = as.numeric(max(dnodes[Y,3])),
+           dimnames = list(dnodes[Y,1],colnames(marginal)[3:ncol(marginal)]))
+    
+    
+  }else
+  {
+    belief_geno_freq_list<-NULL
+    genomarginal<-NULL
+  }
+
+ ## diagnostic plot
+
+ if (dim(evidence)[2] >= 3)
+ {
+   if (type == "cg" & length(node)==1)
+   {
+   colpalette=rainbow(nrow(JSI))
+   
+   for (i in 1:nrow(JSI))
+   {
+     plot(evidence,JSI[i,],type="l",xlab=NA,ylab=NA,lwd=2.5,col=colpalette[i],font.axis=10,cex=0.4,xlim=range(evidence),ylim=range(JSI))
+     par(new=T)
+   }
+   
+   title(xlab=paste(node,"evidence"), col.lab="black")
+   title(ylab="JSI", col.lab="black")
+   legend("top",rownames(JSI),cex=0.6,col=colpalette,bty="n",lwd=2.5)
+   }
+   
+ }
+
+
+  ## store & return results
+ if (type == "cg")
+ {
   results=list(gp=network,
+               gp_flag="cg",
+               gp_nodes=class_nodes,
                evidence=evidence,
                node=node,
-               marginal=list(pheno=list(mean = as.matrix(marginal[dnodes[which(dnodes[,2]=="numeric"),1],1]),
-                                        var = as.matrix(marginal[dnodes[which(dnodes[,2]=="numeric"),1],2])),
+               marginal=list(pheno=list(mean = as.matrix(marginal[dnodes[X,1],1]),
+                                        var = as.matrix(marginal[dnodes[X,1],2])),
                              geno=list(freq = genomarginal)),
-               belief=list(pheno=list(mean=belief_mean,var=belief_var),geno=belief_freq_list),
-               JSI=JSI)
-  
+               belief=list(pheno=list(mean=belief_mean,var=belief_var),geno=belief_geno_freq_list),
+               JSI=JSI,
+               FC=NULL)
+ }
+  if (type == "db")
+  {
+    results=list(gp=network,
+                 gp_flag="db",
+                 gp_nodes=class_nodes,
+                 evidence=evidence,
+                 node=node,
+                 marginal=list(pheno = list(freq = phenomarginal),
+                               geno = list(freq = genomarginal)),
+                 belief=list(pheno = belief_pheno_freq_list,geno = belief_geno_freq_list),
+                 JSI=NULL,
+                 FC=FC)
+  }
+
   class(results)<-"gnbp"
   
   return(results)
@@ -233,32 +333,46 @@ rownames(marginal)=dnodes[,1]
 .get.jsi=function(marginal,belief,dnodes)
 
   { 
-    KLDiv1 = matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=1)
-    KLDiv2 = matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=1)
-    jsi = matrix(nrow=length(dnodes[which(dnodes[,2]=="numeric"),1]),ncol=1)
+  
+    X = which(dnodes[,2]=="numeric" & dnodes[,4]=="pheno")
+    KLDiv1 = matrix(nrow=length(dnodes[X,1]),ncol=1)
+    KLDiv2 = matrix(nrow=length(dnodes[X,1]),ncol=1)
+    jsi = matrix(nrow=length(dnodes[X,1]),ncol=1)
+   
     
-    k=1 
-    
-    for (i in 1:nrow(dnodes))
+    for (i in 1:nrow(dnodes[X,]))
     {
-      
-      if(dnodes[i,2]=="numeric")
-      {
-        mu0=marginal[rownames(marginal)==dnodes[i,1],1]
-        mu=belief[rownames(belief)==dnodes[i,1],1]
+
+        mu0=marginal[rownames(marginal)==dnodes[X[i],1],1]
+        mu=belief[rownames(belief)==dnodes[X[i],1],1]
         
-        sigma20=marginal[rownames(marginal)==dnodes[i,1],2]
-        sigma2=belief[rownames(belief)==dnodes[i,1],2]
+        sigma20=marginal[rownames(marginal)==dnodes[X[i],1],2]
+        sigma2=belief[rownames(belief)==dnodes[X[i],1],2]
         
-        KLDiv1[k,1]=0.5*(((mu-mu0)^2)/sigma2 +(sigma20/sigma2)-log(sigma20/sigma2)-1)
-        KLDiv2[k,1]=0.5*(((mu0-mu)^2)/sigma20 +(sigma2/sigma20)-log(sigma2/sigma20)-1)
-        jsi[k,1]=0.5*(KLDiv1[k,1]+KLDiv2[k,1])*sign(mu-mu0)     
-        
-        k=k+1
-      }   
+        KLDiv1[i,1]=0.5*(((mu-mu0)^2)/sigma2 +(sigma20/sigma2)-log(sigma20/sigma2)-1)
+        KLDiv2[i,1]=0.5*(((mu0-mu)^2)/sigma20 +(sigma2/sigma20)-log(sigma2/sigma20)-1)
+        jsi[i,1]=0.5*(KLDiv1[i,1]+KLDiv2[i,1])*sign(mu-mu0)     
+    
       
     }
     
     return(jsi)
   
   }
+
+.get.FC=function(marginal,belief,dnodes)
+  
+{ 
+  Z<- which(dnodes[,2]=="factor" & dnodes[,4]=="pheno")
+  FC = matrix(nrow=length(dnodes[Z,1]),ncol=2)
+  
+  for (i in 1:nrow(dnodes[Z,]))
+  {
+      FC[i,1] = which.max(belief[dnodes[Z[i],1],])
+      FC[i,2] = belief[dnodes[Z[i],1],FC[i,1]]/marginal[dnodes[Z[i],1],FC[i,1]]  
+      FC[i,1] = FC[i,1]-2
+  }
+  
+  return(FC)
+  
+}

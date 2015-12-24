@@ -1,6 +1,4 @@
 \name{mouse}
-\alias{geno}
-\alias{pheno}
 \docType{data}
 \alias{mouse}
 \title{\emph{Mus Musculus} Kidney eQTL data from Hageman \emph{et. al.} (2011)
@@ -10,10 +8,10 @@
 \usage{
 data(mouse)
 }
-\format{The data set \emph{mouse} contains the following variables:
+\format{The data set \code{mouse} contains the following variables:
 \itemize{
-\item{geno}{  a data frame of 173 observations of 5 variables. All column vectors are of class factor}
-\item{pheno}{ a data frame of 173 observations of 14 variables. All column vectors are of class numeric }
+\item{mousegeno}{  a data frame of 173 observations of 5 variables. All column vectors are of class factor}
+\item{mousepheno}{ a data frame of 173 observations of 14 variables. All column vectors are of class numeric }
 }
 }
 \details{

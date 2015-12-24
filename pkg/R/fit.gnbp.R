@@ -2,7 +2,7 @@
 ## Learn Bayesian Network Structure
 ## from QTL data
 ####################################
-fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1e-04,maxit=0)
+fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=0.001,tol=1e-04,maxit=0)
 
   {
   
@@ -14,11 +14,22 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1
         }
     
     ## Pheno Class Check ##
-      class_pheno=apply(pheno,2,class)
-      X<-which(class_pheno=="numeric")
-    if (length(X)!=dim(pheno)[2])
-      stop("column vectors of 'pheno' should be either all numeric or all factor.")
-         
+      class_pheno=lapply(pheno,class)
+     
+    if (type=="cg")
+      { 
+       X<-which(class_pheno=="numeric")
+       if(length(X)!=dim(pheno)[2])
+        stop("column vectors of 'pheno' should be of class numeric.")
+      }
+    
+    if (type=="db")
+    { 
+      X<-which(class_pheno=="factor")
+      if(length(X)!=dim(pheno)[2])
+        stop("column vectors of 'pheno' should be of class factor.")
+    }
+    
     Data=cbind(pheno,geno)
     
     #####################################
@@ -44,21 +55,21 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1
     colnames(class_nodes)=c("node","class","levels","type")
     
      
-    Xnum=which(class_nodes[,"type"]=="pheno")
-    Xfac=which(class_nodes[,"type"]=="geno")
+    Xpheno=which(class_nodes[,"type"]=="pheno")
+    Xgeno=which(class_nodes[,"type"]=="geno")
 
      
     ## Add nodes
-    for (node in 1:length(Xnum))
+    for (node in 1:length(Xpheno))
     {
-      if(class_nodes[node,"class"]=="numeric")
-        add.node(network,colnames(Data)[Xnum[node]],kind="continuous") 
-      if(class_nodes[node,"class"]=="factor")
-        add.node(network,colnames(Data)[Xnum[node]],kind="discrete",states=class_nodes[node,"levels"])    
+      if(class_nodes[Xpheno[node],"class"]=="numeric")
+        add.node(network,class_nodes[Xpheno[node],"node"],kind="continuous") 
+      if(class_nodes[Xpheno[node],"class"]=="factor")
+        add.node(network,class_nodes[Xpheno[node],"node"],states=levels(Data[,class_nodes[Xpheno[node],"node"]]))    
     }
 
-    for (node in 1:length(Xfac))
-      add.node(network,colnames(Data)[Xfac[node]],kind="discrete",states=levels(Data[,Xfac[node]]))
+    for (node in 1:length(Xgeno))
+      add.node(network,class_nodes[Xgeno[node],"node"],states=levels(Data[,class_nodes[Xgeno[node],"node"]]))
 
     
     ## Set cases
@@ -80,15 +91,14 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1
           {idx <- unique(c(names(constraints$undirected$required), names(qtl_constraints$undirected$required)))
            undirected.required<-setNames(mapply(c, constraints$undirected$required[idx], qtl_constraints$undirected$required[idx]), idx)} 
         if (is.null(constraints$undirected$forbidden))
-          {undirected.forbidden<-qtl_constraints$undirected$forbidden} else 
-          {idx <- unique(c(names(constraints$undirected$forbidden), names(qtl_constraints$undirected$forbidden)))
-           undirected.forbidden<-setNames(mapply(c, constraints$undirected$forbidden[idx], qtl_constraints$undirected$forbidden[idx]), idx)}
-        
-        all_constraints=list(directed=list(required=directed.required,forbidden=directed.forbidden),
-                             undirected=list(required=undirected.required,forbidden=undirected.forbidden))
-        
-      } 
-      else
+           {undirected.forbidden<-qtl_constraints$undirected$forbidden} else 
+           {idx <- unique(c(names(constraints$undirected$forbidden), names(qtl_constraints$undirected$forbidden)))
+            undirected.forbidden<-setNames(mapply(c, constraints$undirected$forbidden[idx], qtl_constraints$undirected$forbidden[idx]), idx)}
+              
+              all_constraints=list(directed=list(required=directed.required,forbidden=directed.forbidden),
+                                   undirected=list(required=undirected.required,forbidden=undirected.forbidden))
+              
+      } else
           all_constraints<-qtl_constraints
 
   
@@ -98,9 +108,8 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1
      
     learn.structure(network,alpha=alpha,constraints=all_constraints)
     
-    }
-    
-    else
+    }else
+      
     {
       if (missing(edgelist))
         stop("if learn == TRUE, edgelist must be provided.")
@@ -121,7 +130,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,alpha=0.001,tol=1
     compile(network)
     learn.cpt(network,tol=tol,maxit=maxit)
         
-    gpfit<-list(gp=network,gp_nodes=class_nodes)
+    gpfit<-list(gp=network,gp_nodes=class_nodes,gp_flag=type)
     
     class(gpfit)<-"gpfit"
     
