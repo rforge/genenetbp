@@ -38,9 +38,9 @@ Edges between the genotypes at SNP markers are not allowed and the genotypes are
 }
 \value{
 Returns an object of class "gpfit". 
-\item{gp} - a pointer to a compiled RHugin domain. There is a cpt table associated with each node in the network.
-\item{gp_nodes} - a data frame containing information about nodes for internal use with other functions
-\item{gp_flag} - a character string specifying the type of network (\code{Conditional Gaussian} or \code{Discrete Bayesian})
+\item{gp}{a pointer to a compiled RHugin domain. There is a cpt table associated with each node in the network.}
+\item{gp_nodes}{a data frame containing information about nodes for internal use with other functions.}
+\item{gp_flag}{a character string specifying the type of network (\code{Conditional Gaussian} or \code{Discrete Bayesian})}
 
 }
 

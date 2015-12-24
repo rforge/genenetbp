@@ -53,8 +53,9 @@ Janhavi Moharil<janhavim@buffalo.edu>
 Rachael Hageman-Blair<hageman@buffalo.edu> 
 }
 \seealso{
-\code{\link{absorb.gnbp}]
+\code{\link{absorb.gnbp}}
 }
+
 \examples{
 ## Fit, absorb and plot a genotype-phenotype network
 data(mouse)
