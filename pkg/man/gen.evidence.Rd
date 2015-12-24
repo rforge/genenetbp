@@ -43,7 +43,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 ##Fit a network
 data(mouse)
 \dontrun{
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 
 ##Generate a sequence of evidence for a single node
 evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)

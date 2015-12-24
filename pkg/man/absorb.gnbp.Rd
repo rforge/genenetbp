@@ -7,7 +7,7 @@ Absorb evidence and infer a genotype-phenotype network
 Absorb a single piece or a spectrum of evidence for one or more continuous nodes in a compiled RHugin domain, obtain the updated beliefs and the Jeffrey's signed information. 
 }
 \usage{
-absorb.gnbp(gp, node, evidence)
+absorb.gnbp(gpfit, node, evidence)
 }
 \arguments{
   \item{gp}{
@@ -25,7 +25,7 @@ a matrix or a numeric vector of evidence. number of rows of the matrix or the le
 \value{
 absorb.gnbp returns an object of class "gnbp". The functions summary and print can be used for objects of class "gnbp". An object of class "gnbp" is a list containing the following components
 
-\item{gp}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
+\item{gpfit}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
 \item{gp_flag}{type of network}
 \item{node}{a character vector specifying the nodes for which evidence was been absorbed}
 \item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
@@ -54,18 +54,18 @@ data(mouse)
 
 \dontrun{
 ## Simple example : Fit a bayesian network to genotype-phenotype data 
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 
 ## Absorb a single evidence for a single node
 absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5))
 
 ## Absorb a sequence of evidence for a single node generated using \code{\link{gen.evidence}
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 evidence<-gen.evidence(network,node="Tlr12")
 absorb.gnbp(network,node="Tlr12",evidence=evidence)
 
 ##Absorb sequence of evidence for multiple nodes}
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 evidence<-gen.evidence(network,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
 absorb.gnbp(network,node=rownames(evidence),evidence=evidence)
 }

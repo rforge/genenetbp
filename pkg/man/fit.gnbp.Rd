@@ -59,9 +59,9 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 data(mouse)
 
 ## Simple example : Fit a bayesian network to genotype-phenotype data using the default values
-fit.gnbp(geno,pheno)
+fit.gnbp(mousegeno,mousepheno)
 
 ## Fit a bayesian network to genotype-phenotype data at a specified significance level
-fit.gnbp(geno,pheno,alpha = 0.1)
+fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 }
 }

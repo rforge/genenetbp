@@ -26,7 +26,7 @@ A character string. Valid options are \code{"JSI"} (default) or \code{"belief"} 
 \code{node_abs_col}= nodes for which evidence has been absorbed (default = "palegreen2")
 
 For Discrete Bayesian networks, a list of 4 elements specifying colors for colormap should be specified. All 4 elements should be character strings specifying the colour for 
-\code{col_nodes}- a vector of colors for phenotype states should be specified. The length of the vector should be equal to the maximum number of phenotype states possible. See example below.
+\code{col_nodes}- a vector of colors for phenotype states should be specified. The length of the vector should be equal to the maximum number of phenotype states possible.
 \code{dsep_col}= \emph{d}-separated nodes (default = "white")
 \code{qtl_col}= discrete nodes (QTLs) (default = "grey")
 \code{node_abs_col}= nodes for which evidence has been absorbed (default = "palegreen2")
@@ -60,7 +60,7 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 ## Fit, absorb and plot a genotype-phenotype network
 data(mouse)
 \dontrun{
-network<-fit.gnbp(geno,pheno,alpha=0.1)
+network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
 plot(x=network)
 }
