@@ -40,6 +40,6 @@ Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2015). Belief
 }
 
 \seealso{
-\code{{RHugin}}
+\code{RHugin}
 }
 

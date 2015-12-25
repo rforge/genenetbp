@@ -22,9 +22,12 @@ Hageman,R.S., Leduc,M.S., Caputo,C.R., Tsaih,S.-W., Churchill,
 G.A., and Korstanje,R.(2011). "Uncovering genes and regulatory pathways related
 to urinary albumin excretion." \emph{Journal of the American Society of Nephrology22}, 1, 73-81.
 }
+
 \examples{
+\dontrun{
 # load the data and fit a genotype-phenotype network
 data(mouse)
-\dontrun{fit.gnbp(geno,pheno)}
+fit.gnbp(mousegeno,mousepheno)
+}
 }
 \keyword{datasets}

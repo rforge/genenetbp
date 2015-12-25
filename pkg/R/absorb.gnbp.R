@@ -170,15 +170,21 @@ absorb.gnbp=function(gpfit,node,evidence)
    {
    colpalette=rainbow(nrow(JSI))
    
+   layout(matrix(c(1,2), 1, 2, byrow = F),c(2.5,1),c(1,1))
+   
    for (i in 1:nrow(JSI))
    {
      plot(evidence,JSI[i,],type="l",xlab=NA,ylab=NA,lwd=2.5,col=colpalette[i],font.axis=10,cex=0.4,xlim=range(evidence),ylim=range(JSI))
      par(new=T)
    }
-   
    title(xlab=paste(node,"evidence"), col.lab="black")
    title(ylab="JSI", col.lab="black")
-   legend("top",rownames(JSI),cex=0.6,col=colpalette,bty="n",lwd=2.5)
+   
+   par(new=F)
+   
+   plot(c(1:5),type='n', bty='n', xaxt='n', xlab='', yaxt='n', ylab='')
+   
+   legend("center",rownames(JSI),col=colpalette,bty="n",lwd=2.5,cex=0.8)
    }
    
  }

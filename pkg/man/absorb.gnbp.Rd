@@ -10,7 +10,7 @@ Absorb a single piece or a spectrum of evidence for one or more continuous nodes
 absorb.gnbp(gpfit, node, evidence)
 }
 \arguments{
-  \item{gp}{
+  \item{gpfit}{
 an object of class "gpfit". Output from \code{\link{fit.gnbp}}. 
 }
 
@@ -25,7 +25,7 @@ a matrix or a numeric vector of evidence. number of rows of the matrix or the le
 \value{
 absorb.gnbp returns an object of class "gnbp". The functions summary and print can be used for objects of class "gnbp". An object of class "gnbp" is a list containing the following components
 
-\item{gpfit}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
+\item{gp}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
 \item{gp_flag}{type of network}
 \item{node}{a character vector specifying the nodes for which evidence was been absorbed}
 \item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}

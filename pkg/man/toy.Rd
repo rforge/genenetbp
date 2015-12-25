@@ -19,8 +19,9 @@ The simulated dataset consists of 3 genotypes each with 2 states and 6 phenotype
 }
 
 \examples{
+\dontrun{
 # load the data and fit a genotype-phenotype network
 data(toy)
-\dontrun{fit.gnbp(toygeno,toypheno)}
+fit.gnbp(toygeno,toypheno)}
 }
 \keyword{datasets}

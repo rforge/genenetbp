@@ -1,31 +1,89 @@
 % \VignetteIndexEntry{An R Package for belief propagation in genotype-phenotype networks}
-\documentclass[12pt, a4paper]{article}
+% \VignetteKeyword{Conditional Gaussian Networks}
+% \VignetteKeyword{Probabilistic networks}
+% \VignetteKeyword{Graphical Models}
+% \VignetteKeyword{Discrete Bayesian Networks}
 
-\title{Belief Propagation in Genotype-Phenotype Networks using the geneNetBP package}
-\author{Janhavi Moharil\\ Department of Biostatistics\\ University at Buffalo}
+\documentclass[12pt, a4paper]{article}
+\bibliographystyle{plos2009}
+
+\usepackage[authoryear,round]{natbib}
+\usepackage{Sweave}
+\SweaveOpts{prefix.string=figures/graph}
+
+% amsmath package, useful for mathematical formulas
+\usepackage{amsmath}
+
+%amssymb package, useful for mathematical symbols
+\usepackage{amssymb}
+
+%graphicx package, useful for including eps and pdf graphics
+% include graphics with the command \includegraphics
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+% packages for tables
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{setspace}
+%\double-spacing
+
+%Text layout
+\topmargin 0.0cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\textwidth 16cm 
+\textheight 21cm
+
+
+% Bold the 'Figure #' in the caption and separate it with a period
+% Captions will be left justified
+\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+
+
+\def\pkg#1{\texttt{#1}}
+\def\code#1{{\texttt{#1}}}
+\def\R{\texttt{R}}
+
+
+<<echo=FALSE,print=FALSE>>=
+require( geneNetBP )
+prettyVersion <- packageDescription("geneNetBP")$Version
+prettyDate <- format(Sys.Date())
+dir.create( "figures" )
+@
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+\author{Janhavi Moharil\\ University at Buffalo}
+\title{Belief Propagation in Genotype-Phenotype Networks using the \pkg{geneNetBP} package}
+\date{\pkg{geneNetBP} version \Sexpr{prettyVersion} as of \Sexpr{prettyDate}}
 
 \begin{document}
-\SweaveOpts{concordance=FALSE}
+\SweaveOpts{concordance=TRUE}
+% \SweaveOpts{concordance=FALSE}
 
 \maketitle
 
-\noindent The geneNetBP package implements methods to predict system-wide changes in beliefs after absorbing evidence in probabilistic graphical models. The package includes functions to fit Conditional Gaussian Bayesian Network (CG-BN) to specifically genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in these networks and quantify and visualize the changes in network beliefs. The package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine.\\ 
+\tableofcontents
 
-\section*{Fit CG-BN to QTL data}
-\textbf{\emph{Network modeling:}} The graphical model is represented as a Directed Acyclic Graph (DAG). The nodes in the graph represent the model variables, which may be discrete (QTL) or continuous (phenotypes). The phenotypes (e.g., metabolites, gene-expression, or clinical traits etc) are assumed to be continuous and follow a normal distribution.  The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$.  \\
+\section{Introduction}
 
-\noindent Model Assumptions:\\
+\noindent The \code{geneNetBP} package implements methods to predict system-wide changes in beliefs after absorbing evidence in probabilistic graphical models. The package includes functions to fit Conditional Gaussian Bayesian Network (CG-BN) to specifically genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in these networks and quantify and visualize the changes in network beliefs. The package makes extensive use of \code{RHugin} package that provides an R interface for the Hugin Decision Engine, a commercial software for building and infering Bayesian belief networks. Note that \code{RHugin} is currently not available on CRAN and is hosted on R-Forge. It can be downloaded from \url{http://rhugin.r-forge.r-project.org}. The Hugin Decision Engine can be downloaded from \url{http://www.hugin.com}. Detailed installation instructions of the \code{geneNetBP} package and package dependencies are available on the project homepage on R-Forge, \url{http://genenetbp.r-forge.r-project.org}\\ 
 
-1. Discrete variables precede the continuous variables.  
-2. No relationships between discrete variables (no edges between them).\\
+\section{Datasets}
 
-\noindent Local relationships between continuous child nodes and parents are described using Homogeneous Conditional Gaussian Models (HCGM).  The conditional distribution for a phenotype $Y=X_j$ with discrete parent $Q_i$ with genotype states ($g$) and continuous parent $X_i$ ($i\neq j$) is modeled as:
-\begin{equation} 
-P\left(Y \mid  Q_i={g}, X_i = x_i \right)=N\left(\alpha(g) + \beta(g)^{T}x_i, \gamma(g) \right),  \label{eq:local}
-\end{equation}
-where the mean is a regression that depends on both discrete and continuous parents, but the variance depends only on the discrete parents (genotype states).  The parameters of the CG-BN and subsequently the marginal distributions are inferred from the data under the constraints of the topology and the Markov condition using the PC-algorithm in \emph{RHugin} package.\\  
+\noindent There are 3 datasets provided with this package. 
 
-\textbf{\emph{Mouse dataset:}} The \emph{Mus} \emph{Musculus} Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \emph{geno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \emph{pheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
+\subsection{mouse} 
+\noindent The \emph{Mus Musculus} Kidney eQTL data (\code{mouse}) was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{mousegeno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{mousepheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
 
 \noindent Load the dataset and view the first 3 observations:
 
@@ -35,25 +93,145 @@ head(mousegeno,n=3)
 head(mousepheno,n=3)
 @
 
-\noindent Note that there are 3 possible genotype states MM (homozygous) denoted by 1, H (heterozygous) by 2 and SS (homozygous) by 3. The genotypes are categorical variables and hence all columns in data frame \emph{geno} have to be of class factor while the phenotypes are continuous variables with all columns in data frame \emph{pheno} of class numeric.\\ 
+\noindent Note that there are 3 possible genotype states MM (homozygous) denoted by 1, H (heterozygous) by 2 and SS (homozygous) by 3. The genotypes are categorical variables and hence all columns in data frame \code{mousegeno} have to be of class factor while the phenotypes are continuous variables with all columns in data frame \code{mousepheno} of class numeric.\\ 
+
+
+\subsection{toy} 
+\noindent The \code{toy} is a simulated eQTL dataset from the network shown below, of 500 observations, 3 genotypes (Q1,Q2,Q3) each having 2 possible states (\code{toygeno}) and 6 phenotypes, X1-X6 (\code{toypheno}).  \\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[trim=0 450 300 80,clip,height=7cm,width=7cm]{figures/toy_graph}
+  \caption{Toy network example.}
+\end{figure}
+
+
+\subsection{yeast}
+
+\noindent The \code{yeast} dataset is a subset of the widely studied yeast expression dataset comprising of 112 F1 segregants from a cross between BY4716 and RM11-1a strains of \emph{Saccharomyces Cerevisiae} \cite{kruglak2005, kruglak2005nature}. The original dataset consists of expression values reported as log2(sample/ BY reference) for 6216 genes. The data can be accessed in Gene Expression Omnibus (GEO) by accession number (GSE1990). After linkage analysis and filtering based on location and significance of QTL, a final set of 25 genes and their corresponding 12 SNP markers were identified and included in the yeast dataset.\\ 
+
+\noindent Thus the final dataset has 2 variables \code{yeastgeno}, data frame of 112 observations (genotype) of 9 variables (SNP markers)  and \code{yeastpheno}, data frame of 112 observations (normalized gene expression) of 16 variables (genes).\\
+
+\noindent Load the dataset and view the first 3 observations:
+
+<<dataset,results=verbatim,eval=FALSE>>=
+data(yeast,package="geneNetBP")
+head(yeastgeno,n=3)
+head(yeastpheno,n=3)
+@
+
+\noindent Note that there are 2 possible genotype states denoted by 1 and 2. The genotypes are categorical variables and hence all columns in data frame \code{yeastgeno} have to be of class factor while the phenotypes are continuous variables with all columns in data frame \code{yeastpheno} of class numeric.\\ 
+
+
+\section{Fit CG-BN to QTL data}
+\subsection{Model}
+\noindent The graphical model is represented as a Directed Acyclic Graph (DAG). The nodes in the graph represent the model variables, which may be discrete (QTL) or continuous (phenotypes). The phenotypes (e.g., metabolites, gene-expression, or clinical traits etc) are assumed to be continuous and follow a normal distribution.  The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$.  \\
+
+\noindent Model Assumptions:\\
+
+\noindent 1. Discrete variables precede the continuous variables.\\  
+\noindent 2. No relationships between discrete variables (no edges between them).\\
+
+\noindent Local relationships between continuous child nodes and parents are described using Homogeneous Conditional Gaussian Models (HCGM).  The conditional distribution for a phenotype $Y=X_j$ with discrete parent $Q_i$ with genotype states ($g$) and continuous parent $X_i$ ($i\neq j$) is modeled as:
+\begin{equation} 
+P\left(Y \mid  Q_i={g}, X_i = x_i \right)=N\left(\alpha(g) + \beta(g)^{T}x_i, \gamma(g) \right),  \label{eq:local}
+\end{equation}
+where the mean is a regression that depends on both discrete and continuous parents, but the variance depends only on the discrete parents (genotype states).  The parameters of the CG-BN and subsequently the marginal distributions are inferred from the data under the constraints of the topology and the Markov condition using the PC-algorithm in \code{RHugin} package.\\  
+
+\subsection{Mouse Example}
+
+\noindent We will use the function \code{fit.gnbp} to learn the structure of a genotype-phenotype network from mouse dataset. This function uses the PC algorithm and the EM algorithm implemented in the \code{RHugin} package to learn the network structure and and the conditional probability tables for each node in the network. 
+}
+
+\subsubsection{fit.gnbp}
 
 \noindent The simplest example of fitting a CG-BN to mouse QTL data is given below. This example uses default parameters.\\
 
-<<A,results=verbatim,eval=FALSE>>=
-library(geneNetBP)
-fit.gnbp(mousegeno,mousepheno)
-@
-
-\noindent The learnt network structure is returned as RHugin domain in the first element \emph{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \emph{read.rhd} and \emph{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
-
-\noindent The inferred network structure is very sensitive to the significance level (specified as \emph{alpha}) and hence it is recommended to try out different values of the argument \emph{alpha}. Note that the argument \emph{alpha} is for use with RHugin package i.e. the function fit.geneNetBP will pass on \emph{alpha} to RHugin functions.For example,
-
-<<B,results=verbatim,eval=FALSE>>=
-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
-@
+\begin{Schunk}
+\begin{Sinput}
+> library(geneNetBP)
+> fit.gnbp(mousegeno,mousepheno)
+\end{Sinput}
+\begin{Soutput}
+$gp
+  A Hugin domain: there are 19 nodes and 17 edges
 
 
-\noindent The inferred network structure can be visualized by the generic plot method for RHugin domain, however it has minimal graphic capabilities. Refer to RHugin manual for more help on the plot method. We will plot the network using Rgraphviz package that has several ways of rendering customized graphs. Good news is that the RHugin package has a function to coerce the RHugin domain into a graph object of class "graphNEL".
+$gp_nodes
+      node      class     levels type   
+ [1,] "Cyp4a31" "numeric" "0"    "pheno"
+ [2,] "Slc5a9"  "numeric" "0"    "pheno"
+ [3,] "Slc6a9"  "numeric" "0"    "pheno"
+ [4,] "Hmgcl"   "numeric" "0"    "pheno"
+ [5,] "Ptp4a2"  "numeric" "0"    "pheno"
+ [6,] "Ak2"     "numeric" "0"    "pheno"
+ [7,] "Zbtb8a"  "numeric" "0"    "pheno"
+ [8,] "Stx12"   "numeric" "0"    "pheno"
+ [9,] "Trspap1" "numeric" "0"    "pheno"
+[10,] "Mecr"    "numeric" "0"    "pheno"
+[11,] "Wdtc1"   "numeric" "0"    "pheno"
+[12,] "Atpif1"  "numeric" "0"    "pheno"
+[13,] "Rbbp4"   "numeric" "0"    "pheno"
+[14,] "Tlr12"   "numeric" "0"    "pheno"
+[15,] "Qchr4"   "factor"  "3"    "geno" 
+[16,] "Qchr17"  "factor"  "3"    "geno" 
+[17,] "Qchr15"  "factor"  "3"    "geno" 
+[18,] "Qchr11"  "factor"  "3"    "geno" 
+[19,] "Qchr2"   "factor"  "3"    "geno" 
+
+$gp_flag
+[1] "cg"
+
+attr(,"class")
+[1] "gpfit"
+\end{Soutput}
+\end{Schunk}
+
+
+\noindent The learnt network structure is returned as RHugin domain in the first element \code{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \code{read.rhd} and \code{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
+
+\noindent The inferred network structure is very sensitive to the significance level (specified as \code{alpha}) and hence it is recommended to try out different values of the argument \code{alpha}. Note that the argument \code{alpha} is for use with RHugin package i.e. the function \code{fit.gnbp} will pass on \code{alpha} to RHugin functions.For example,
+
+\begin{Schunk}
+\begin{Sinput}
+>fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+\end{Sinput}
+\begin{Soutput}
+$gp
+  A Hugin domain: there are 19 nodes and 31 edges
+
+
+$gp_nodes
+      node      class     levels type   
+ [1,] "Cyp4a31" "numeric" "0"    "pheno"
+ [2,] "Slc5a9"  "numeric" "0"    "pheno"
+ [3,] "Slc6a9"  "numeric" "0"    "pheno"
+ [4,] "Hmgcl"   "numeric" "0"    "pheno"
+ [5,] "Ptp4a2"  "numeric" "0"    "pheno"
+ [6,] "Ak2"     "numeric" "0"    "pheno"
+ [7,] "Zbtb8a"  "numeric" "0"    "pheno"
+ [8,] "Stx12"   "numeric" "0"    "pheno"
+ [9,] "Trspap1" "numeric" "0"    "pheno"
+[10,] "Mecr"    "numeric" "0"    "pheno"
+[11,] "Wdtc1"   "numeric" "0"    "pheno"
+[12,] "Atpif1"  "numeric" "0"    "pheno"
+[13,] "Rbbp4"   "numeric" "0"    "pheno"
+[14,] "Tlr12"   "numeric" "0"    "pheno"
+[15,] "Qchr4"   "factor"  "3"    "geno" 
+[16,] "Qchr17"  "factor"  "3"    "geno" 
+[17,] "Qchr15"  "factor"  "3"    "geno" 
+[18,] "Qchr11"  "factor"  "3"    "geno" 
+[19,] "Qchr2"   "factor"  "3"    "geno" 
+
+$gp_flag
+[1] "cg"
+
+attr(,"class")
+[1] "gpfit"
+\end{Soutput}
+\end{Schunk}
+
+\noindent The inferred network structure can be visualized by the generic plot method for RHugin domain, however it has minimal graphic capabilities. Refer to RHugin manual for more help on the plot method. We will plot the network using \code{Rgraphviz} package that has several ways of rendering customized graphs. Good news is that the RHugin package has a function to coerce the RHugin domain into a graph object of class "graphNEL".\\
 
 \begin{center}
 
@@ -67,31 +245,24 @@ attrs$node$fontsize<-30
 ## plot method for graph objects
 plot(BNgraph,attrs=attrs) 
 @
-
 \end{center}
 
-\noindent Notice that the network now has 31 edges.Also, Qchr17 and Qchr2 are not included in the network. Any additional domain knowledge can be provided through a list of constraints. 
+\begin{figure}[H]
+\centering 
+\includegraphics{figures/mouse_graph}
+\caption{Conditional Gaussian network learnt from mouse QTL data}
+\end{figure} 
+
+\noindent Notice that the network now has 31 edges.Also, Qchr17 and Qchr2 are not included in the network. Any additional domain knowledge can be provided through a list of constraints.\\ 
 
 \noindent More help about the structure of the constraints list can be found in RHugin documentation.
 
-\section*{Absorbing evidence and network comparison}
-{\textbf{Absorption of Evidence:}}  New evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
+\section{Absorbing evidence and network comparison}
+\subsection{Evidence Absorption and Belief Propagation}  
 
-\noindent A function \emph{gen.evidence} is useful to generate evidence for a node based on it's marginal distribution. This is particularly useful when network perturbation to assess the network behaviour is of interest.
+\noindent New evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
 
-\noindent To generate a spectrum of evidence for \emph{Tlr12} within $\pm$$2$ standard deviations of it's marginal distribution, we input the inferred network to \emph{gen.evidence}\\
-
-
-
-<<C,results=verbatim,print=TRUE,eval=FALSE>>=
-##Fit network
-network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
-##Generate evidence
-evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
-@
-
-
-{\textbf{Comparison of Networks:}}  Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence.For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
+\noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence.For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
 
 \noindent A symmetric version of the Kullback-Leibler information, known as Jeffrey's information is calculated to compare the marginal belief in the original network $X_i^{\rm 0} \sim N( \mu_0, \sigma_0^2)$ to the absorbed network $X_i^{\rm abs} \sim N( \mu_{\rm abs}, \sigma_{\rm abs}^2)$.  Jeffrey's information, which is computed for all continuous unabsorbed nodes in the network,  is given as: 
 \[ J \left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right) = I^{\rm KL}\left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right)  + I^{\rm KL}\left( X_{i}^{\rm abs}, X_{i}^{\rm 0} \right)   \]
@@ -101,80 +272,537 @@ For ease of interpretation, the signed Jeffrey's information
 \[\rm{sign}(\mu_0-\mu_{\rm{abs}})\cdot   J\left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right)\]
 is used to demonstrate the direction of change after the absorption of evidence.\\  
 
-\noindent The changes in belief are measured only for the nodes that are \emph{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \emph{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs.\\
+\noindent The changes in belief are measured only for the nodes that are \code{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \code{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs.\\
 
-\noindent The function \emph{absorb.gnbp} uses the \emph{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \emph{d}-connected nodes. The following example illustrates how to absorb evidence after fitting a network to QTL data using geneNetBP package. \\
+\subsection{Example}
+
+Suppose we know the marginal mean of one of the nodes \code{Tlr12} is -0.99 and we want to enter this new information in the mouse network and see the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
+
+\subsubsection{absorb.gnbp}
+
+\noindent The function \code{absorb.gnbp} uses the \code{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \code{d}-connected nodes. The following example illustrates how to absorb evidence after fitting a network to QTL data using geneNetBP package. \\
 
 \noindent 1. Absorb a single evidence for a single node\\
 
-<<F,results=verbatim,eval=FALSE>>=
-## Fit network
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-## Absorb evidence
-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
-@
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+>## Absorb evidence
+>absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+\end{Sinput}
+\begin{Soutput}
+$gp
+  A Hugin domain: there are 19 nodes and 31 edges
 
 
-\noindent Note that the function absorb.gnbp requires the argument \emph{evidence} to be of class matrix or a numeric vector. If only a single value of evidence is to be entered, this can be done by simply using the function matrix(), as above.\\
+$gp_flag
+[1] "cg"
 
-\noindent \emph{absorb.gnbp} returns an object of class "gnbp" which is a list of several variables. The generic plot method for geneNetBP objects will extract various useful features of the value returned by \emph{absorb.gnbp} and we expect that in the future, more functions from the package will also require these components. \\
+$gp_nodes
+      node      class     levels type   
+ [1,] "Cyp4a31" "numeric" "0"    "pheno"
+ [2,] "Slc5a9"  "numeric" "0"    "pheno"
+ [3,] "Slc6a9"  "numeric" "0"    "pheno"
+ [4,] "Hmgcl"   "numeric" "0"    "pheno"
+ [5,] "Ptp4a2"  "numeric" "0"    "pheno"
+ [6,] "Ak2"     "numeric" "0"    "pheno"
+ [7,] "Zbtb8a"  "numeric" "0"    "pheno"
+ [8,] "Stx12"   "numeric" "0"    "pheno"
+ [9,] "Trspap1" "numeric" "0"    "pheno"
+[10,] "Mecr"    "numeric" "0"    "pheno"
+[11,] "Wdtc1"   "numeric" "0"    "pheno"
+[12,] "Atpif1"  "numeric" "0"    "pheno"
+[13,] "Rbbp4"   "numeric" "0"    "pheno"
+[14,] "Tlr12"   "numeric" "0"    "pheno"
+[15,] "Qchr4"   "factor"  "3"    "geno" 
+[16,] "Qchr17"  "factor"  "3"    "geno" 
+[17,] "Qchr15"  "factor"  "3"    "geno" 
+[18,] "Qchr11"  "factor"  "3"    "geno" 
+[19,] "Qchr2"   "factor"  "3"    "geno" 
 
-\noindent The Jeffrey's signed information is returned as a matrix \emph{JSI} that gives the quantified comparison of beliefs of the continuous nodes (phenotypes) before and after evidence absorption. Note that since we absorbed only a single value of evidence, \emph {JSI} is a column vector.In addition to Jeffrey's signed information, the marginal distributions (mean and variance for continuous nodes in and genotype frequencies for SNP markers) before evidence absorption and the updated beliefs (after evidence absorption) are also returned.\\ 
+$evidence
+      [,1]
+[1,] -0.99
 
-\noindent Since Qchr15 is \emph{d}-separated when evidence is absorbed in \emph{Tlr12}, it's marginal distribution is not affected and hence the beliefs are not calculated. Qchr4, on the other hand is \emph{d}-connected and a list returns the updated frequencies of all 3 genotype states of the SNP marker Qchr15.\\ 
+$node
+[1] "Tlr12"
+
+$marginal
+$marginal$pheno
+$marginal$pheno$mean
+                 [,1]
+Rbbp4    2.317482e-17
+Atpif1   2.190113e-03
+Wdtc1    2.514671e-17
+Mecr    -1.551256e-16
+Trspap1  4.239712e-03
+Stx12    4.433032e-17
+Zbtb8a  -2.003327e-17
+Ak2     -7.153821e-03
+Ptp4a2   3.519799e-03
+Hmgcl   -7.136515e-03
+Slc6a9  -1.957688e-02
+Slc5a9   2.471620e-02
+Cyp4a31  1.914642e-02
+
+$marginal$pheno$var
+             [,1]
+Rbbp4   0.9557443
+Atpif1  0.9027874
+Wdtc1   0.9574396
+Mecr    0.9550281
+Trspap1 0.8530483
+Stx12   0.9575380
+Zbtb8a  0.9551227
+Ak2     0.7696464
+Ptp4a2  0.8550665
+Hmgcl   0.8509102
+Slc6a9  0.7939058
+Slc5a9  0.8538129
+Cyp4a31 0.8965621
+
+
+$marginal$geno
+$marginal$geno$freq
+         state1    state2   state3
+Qchr4 0.2312139 0.4682081 0.300578
+
+
+
+$belief
+$belief$pheno
+$belief$pheno$mean
+              [,1]
+Rbbp4    0.8776457
+Atpif1  -0.6538109
+Wdtc1    0.6669131
+Mecr    -0.8791569
+Trspap1 -0.6613503
+Stx12    0.8676931
+Zbtb8a  -0.1222389
+Ak2      0.6720433
+Ptp4a2  -0.6969352
+Hmgcl    0.6855139
+Slc6a9   0.5667517
+Slc5a9  -0.6510656
+Cyp4a31 -0.5043484
+
+$belief$pheno$var
+             [,1]
+Rbbp4   0.4859803
+Atpif1  0.6226163
+Wdtc1   0.6627283
+Mecr    0.4428854
+Trspap1 0.5679888
+Stx12   0.4933635
+Zbtb8a  0.8083572
+Ak2     0.5327134
+Ptp4a2  0.5448964
+Hmgcl   0.5628789
+Slc6a9  0.5718937
+Slc5a9  0.5254673
+Cyp4a31 0.6995273
+
+
+$belief$geno
+$belief$geno$state1
+             [,1]
+Qchr4 0.007944801
+
+$belief$geno$state2
+           [,1]
+Qchr4 0.2152284
+
+$belief$geno$state3
+           [,1]
+Qchr4 0.7768268
+
+
+
+$JSI
+               [,1]
+Rbbp4    0.71650239
+Atpif1  -0.32687548
+Wdtc1    0.31813768
+Mecr    -0.79365404
+Trspap1 -0.36674950
+Stx12    0.69209864
+Zbtb8a  -0.01550701
+Ak2      0.40056441
+Ptp4a2  -0.42017671
+Hmgcl    0.39734466
+Slc6a9   0.28567820
+Slc5a9  -0.41106696
+Cyp4a31 -0.18983139
+
+$FC
+NULL
+
+attr(,"class")
+[1] "gnbp"
+\end{Soutput}
+\end{Schunk}
+
+\noindent Note that the function absorb.gnbp requires the argument \code{evidence} to be of class matrix. If only a single value of evidence is to be entered, this can be done by simply using the function matrix(), as above.\\
+
+\noindent \code{absorb.gnbp} returns an object of class "gnbp" which is a list of several variables. \\
+
+\noindent The Jeffrey's signed information is returned as a matrix \code{JSI} that gives the quantified comparison of beliefs of the continuous nodes (phenotypes) before and after evidence absorption. Note that since we absorbed only a single value of evidence, \code {JSI} is a column vector.In addition to Jeffrey's signed information, the marginal distributions (mean and variance for continuous nodes in and genotype frequencies for SNP markers) before evidence absorption and the updated beliefs (after evidence absorption) are also returned.\\ 
+
+\noindent Since Qchr15 is \code{d}-separated when evidence is absorbed in \code{Tlr12}, it's marginal distribution is not affected and hence the beliefs are not calculated. Qchr4, on the other hand is \code{d}-connected and a list returns the updated frequencies of all 3 genotype states of the SNP marker Qchr15.\\ 
 
 \noindent 2. Absorb a sequence of evidence for a single node
 
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+>##Absorb evidence
+>absorb.gnbp(network,node="Tlr12",evidence=t(matrix(c(2.5,3,3.5,4))))
+\end{Sinput}
+\end{Schunk}
 
-<<G,results=hide,eval=FALSE>>=
-## Fit network
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-##Absorb evidence
-absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5,3,3.5,4))
-@
+\subsubsection{gen.evidence} 
+
+\noindent A function \code{gen.evidence} is useful to generate evidence for a node based on it's marginal distribution. This is particularly useful when network perturbation to assess the network behaviour is of interest.\\
+
+\noindent To generate a spectrum of evidence for \code{Tlr12} within $\pm$$2$ standard deviations of it's marginal distribution, we input the inferred network to \code{gen.evidence}\\
+
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+>##Generate evidence
+>evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
+>##absorb evidence
+>absorb.gnbp(network,node="Tlr12",evidence=evidence)
+\end{Sinput}
+\begin{Soutput}
+$gp
+  A Hugin domain: there are 19 nodes and 31 edges
+
+
+$gp_flag
+[1] "cg"
+
+$gp_nodes
+      node      class     levels type   
+ [1,] "Cyp4a31" "numeric" "0"    "pheno"
+ [2,] "Slc5a9"  "numeric" "0"    "pheno"
+ [3,] "Slc6a9"  "numeric" "0"    "pheno"
+ [4,] "Hmgcl"   "numeric" "0"    "pheno"
+ [5,] "Ptp4a2"  "numeric" "0"    "pheno"
+ [6,] "Ak2"     "numeric" "0"    "pheno"
+ [7,] "Zbtb8a"  "numeric" "0"    "pheno"
+ [8,] "Stx12"   "numeric" "0"    "pheno"
+ [9,] "Trspap1" "numeric" "0"    "pheno"
+[10,] "Mecr"    "numeric" "0"    "pheno"
+[11,] "Wdtc1"   "numeric" "0"    "pheno"
+[12,] "Atpif1"  "numeric" "0"    "pheno"
+[13,] "Rbbp4"   "numeric" "0"    "pheno"
+[14,] "Tlr12"   "numeric" "0"    "pheno"
+[15,] "Qchr4"   "factor"  "3"    "geno" 
+[16,] "Qchr17"  "factor"  "3"    "geno" 
+[17,] "Qchr15"  "factor"  "3"    "geno" 
+[18,] "Qchr11"  "factor"  "3"    "geno" 
+[19,] "Qchr2"   "factor"  "3"    "geno" 
+
+$evidence
+           [,1]      [,2]      [,3]      [,4]       [,5]       [,6]       [,7]
+Tlr12 -1.649406 -1.469586 -1.289766 -1.109946 -0.9301265 -0.7503065 -0.5704866
+            [,8]       [,9]       [,10]     [,11]     [,12]     [,13]     [,14]
+Tlr12 -0.3906666 -0.2108467 -0.03102669 0.1487933 0.3286132 0.5084332 0.6882532
+          [,15]    [,16]    [,17]    [,18]    [,19]    [,20]
+Tlr12 0.8680731 1.047893 1.227713 1.407533 1.587353 1.767173
+
+$node
+[1] "Tlr12"
+
+$marginal
+$marginal$pheno
+$marginal$pheno$mean
+                 [,1]
+Rbbp4    2.317482e-17
+Atpif1   2.190113e-03
+Wdtc1    2.514671e-17
+Mecr    -1.551256e-16
+Trspap1  4.239712e-03
+Stx12    4.433032e-17
+Zbtb8a  -2.003327e-17
+Ak2     -7.153821e-03
+Ptp4a2   3.519799e-03
+Hmgcl   -7.136515e-03
+Slc6a9  -1.957688e-02
+Slc5a9   2.471620e-02
+Cyp4a31  1.914642e-02
+
+$marginal$pheno$var
+             [,1]
+Rbbp4   0.9557443
+Atpif1  0.9027874
+Wdtc1   0.9574396
+Mecr    0.9550281
+Trspap1 0.8530483
+Stx12   0.9575380
+Zbtb8a  0.9551227
+Ak2     0.7696464
+Ptp4a2  0.8550665
+Hmgcl   0.8509102
+Slc6a9  0.7939058
+Slc5a9  0.8538129
+Cyp4a31 0.8965621
+
+
+$marginal$geno
+$marginal$geno$freq
+         state1    state2   state3
+Qchr4 0.2312139 0.4682081 0.300578
 
 
 
-\section*{Visualizing network changes}
+$belief
+$belief$pheno
+$belief$pheno$mean
+              [,1]       [,2]       [,3]       [,4]        [,5]         [,6]
+Rbbp4    1.2117768  1.1466707  1.0649542  0.9609346  0.83205299  0.682068882
+Atpif1  -0.8563113 -0.8208138 -0.7731158 -0.7082821 -0.62320973 -0.519315302
+Wdtc1    0.8513453  0.8231174  0.7812401  0.7201922  0.63650199  0.531754546
+Mecr    -1.1222842 -1.0850729 -1.0298682 -0.9493919 -0.83906748 -0.700984371
+Trspap1 -0.8862356 -0.8430968 -0.7887082 -0.7185191 -0.62966835 -0.523462200
+Stx12    1.2282670  1.1416000  1.0482345  0.9444531  0.82687357  0.694347560
+Zbtb8a  -0.6057688 -0.4716373 -0.3357200 -0.2035619 -0.08502107  0.008096461
+Ak2      1.0193641  0.9410238  0.8516434  0.7485538  0.63185992  0.506031949
+Ptp4a2  -0.9500937 -0.9002030 -0.8383241 -0.7598947 -0.66233139 -0.547538182
+Hmgcl    0.9438403  0.8939413  0.8309520  0.7503283  0.64995880  0.532699689
+Slc6a9   0.8139013  0.7572669  0.6940334  0.6214168  0.53754796  0.442974063
+Slc5a9  -1.0759126 -0.9600569 -0.8442013 -0.7283456 -0.61248993 -0.496634271
+Cyp4a31 -0.8334563 -0.7437087 -0.6539610 -0.5642134 -0.47446570 -0.384718039
+               [,7]        [,8]        [,9]       [,10]       [,11]        [,12]
+Rbbp4    0.52102788  0.36064062  0.20863599  0.06645918 -0.06940320 -0.204752346
+Atpif1  -0.40316788 -0.28354724 -0.16714146 -0.05632456  0.05029584  0.156062893
+Wdtc1    0.41329898  0.29095772  0.17221312  0.05972111 -0.04807603 -0.154918486
+Mecr    -0.54483055 -0.38355444 -0.22701960 -0.07872724  0.06337613  0.204220985
+Trspap1 -0.40595783 -0.28525088 -0.16750828 -0.05491907  0.05380063  0.161733484
+Stx12    0.54916903  0.39610604  0.23991409  0.08349381 -0.07227818 -0.227602379
+Zbtb8a   0.06733252  0.09188028  0.08815777  0.06595514  0.03508134  0.004299843
+Ak2      0.37890148  0.25790648  0.14655213  0.04364671 -0.05521451 -0.155678067
+Ptp4a2  -0.42227799 -0.29510999 -0.17222097 -0.05544400  0.05704141  0.168869674
+Hmgcl    0.40639716  0.28027768  0.16048309  0.04821170 -0.05927524 -0.166563948
+Slc6a9   0.34109896  0.23666555  0.13341453  0.03281158 -0.06570981 -0.163771995
+Slc5a9  -0.38077861 -0.26492295 -0.14906729 -0.03321163  0.08264403  0.198499693
+Cyp4a31 -0.29497038 -0.20522272 -0.11547507 -0.02572741  0.06402025  0.153767908
+              [,13]       [,14]        [,15]       [,16]      [,17]      [,18]
+Rbbp4   -0.34513366 -0.49357494 -0.648701942 -0.80419709 -0.9507987 -1.0802957
+Atpif1   0.26438876  0.37707997  0.493008906  0.60778985  0.7152107  0.8099559
+Wdtc1   -0.26462363 -0.37921254 -0.497423671 -0.61435048 -0.7230432 -0.8175548
+Mecr     0.34883957  0.49989618  0.655727763  0.80986629  0.9531502  1.0777400
+Trspap1  0.27202576  0.38634324  0.503646145  0.61989051  0.7293483  0.8271181
+Stx12   -0.38251080 -0.53578410 -0.684419258 -0.82414224 -0.9510500 -1.0634184
+Zbtb8a  -0.01821555 -0.02442611 -0.007161898  0.03775819  0.1094020  0.2017538
+Ak2     -0.26294393 -0.38017898 -0.506969101 -0.63860010 -0.7673498 -0.8856730
+Ptp4a2   0.28364520  0.40330198  0.526777030  0.64966401  0.7656341  0.8691917
+Hmgcl   -0.27807904 -0.39627987 -0.520137921 -0.64466686 -0.7624774 -0.8669517
+Slc6a9  -0.26301118 -0.36415308 -0.466316686 -0.56691765 -0.6625400 -0.7504443
+Slc5a9   0.31435535  0.43021101  0.546066675  0.66192234  0.7777780  0.8936337
+Cyp4a31  0.24351557  0.33326322  0.423010881  0.51275854  0.6025062  0.6922539
+             [,19]      [,20]
+Rbbp4   -1.1888033 -1.2771912
+Atpif1   0.8897429  0.9554914
+Wdtc1   -0.8953319 -0.9574033
+Mecr     1.1802694  1.2620951
+Trspap1  0.9110953  0.9821280
+Stx12   -1.1622932 -1.2505793
+Zbtb8a   0.3063816  0.4157300
+Ak2     -0.9891825 -1.0774433
+Ptp4a2   0.9578767  1.0324861
+Hmgcl   -0.9548838 -1.0268636
+Slc6a9  -0.8296574 -0.9009498
+Slc5a9   1.0094893  1.1253450
+Cyp4a31  0.7820015  0.8717492
 
-\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "geneNetBP". If a RHugin domain is input to plot, the corresponding plot method for RHugin domain will be used.  The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package as mentioned previously. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
+$belief$pheno$var
+             [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+Rbbp4   0.3747391 0.3926433 0.4205924 0.4582358 0.4994635 0.5329699 0.5490921
+Atpif1  0.5617872 0.5702475 0.5845726 0.6056600 0.6314127 0.6560431 0.6730323
+Wdtc1   0.5866482 0.5972280 0.6151440 0.6415196 0.6737302 0.7045320 0.7257656
+Mecr    0.3106751 0.3290604 0.3601944 0.4060294 0.4620042 0.5155308 0.5524301
+Trspap1 0.5161433 0.5233581 0.5355691 0.5535392 0.5754857 0.5964876 0.6110025
+Stx12   0.4926557 0.4919377 0.4915715 0.4921789 0.4941838 0.4972108 0.5001526
+Zbtb8a  0.7635522 0.7751141 0.7875429 0.7998138 0.8131113 0.8315822 0.8590030
+Ak2     0.4969398 0.5050475 0.5157420 0.5269875 0.5344539 0.5333436 0.5221686
+Ptp4a2  0.4810664 0.4904136 0.5057492 0.5276713 0.5537092 0.5779275 0.5940811
+Hmgcl   0.4907740 0.5021056 0.5200623 0.5445704 0.5718766 0.5947607 0.6067587
+Slc6a9  0.5486206 0.5525391 0.5582416 0.5659295 0.5749655 0.5836647 0.5901296
+Slc5a9  0.5198935 0.5208446 0.5222222 0.5240266 0.5262575 0.5289151 0.5319994
+Cyp4a31 0.6961825 0.6967532 0.6975800 0.6986627 0.7000015 0.7015963 0.7034471
+             [,8]      [,9]     [,10]     [,11]     [,12]     [,13]     [,14]
+Rbbp4   0.5473460 0.5362333 0.5266660 0.5263782 0.5379966 0.5589648 0.5820286
+Atpif1  0.6798423 0.6792725 0.6766315 0.6764090 0.6806826 0.6888193 0.6977581
+Wdtc1   0.7342547 0.7335028 0.7301543 0.7298287 0.7351265 0.7452550 0.7563833
+Mecr    0.5671823 0.5658757 0.5600567 0.5594910 0.5686973 0.5862985 0.6056369
+Trspap1 0.6168725 0.6164776 0.6143313 0.6142511 0.6180034 0.6250499 0.6327880
+Stx12   0.5022208 0.5037897 0.5060704 0.5101914 0.5165464 0.5246191 0.5332171
+Zbtb8a  0.8939837 0.9298242 0.9588662 0.9761387 0.9802362 0.9728754 0.9582706
+Ak2     0.5046416 0.4872915 0.4757022 0.4727152 0.4784261 0.4904091 0.5037068
+Ptp4a2  0.6000893 0.5989619 0.5958351 0.5948131 0.5975756 0.6031878 0.6084397
+Hmgcl   0.6070218 0.6004235 0.5935448 0.5911209 0.5947492 0.6028198 0.6108772
+Slc6a9  0.5936173 0.5949455 0.5956547 0.5970023 0.5994814 0.6027652 0.6058795
+Slc5a9  0.5355102 0.5394478 0.5438119 0.5486027 0.5538202 0.5594642 0.5655349
+Cyp4a31 0.7055539 0.7079167 0.7105356 0.7134105 0.7165414 0.7199283 0.7235712
+            [,15]     [,16]     [,17]     [,18]     [,19]     [,20]
+Rbbp4   0.5971876 0.5962315 0.5777927 0.5481045 0.5163025 0.4890945
+Atpif1  0.7030875 0.7012621 0.6918896 0.6779280 0.6634606 0.6513437
+Wdtc1   0.7629897 0.7606371 0.7488341 0.7312831 0.7130948 0.6978442
+Mecr    0.6171175 0.6130291 0.5925180 0.5620183 0.5304111 0.5039090
+Trspap1 0.6374670 0.6360725 0.6282710 0.6165773 0.6044634 0.5943575
+Stx12   0.5410806 0.5476009 0.5530296 0.5579186 0.5624672 0.5664672
+Zbtb8a  0.9419024 0.9281179 0.9179110 0.9092952 0.8999990 0.8894477
+Ak2     0.5115730 0.5081181 0.4918704 0.4668772 0.4398246 0.4160883
+Ptp4a2  0.6089837 0.6016074 0.5864954 0.5672583 0.5484660 0.5331567
+Hmgcl   0.6129430 0.6044237 0.5852128 0.5599486 0.5348226 0.5141359
+Slc6a9  0.6076390 0.6073613 0.6054364 0.6031489 0.6018524 0.6022978
+Slc5a9  0.5720323 0.5789563 0.5863069 0.5940842 0.6022881 0.6109186
+Cyp4a31 0.7274702 0.7316251 0.7360361 0.7407031 0.7456262 0.7508052
+
+
+$belief$geno
+$belief$geno$state1
+              [,1]        [,2]        [,3]       [,4]        [,5]       [,6]
+Qchr4 0.0005708269 0.001234693 0.002579665 0.00515612 0.009762198 0.01738964
+            [,7]       [,8]       [,9]     [,10]     [,11]     [,12]     [,13]
+Qchr4 0.02913058 0.04619067 0.07008426 0.1028878 0.1473287 0.2064928 0.2829219
+         [,14]     [,15]    [,16]     [,17]     [,18]     [,19]     [,20]
+Qchr4 0.376992 0.4850227 0.598531 0.7061746 0.7979502 0.8687349 0.9187858
+
+$belief$geno$state2
+            [,1]       [,2]       [,3]      [,4]      [,5]     [,6]      [,7]
+Qchr4 0.02853162 0.05378668 0.09579635 0.1596449 0.2464918 0.350223 0.4576977
+           [,8]      [,9]     [,10]     [,11]     [,12]     [,13]     [,14]
+Qchr4 0.5537779 0.6270904 0.6720137 0.6870413 0.6724462 0.6292932 0.5601814
+          [,15]     [,16]     [,17]     [,18]     [,19]     [,20]
+Qchr4 0.4709179 0.3713921 0.2739034 0.1892242 0.1231913 0.0762036
+
+$belief$geno$state3
+           [,1]      [,2]     [,3]      [,4]     [,5]      [,6]      [,7]      [,8]
+Qchr4 0.9708976 0.9449786 0.901624 0.8351989 0.743746 0.6323874 0.5131717 0.4000314
+           [,9]     [,10]   [,11]    [,12]      [,13]      [,14]      [,15]
+Qchr4 0.3028253 0.2250985 0.16563 0.121061 0.08778483 0.06282664 0.04405935
+           [,16]    [,17]      [,18]       [,19]       [,20]
+Qchr4 0.03007685 0.019922 0.01282558 0.008073734 0.005010634
+
+
+
+$JSI
+              [,1]       [,2]        [,3]       [,4]        [,5]         [,6]
+Rbbp4    1.5993456  1.3923534  1.14889686  0.8866052  0.63665355  0.427632448
+Atpif1  -0.5893973 -0.5382164 -0.47149291 -0.3885024 -0.29546977 -0.204651878
+Wdtc1    0.5593146  0.5172500  0.45714690  0.3781845  0.28731409  0.197875877
+Mecr    -1.6930809 -1.5144212 -1.27093843 -0.9852387 -0.70298956 -0.464997646
+Trspap1 -0.6809071 -0.6142498 -0.53292886 -0.4365136 -0.33156430 -0.230662537
+Stx12    1.2739819  1.1176191  0.96101866  0.8008480  0.63782160  0.479555657
+Zbtb8a  -0.2287775 -0.1409103 -0.07461286 -0.0316921 -0.01060654  0.004840769
+Ak2      0.9210056  0.7820873  0.63768196  0.4927237  0.35726479  0.243001001
+Ptp4a2  -0.8234759 -0.7344020 -0.62807044 -0.5059073 -0.37775665 -0.258999766
+Hmgcl    0.8040258  0.7140100  0.60585149  0.4825975  0.35561044  0.240528590
+Slc6a9   0.5698495  0.4962904  0.41974234  0.3398063  0.25895341  0.182863415
+Slc5a9  -1.0000116 -0.8117654 -0.64416593 -0.4973701 -0.37147061 -0.266496116
+Cyp4a31 -0.4798238 -0.3870566 -0.30453656 -0.2322949 -0.17035014 -0.118708268
+                [,7]         [,8]         [,9]        [,10]         [,11]
+Rbbp4    0.273386634  0.173135063  0.117528251  0.094691894 -0.0951604390
+Atpif1  -0.128256994 -0.072879317 -0.038859905 -0.023145609  0.0224766216
+Wdtc1    0.122752465  0.068642613  0.035703681  0.020626293 -0.0199302872
+Mecr    -0.288843536 -0.172780201 -0.106315805 -0.077305171  0.0760451673
+Trspap1 -0.146259482 -0.085023736 -0.047212240 -0.029634937  0.0289264385
+Stx12    0.338693309  0.226842381  0.150290762  0.110417973 -0.1063330712
+Zbtb8a   0.005321336  0.005664864  0.004303991  0.002276617  0.0007557597
+Ak2      0.157865798  0.102830164  0.072938562  0.061193355 -0.0625562961
+Ptp4a2  -0.162826307 -0.094902380 -0.053937575 -0.035450623  0.0353344788
+Hmgcl    0.149567979  0.087081078  0.050655416  0.034977470 -0.0354929982
+Slc6a9   0.118231782  0.069609120  0.038158204  0.022794350 -0.0220118147
+Slc5a9  -0.182412602 -0.119125054 -0.076479993 -0.054268565  0.0522301522
+Cyp4a31 -0.077362557 -0.046293906 -0.025471026 -0.014850737  0.0143783197
+                [,12]         [,13]         [,14]         [,15]         [,16]
+Rbbp4   -0.1152965342 -0.1581077493 -0.2311329770 -3.425523e-01 -0.4970490772
+Atpif1   0.0353215675  0.0623946508  0.1059572953  1.680772e-01  0.2483448797
+Wdtc1   -0.0319832509 -0.0575494617 -0.0990329041 -1.586196e-01 -0.2358961978
+Mecr     0.0979523653  0.1444480546  0.2213339654  3.351801e-01  0.4891136851
+Trspap1  0.0435018804  0.0740704326  0.1229399559  1.922708e-01  0.2817421558
+Stx12   -0.1368925953 -0.2011972445 -0.2976988917 -4.224211e-01 -0.5675395637
+Zbtb8a   0.0001779642 -0.0002569048 -0.0003145279 -7.560872e-05  0.0009628556
+Ak2     -0.0762732686 -0.1062529300 -0.1598680525 -2.455171e-01 -0.3694166834
+Ptp4a2   0.0518711050  0.0862176662  0.1416276720  2.215248e-01  0.3267824491
+Hmgcl   -0.0505667685 -0.0820101505 -0.1341752303 -2.118029e-01 -0.3170599304
+Slc6a9  -0.0350746208 -0.0623260879 -0.1047554861 -1.629381e-01 -0.2356930433
+Slc5a9   0.0700564176  0.1073957032  0.1638576793  2.390182e-01  0.3324240224
+Cyp4a31  0.0239879218  0.0436030144  0.0731368940  1.124932e-01  0.1615666136
+               [,17]       [,18]       [,19]       [,20]
+Rbbp4   -0.692290685 -0.91687908 -1.15182350 -1.37694520
+Atpif1   0.342286701  0.44195742  0.53888431  0.62735120
+Wdtc1   -0.326216627 -0.42129054 -0.51221039 -0.59293308
+Mecr     0.679196760  0.89267159  1.11022427  1.31295600
+Trspap1  0.386875448  0.49957413  0.61110556  0.71547346
+Stx12   -0.722282354 -0.87671457 -1.02560410 -1.16903449
+Zbtb8a   0.006787439  0.02245007  0.05152873  0.09508562
+Ak2     -0.532395249 -0.72775167 -0.94175557 -1.15794538
+Ptp4a2   0.453354552  0.59206353  0.73156219  0.86284869
+Hmgcl   -0.446800055 -0.59169035 -0.73865759 -0.87594797
+Slc6a9  -0.319358563 -0.40861423 -0.49853253 -0.58625347
+Slc5a9   0.443598071  0.57204390  0.71725058  0.87869713
+Cyp4a31  0.220243220  0.28840138  0.36591227  0.45264055
+
+$FC
+NULL
+
+attr(,"class")
+[1] "gnbp"
+\end{Soutput}
+\end{Schunk}
+
+Note that \code{JSI} is now a matrix whose number of rows are the \emph{d}-connected phenotype nodes to \code{Tlr12} and the number of columns is the length of evidence absorbed in \code{Tlr12}.
+
+When a sequence of evidence is absorbed for a single node in the network, \code{absorb.gnbp} also plots the JSI of the \emph{d}-connected nodes vs the evidence absorbed. 
+
+\begin{figure}[H]
+\centering 
+\includegraphics{figures/mouse_tlr12_evidence}
+\caption{Plot produced by \code{absorb.gnbp}}
+\end{figure} 
+
+
+\section{Visualizing network changes}
+
+\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "gnbp". If a RHugin domain is input to plot, the corresponding plot method for RHugin domain will be used.  The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package as mentioned previously. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
 
 \noindent A complete example that fits a network, absorbs evidence and plots the network:\\
 
-\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+>network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+>plot(x=network)
+\end{Sinput}
+\end{Schunk}
 
-<<I,results = hide, fig=TRUE,eval=FALSE>>=
-## Fit, absorb and plot a genotype-phenotype network
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
-plot(x=network)
-@
 
-\end{center}
+\noindent The plot method will draw the network with Jeffrey's signed information mapped onto it by a colormap. There is an option to plot beliefs (updated marginal means) which can be entered through the argument y (see help for \code{plot.geneNetBP}).
 
-\noindent The plot method will draw the network with Jeffrey's signed information mapped onto it by a colormap. There is an option to plot beliefs (updated marginal means) which can be entered through the argument y (see help for \emph{plot.geneNetBP}).
+\noindent The \code{d}-separated nodes are white while the colored nodes are \code{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
 
-\noindent The \emph{d}-separated nodes are white while the colored nodes are \emph{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
+\noindent Colormap options such as end colors for the positive and negative gradients and the resolution of the colormap can be customized. The resolution of the colormap can be specified by \code{col.length}. The argument \code{col.palette} can be used to specify the end colors.\\ 
 
-\noindent Colormap options such as end colors for the positive and negative gradients and the resolution of the colormap can be customized. The resolution of the colormap can be specified by \emph{col.length}. The argument \emph{col.palette} can be used to specify the end colors.\\ 
-
-\begin{center}
-
-<<J,results=hide, fig=TRUE,eval=FALSE>>=
-col.palette<-list(pos_high="darkgreen", pos_low= "palegreen2", 
+\begin{Schunk}
+\begin{Sinput}
+>col.palette<-list(pos_high="darkgreen", pos_low= "palegreen2", 
                     neg_high="wheat1", neg_low = "red",
                     dsep_col="white",qtl_col="grey",node_abs_col="yellow") 
-plot(x=network,col.palette=col.palette)
-@
+>plot(x=network,col.palette=col.palette)
+\end{Sinput}
+\end{Soutput}
 
-\end{center}
 
-\noindent The plot method will always map the JSI or beliefs onto the network for a single piece of evidence. Incase a spectrum of evidence is absorbed for a single/multiple node(s), then the evidence for which we wish to visualize the network changes can be chosen by specifying the corresponding column number of JSI or belief matrix through the argument \emph{ncol}.\\
+\noindent The plot method will always map the JSI or beliefs onto the network for a single piece of evidence. Incase a spectrum of evidence is absorbed for a single/multiple node(s), then the evidence for which we wish to visualize the network changes can be chosen by specifying the corresponding column number of JSI or belief matrix through the argument \code{ncol}.\\
 
-\noindent For example we absorbed a sequence of evidence for \emph{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.
+\noindent For example we absorbed a sequence of evidence for \code{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.
 
 \begin{center}
-
 
 <<K,results=hide, fig=TRUE,eval=FALSE>>=
 ##Fit network
@@ -187,14 +815,11 @@ plot(x=network,y="belief",ncol=20)
 
 \end{center}
 
-\section*{Belief propagation in known networks}
+\section{Belief propagation in known networks}
 
-\noindent Belief propagation can obviously be also implemented in known genotype-phenotype networks. If the network structure is known from a knowledge database, then learning step can be skipped in fit.gnbp and only the conditional probabilities will be learnt based on the input network. This section demonstrates how to specify known networks and subsequent belief propagation in a simulated toy example.
-
-\textbf{\emph{Toy dataset:}} The toy is a simulated eQTL dataset with 500 observations, 3 genotypes (Q1,Q2,Q3) each having 2 possible states and 6 phenotypes (X1-X6.)  \\
+\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt based on the input network. This section demonstrates how to specify known networks and subsequent belief propagation in a simulated toy example.\\
 
 \noindent First create a list of known edges from parent to child. 
-
 
 <<L,results=hide,eval=FALSE>>=
 ## Load the toy dataset
@@ -214,19 +839,24 @@ edgelist[[9]]<-cbind("X2","X6")
 edgelist[[10]]<-cbind("X4","X6")
 @
 
+\noindent in \code{fit.gnbp} provide the edgelist and set learn = FALSE. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.
 
-\noindent in \emph{fit.gnbp} provide the edgelist and set learn = FALSE. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.
 
-\begin{center}
-<<M,results=verbatim,fig=FALSE,eval=FALSE>>=
-##Fit network
-network<-fit.gnbp(toygeno,toypheno,learn=FALSE,edgelist=edgelist)
-##Generate evidence
-evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
-network<-absorb.gnbp(network,node="X2",evidence=evidence)
-plot(x=network,y="JSI",ncol=17)
-@
-\end{center}
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(toygeno,toypheno,learn=FALSE,edgelist=edgelist)
+>##Generate evidence
+>evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
+>network<-absorb.gnbp(network,node="X2",evidence=evidence)
+>plot(x=network,y="JSI",ncol=17)
+\end{Sinput}
+\end{Schunk}
 
+
+\section{Belief propagation in discrete bayesian networks}
+
+\newpage
+\section{References}
+\bibliography{newbib02}
 
 \end{document}
