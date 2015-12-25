@@ -41,7 +41,7 @@ The package makes extensive use of RHugin package that provides an R interface f
 
 <h2>Installation</h2>
 
-The geneNetBP package requires HDE and the R package RHugin to be installed to function. 
+The geneNetBP package requires HDE and the R package RHugin to be installed. 
 
 <h3> Installation Steps </h3>
 <p> 1. Install Hugin Decision Engine </p>
@@ -57,18 +57,20 @@ The geneNetBP package is currently available on R-Forge and not on CRAN. It can 
 
 <h3> HUGIN Decision Engine </h3>
 
-The geneNetBP package is compatible with the free demo version of Hugin Researcher/Developer, Hugin Lite Demo that can be obtained from <a> http://www.hugin.com/productsservices/demo/hugin-lite </a>. The free demo version is limited to handle only 50 states and 500 cases.    
+The geneNetBP package is compatible with the free demo version of Hugin Researcher/Developer, Hugin Lite Demo that can be obtained from <a http://www.hugin.com/productsservices/demo/hugin-lite </a>. The free demo version is limited to handle only 50 states and 500 cases.    
 If you do not have Hugin installed in the default location you will need to set the HUGINHOME environment variable before using the RHugin package. Also, you will need to modify the HUGINHOME variable. Please see the instructions on the project homepage for <a href="http://rhugin.r-forge.r-project.org/">RHugin</a>
 
 <h3>Package Dependencies </h3>
 
-<p> RHugin </p>
+<h4> RHugin </h4>
 
-geneNetBP package depends on RHugin package which is not on CRAN, installing geneNetBP will not automatically install RHugin. Installation instructions for RHugin can be found on its project homepage <a> http://rhugin.r-forge.r-project.org/ </a>
+geneNetBP package depends on RHugin package which is not on CRAN, installing geneNetBP will not automatically install RHugin. Installation instructions for RHugin can be found on its project homepage <a http://rhugin.r-forge.r-project.org/ </a>
 
-It is important to install the matching versions and the architecture (32/64 bit) of Hugin Lite, RHugin and R as listed on RHugin project homepage.
+<p> It is important to install the matching versions and the architecture (32/64 bit) of Hugin Lite, RHugin and R as listed on RHugin project homepage. </p>
 
-<p> Rgraphviz, graph </p>
+<p> Please note that RHugin is required for proper functioning of geneNetBP. The package RHugin will not automatically load upon loading geneNetBP package. Please use library(RHugin) or require(RHugin) to load it before using geneNetBP. </p>
+
+<h4> Rgraphviz, graph </h4>
 Both geneNetBP and RHugin depend on the Bioconductor packages <code>graph</code> and <code>Rgraphviz</code>. Run the commands
 <pre>
   source(&quot;http://bioconductor.org/biocLite.R&quot;)
