@@ -41,7 +41,7 @@ The package makes extensive use of RHugin package that provides an R interface f
 
 <h2>Installation</h2>
 
-The geneNetBP package requires HDE and the R package RHugin to be installed to function. 
+The geneNetBP package requires HDE and the R package RHugin to be installed to function. Here 
 
 <p> Installation Steps </p>
 1. Install Hugin Decision Engine
@@ -51,25 +51,24 @@ The geneNetBP package requires HDE and the R package RHugin to be installed to f
 
 <p> HUGIN Decision Engine.</p>
 
-The geneNetBP package is compatible with the free demo version of Hugin Researcher/Developer, Hugin Lite Demo that can be obtained from http://www.hugin.com/productsservices/demo/hugin-lite 
-
-The free demo version is limited to handle only 50 states and 500 cases.    
+The geneNetBP package is compatible with the free demo version of Hugin Researcher/Developer, Hugin Lite Demo that can be obtained from http://www.hugin.com/productsservices/demo/hugin-lite. The free demo version is limited to handle only 50 states and 500 cases.    
 If you do not have Hugin installed in the default location you will need to set the HUGINHOME environment variable before using the RHugin package. Also, you will need to modify the HUGINHOME variable. Please see the instructions on the project homepage for <a href="http://rhugin.r-forge.r-project.org/">RHugin</a>
 
-<h4>Dependencies</h4>
+<h4>Package Dependencies</h4>
 
-<p>
-geneNetBP has dependencies on the Bioconductor packages <code>graph</code> and <code>Rgraphviz</code>. Run the commands
-</p>
+<p> RHugin
+geneNetBP package depends on RHugin package which is not on CRAN, installing geneNetBP will not automatically install RHugin. Installation instructions for RHugin can be found on its project homepage http://rhugin.r-forge.r-project.org/
 
+It is important to install the matching versions and the architecture (32/64 bit) of Hugin Lite and RHugin.
+
+<p> Rgraphviz, graph</p>
+Both geneNetBP and RHugin depend on the Bioconductor packages <code>graph</code> and <code>Rgraphviz</code>. Run the commands
 <pre>
   source(&quot;http://bioconductor.org/biocLite.R&quot;)
   biocLite(c(&quot;graph&quot;, &quot;Rgraphviz&quot;))
 </pre>
 
-<p>
-to install them.
-</p>
+<p>to install them.</p>
 
 
 </body>
