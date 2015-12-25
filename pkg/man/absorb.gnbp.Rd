@@ -15,7 +15,7 @@ an object of class "gpfit". Output from \code{\link{fit.gnbp}}.
 }
 
   \item{node}{
-a character vector specifying the names of the continuous nodes for which the evidence is to be absorbed.
+a character vector specifying the names of the nodes for which the evidence is to be absorbed.
 }
   \item{evidence}{
 a matrix or a numeric vector of evidence. number of rows of the matrix or the length of the vector should be equal to the length of node. 
@@ -27,13 +27,13 @@ absorb.gnbp returns an object of class "gnbp". The functions summary and print c
 
 \item{gp}{an RHugin domain that is triangulated, compiled and with the latest absorbed evidence propagated }
 \item{gp_flag}{type of network}
-\item{node}{a character vector specifying the nodes for which evidence was been absorbed}
+\item{node}{a character vector specifying the nodes for which evidence has been absorbed}
 \item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
 \item{belief}{a list of updated beliefs for phenotypes (\code{pheno}) and genotypes (\code{geno})}
-\item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise\code{NULL} if network is \code{Discrete Bayesian}}
+\item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise \code{NULL} if network is \code{Discrete Bayesian}}
 \item{FC}{a list of two. a matrix \code{FC} of fold changes and a matrix \code{pheno_state} of phenotype node beliefs - state with maxium probability. If network is \code{Conditional Gaussian}, a \code{NULL} value is returned.}
 
-The marginal, beliefs and JSI or FC are calculated for only \code{d}-connected nodes.
+The marginals, beliefs and JSI or FC are calculated for only \emph{d}-connected nodes.
 
 If a sequence of evidence is absorbed for a single node in a Conditional Gaussian network, a plot of \code{JSI} vs \code{evidence} is drawn. 
 

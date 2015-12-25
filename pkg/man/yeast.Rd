@@ -7,12 +7,12 @@
 }
 
 \usage{
-data(mouse)
+data(yeast)
 }
-\format{The data set \code{mouse} contains the following variables:
+\format{The data set \code{yeast} contains the following variables:
 \itemize{
-\item{mousegeno}{  a data frame of 112 observations of 9 variables. All column vectors are of class factor}
-\item{mousepheno}{ a data frame of 112 observations of 16 variables. All column vectors are of class numeric }
+\item{yeastgeno}{  a data frame of 112 observations of 9 variables. All column vectors are of class factor}
+\item{yeastpheno}{ a data frame of 112 observations of 16 variables. All column vectors are of class numeric }
 }
 }
 \details{
