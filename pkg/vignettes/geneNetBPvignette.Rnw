@@ -9,7 +9,7 @@
 
 \usepackage[authoryear,round]{natbib}
 \usepackage{Sweave}
-\SweaveOpts{prefix.string=figures/graph}
+\SweaveOpts{prefix.string=graph}
 
 % amsmath package, useful for mathematical formulas
 \usepackage{amsmath}
@@ -101,7 +101,7 @@ head(mousepheno,n=3)
 
 \begin{figure}[H]
   \centering
-  \includegraphics[trim=0 450 300 80,clip,height=7cm,width=7cm]{figures/toy_graph}
+  \includegraphics[trim=0 450 300 80,clip,height=7cm,width=7cm]{toy_graph}
   \caption{Toy network example.}
 \end{figure}
 
@@ -249,7 +249,7 @@ plot(BNgraph,attrs=attrs)
 
 \begin{figure}[H]
 \centering 
-\includegraphics{figures/mouse_graph}
+\includegraphics{mouse_graph}
 \caption{Conditional Gaussian network learnt from mouse QTL data}
 \end{figure} 
 
@@ -762,7 +762,7 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \begin{figure}[H]
 \centering 
-\includegraphics{figures/mouse_tlr12_evidence}
+\includegraphics{mouse_tlr12_evidence}
 \caption{Plot produced by \code{absorb.gnbp}}
 \end{figure} 
 
