@@ -44,10 +44,10 @@ The package makes extensive use of RHugin package that provides an R interface f
 The geneNetBP package requires HDE and the R package RHugin to be installed to function. 
 
 <h3> Installation Steps </h3>
-1. Install Hugin Decision Engine
-2. Install the corresponding version of RHugin package
-3. Install other package dependencies (Rgraphviz, scales)
-4. Install the geneNetBP package
+<p> 1. Install Hugin Decision Engine </p>
+<p> 2. Install the corresponding version of RHugin package </p>
+<p> 3. Install other package dependencies (Rgraphviz, scales) </p>
+<p> 4. Install the geneNetBP package </p>
 
 <h3> The geneNetBP package </h3>
 
