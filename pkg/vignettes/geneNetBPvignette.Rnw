@@ -143,48 +143,6 @@ where the mean is a regression that depends on both discrete and continuous pare
 
 \subsubsection{fit.gnbp}
 
-\noindent The simplest example of fitting a CG-BN to mouse QTL data is given below. This example uses default parameters.\\
-
-\begin{Schunk}
-\begin{Sinput}
-> library(geneNetBP)
-> fit.gnbp(mousegeno,mousepheno)
-\end{Sinput}
-\begin{Soutput}
-$gp
-  A Hugin domain: there are 19 nodes and 17 edges
-
-
-$gp_nodes
-      node      class     levels type   
- [1,] "Cyp4a31" "numeric" "0"    "pheno"
- [2,] "Slc5a9"  "numeric" "0"    "pheno"
- [3,] "Slc6a9"  "numeric" "0"    "pheno"
- [4,] "Hmgcl"   "numeric" "0"    "pheno"
- [5,] "Ptp4a2"  "numeric" "0"    "pheno"
- [6,] "Ak2"     "numeric" "0"    "pheno"
- [7,] "Zbtb8a"  "numeric" "0"    "pheno"
- [8,] "Stx12"   "numeric" "0"    "pheno"
- [9,] "Trspap1" "numeric" "0"    "pheno"
-[10,] "Mecr"    "numeric" "0"    "pheno"
-[11,] "Wdtc1"   "numeric" "0"    "pheno"
-[12,] "Atpif1"  "numeric" "0"    "pheno"
-[13,] "Rbbp4"   "numeric" "0"    "pheno"
-[14,] "Tlr12"   "numeric" "0"    "pheno"
-[15,] "Qchr4"   "factor"  "3"    "geno" 
-[16,] "Qchr17"  "factor"  "3"    "geno" 
-[17,] "Qchr15"  "factor"  "3"    "geno" 
-[18,] "Qchr11"  "factor"  "3"    "geno" 
-[19,] "Qchr2"   "factor"  "3"    "geno" 
-
-$gp_flag
-[1] "cg"
-
-attr(,"class")
-[1] "gpfit"
-\end{Soutput}
-\end{Schunk}
-
 
 \noindent The learnt network structure is returned as RHugin domain in the first element \code{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \code{read.rhd} and \code{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
 
