@@ -78,7 +78,7 @@ dir.create( "figures" )
 
 \noindent The \code{geneNetBP} package implements methods to predict system-wide changes in beliefs after absorbing evidence in probabilistic graphical models. The package includes functions to fit Conditional Gaussian Bayesian Network (CG-BN) to specifically genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in these networks and quantify and visualize the changes in network beliefs.\\
 
-\noindent The package makes extensive use of \code{RHugin} package that provides an R interface for the Hugin Decision Engine, a commercial software for building and infering Bayesian belief networks. Note that \code{RHugin} is currently not available on CRAN and is hosted on R-Forge.It can be downloaded from \url{http://rhugin.r-forge.r-project.org}. The Hugin Decision Engine can be downloaded from \url{http://www.hugin.com}. Detailed installation instructions of the \code{geneNetBP} package and package dependencies are available on the project homepage on R-Forge, \url{http://genenetbp.r-forge.r-project.org}\\ 
+\noindent The package makes extensive use of \code{RHugin} package that provides an R interface for the Hugin Decision Engine, a commercial software for building and infering Bayesian belief networks. Note that \code{RHugin} is currently not available on CRAN and is hosted on R-Forge.It can be downloaded from http://rhugin.r-forge.r-project.org. The Hugin Decision Engine can be downloaded from http://www.hugin.com. Detailed installation instructions of the \code{geneNetBP} package and package dependencies are available on the project homepage on R-Forge, http://genenetbp.r-forge.r-project.org.\\ 
  
 \section{Datasets}
 
@@ -783,6 +783,11 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 \end{Sinput}
 \end{Schunk}
 
+\begin{figure}[H]
+\centering 
+\includegraphics{mouse_network_tlr12}
+\caption{Evidence absorption in single node}
+\end{figure} 
 
 \noindent The plot method will draw the network with Jeffrey's signed information mapped onto it by a colormap. There is an option to plot beliefs (updated marginal means) which can be entered through the argument y (see help for \code{plot.geneNetBP}).
 
@@ -799,33 +804,34 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 \end{Sinput}
 \end{Soutput}
 
+\begin{figure}[H]
+\centering 
+\includegraphics{mouse_tlr12_evidence_colpalette}
+\caption{Plot produced by \code{absorb.gnbp}}
+\end{figure} 
 
 \noindent The plot method will always map the JSI or beliefs onto the network for a single piece of evidence. Incase a spectrum of evidence is absorbed for a single/multiple node(s), then the evidence for which we wish to visualize the network changes can be chosen by specifying the corresponding column number of JSI or belief matrix through the argument \code{ncol}.\\
 
-\noindent For example we absorbed a sequence of evidence for \code{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.
+\noindent For example we absorbed a sequence of evidence for \code{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.\\
 
-\begin{center}
-
-<<K,results=hide, fig=TRUE,eval=FALSE>>=
-##Fit network
-network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
-##Generate evidence
-evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
-network<-absorb.gnbp(network,node="Tlr12",evidence=evidence)
-plot(x=network,y="belief",ncol=20)
-@
-
-\end{center}
+\begin{Schunk}
+\begin{Sinput}
+>network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+>##Generate evidence
+>evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
+>network<-absorb.gnbp(network,node="Tlr12",evidence=evidence)
+>plot(x=network,y="belief",ncol=20)
+\end{Sinput}
+\end{Schunk}
 
 \section{Belief propagation in known networks}
 
-\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt based on the input network. This section demonstrates how to specify known networks and subsequent belief propagation in a simulated toy example.\\
+\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation in a simulated toy example.\\
 
-\noindent First create a list of known edges from parent to child. 
+\noindent First create a list of known edges from parent to child.\\ 
 
 <<L,results=hide,eval=FALSE>>=
 ## Load the toy dataset
-library(geneNetBP)
 data(toy)
 ## Create a list of edges ("from (parent)", "to (child)")
 edgelist=list()
@@ -841,7 +847,7 @@ edgelist[[9]]<-cbind("X2","X6")
 edgelist[[10]]<-cbind("X4","X6")
 @
 
-\noindent in \code{fit.gnbp} provide the edgelist and set learn = FALSE. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.
+\noindent In \code{fit.gnbp} provide the edgelist and set \code{learn = FALSE}. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.\\
 
 
 \begin{Schunk}
@@ -850,9 +856,15 @@ edgelist[[10]]<-cbind("X4","X6")
 >##Generate evidence
 >evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
 >network<-absorb.gnbp(network,node="X2",evidence=evidence)
->plot(x=network,y="JSI",ncol=17)
+>plot(x=network,y="JSI",ncol=17,fontsize = 5)
 \end{Sinput}
 \end{Schunk}
+
+\begin{figure}[H]
+\centering 
+\includegraphics{toy_network_belief}
+\caption{Belief propagation in known network}
+\end{figure}
 
 
 \section{Belief propagation in discrete bayesian networks}
