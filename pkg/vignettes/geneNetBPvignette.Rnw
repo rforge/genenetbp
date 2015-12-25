@@ -21,7 +21,6 @@
 \usepackage{epstopdf}
 
 % packages for tables
-\usepackage{rotating}
 \usepackage{graphicx}
 \usepackage{cite}
 \usepackage{algorithm}
