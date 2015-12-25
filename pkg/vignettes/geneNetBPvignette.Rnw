@@ -6,8 +6,6 @@
 
 \documentclass[12pt, a4paper]{article}
 
-\bibliographystyle{plos2009}
-
 \usepackage{Sweave}
 \SweaveOpts{prefix.string=graph}
 
@@ -589,10 +587,5 @@ edgelist[[10]]<-cbind("X4","X6")
 \caption{Belief propagation in known network}
 \end{figure}
 
-
-\section{Belief propagation in discrete bayesian networks}
-
-\newpage
-\bibliography{newbib02}
 
 \end{document}
