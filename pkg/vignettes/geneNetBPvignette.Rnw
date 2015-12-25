@@ -8,7 +8,6 @@
 
 \bibliographystyle{plos2009}
 
-\usepackage[authoryear,round]{natbib}
 \usepackage{Sweave}
 \SweaveOpts{prefix.string=graph}
 
