@@ -8,7 +8,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
   class_nodes=x$gp_nodes
   
   ## get network type
-  type=x$type
+  type=x$gp_flag
   
   ## get d-connected nodes
   dnodes<-get.dconnected.nodes(x$gp,x$node)
