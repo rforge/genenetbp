@@ -805,7 +805,7 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
                     dsep_col="white",qtl_col="grey",node_abs_col="yellow") 
 >plot(x=network,col.palette=col.palette)
 \end{Sinput}
-\end{Soutput}
+\end{Schunk}
 
 \begin{figure}[H]
 \centering 
