@@ -143,7 +143,6 @@ where the mean is a regression that depends on both discrete and continuous pare
 
 \subsubsection{fit.gnbp}
 
-
 \noindent The learnt network structure is returned as RHugin domain in the first element \code{gp} of the list. An RHugin domain is an external pointer and hence cannot be saved in R workspace. The RHugin package provides functions \code{read.rhd} and \code{write.rhd} for loading and saving Hugin domains. The domains that are not saved will be lost when quitting R. The use of assignment operator such as <- or = will only return the pointer.Refer to the RHugin help manual for more information.\\ 
 
 \noindent The inferred network structure is very sensitive to the significance level (specified as \code{alpha}) and hence it is recommended to try out different values of the argument \code{alpha}. Note that the argument \code{alpha} is for use with RHugin package i.e. the function \code{fit.gnbp} will pass on \code{alpha} to RHugin functions.For example,
