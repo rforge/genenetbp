@@ -2,7 +2,7 @@ Package: geneNetBP
 Type: Package
 Title: The geneNetBP package
 Version: 1.0.0
-Date: 2015-11-10
+Date: 2015-12-24
 Author: Janhavi Moharil <janhavim@buffalo.edu>
 Maintainer: Janhavi Moharil <janhavim@buffalo.edu>
 Depends: R (>= 3.1.0),scales,Rgraphviz
