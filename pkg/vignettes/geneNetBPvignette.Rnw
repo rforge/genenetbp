@@ -5,6 +5,7 @@
 % \VignetteKeyword{Discrete Bayesian Networks}
 
 \documentclass[12pt, a4paper]{article}
+
 \bibliographystyle{plos2009}
 
 \usepackage[authoryear,round]{natbib}
@@ -54,7 +55,6 @@
 require( geneNetBP )
 prettyVersion <- packageDescription("geneNetBP")$Version
 prettyDate <- format(Sys.Date())
-dir.create( "figures" )
 @
 
 % Remove brackets from numbering in List of References
@@ -85,7 +85,7 @@ dir.create( "figures" )
 \noindent There are 3 datasets provided with this package. 
 
 \subsection{mouse} 
-\noindent The \emph{Mus Musculus} Kidney eQTL data (\code{mouse}) was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{mousegeno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{mousepheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
+\noindent The \emph{Mus Musculus} Kidney eQTL data (\code{mouse}) was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice \cite{hageman2011}. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{mousegeno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{mousepheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
 
 \noindent Load the dataset and view the first 3 observations:
 
@@ -276,7 +276,7 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \noindent The changes in belief are measured only for the nodes that are \code{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \code{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs.\\
 
-\subsection{Example}
+\subsection{Mouse Example}
 
 Suppose we know the marginal mean of one of the nodes \code{Tlr12} is -0.99 and we want to enter this new information in the mouse network and see the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
 
@@ -758,9 +758,9 @@ attr(,"class")
 \end{Soutput}
 \end{Schunk}
 
-Note that \code{JSI} is now a matrix whose number of rows are the \emph{d}-connected phenotype nodes to \code{Tlr12} and the number of columns is the length of evidence absorbed in \code{Tlr12}.
+Note that \code{JSI} is now a matrix whose number of rows are the \emph{d}-connected phenotype nodes to \code{Tlr12} and the number of columns is the length of evidence absorbed in \code{Tlr12}.\\
 
-When a sequence of evidence is absorbed for a single node in the network, \code{absorb.gnbp} also plots the JSI of the \emph{d}-connected nodes vs the evidence absorbed. 
+When a sequence of evidence is absorbed for a single node in the network, \code{absorb.gnbp} also plots the JSI of the \emph{d}-connected nodes vs the evidence absorbed.\\ 
 
 \begin{figure}[H]
 \centering 
@@ -772,6 +772,8 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 \section{Visualizing network changes}
 
 \noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "gnbp". If a RHugin domain is input to plot, the corresponding plot method for RHugin domain will be used.  The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package as mentioned previously. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
+
+\subsection{A complete example}
 
 \noindent A complete example that fits a network, absorbs evidence and plots the network:\\
 
@@ -793,6 +795,8 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \noindent The \code{d}-separated nodes are white while the colored nodes are \code{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
 
+\subsection{Plot options}
+
 \noindent Colormap options such as end colors for the positive and negative gradients and the resolution of the colormap can be customized. The resolution of the colormap can be specified by \code{col.length}. The argument \code{col.palette} can be used to specify the end colors.\\ 
 
 \begin{Schunk}
@@ -806,8 +810,7 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \begin{figure}[H]
 \centering 
-\includegraphics{mouse_tlr12_evidence_colpalette}
-\caption{Plot produced by \code{absorb.gnbp}}
+\includegraphics{mouse_network_tlr12_colpalette}
 \end{figure} 
 
 \noindent The plot method will always map the JSI or beliefs onto the network for a single piece of evidence. Incase a spectrum of evidence is absorbed for a single/multiple node(s), then the evidence for which we wish to visualize the network changes can be chosen by specifying the corresponding column number of JSI or belief matrix through the argument \code{ncol}.\\
