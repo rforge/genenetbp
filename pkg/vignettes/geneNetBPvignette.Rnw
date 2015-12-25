@@ -873,7 +873,6 @@ edgelist[[10]]<-cbind("X4","X6")
 \section{Belief propagation in discrete bayesian networks}
 
 \newpage
-\section{References}
 \bibliography{newbib02}
 
 \end{document}
