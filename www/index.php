@@ -59,7 +59,7 @@ The geneNetBP package is currently available on R-Forge and not on CRAN. It can 
 
 <pre> install.packages(&quot;geneNetBP&quot;, repos=(&quot;http://R-Forge.R-project.org&quot;),type=&quot;source&quot;)</pre>
 
-If this does not work, simply download the binary tar ball from the and do a local installation. 
+If this does not work, simply download the binary tar ball from R-Forge, <a href="https://r-forge.r-project.org/R/?group_id=2155">here</a>, and do a local installation. 
 
 
 
