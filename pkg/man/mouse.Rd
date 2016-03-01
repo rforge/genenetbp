@@ -1,8 +1,10 @@
 \name{mouse}
 \docType{data}
 \alias{mouse}
-\title{\emph{Mus Musculus} Kidney eQTL data from Hageman \emph{et. al.} (2011)
-}
+\alias{mousegeno}
+\alias{mousepheno}
+\title{Mus Musculus Kidney eQTL data from Hageman et. al. (2011)
+} 
 \description{Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice.
 }
 \usage{

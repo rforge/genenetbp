@@ -1,5 +1,8 @@
 exportPattern("^[^\\.]")
 export(fit.gnbp,gen.evidence,absorb.gnbp,plot.gnbp)
-import(Rgraphviz)
-import(scales)
+import(Rgraphviz,scales)
+importFrom("grDevices", "rainbow")
+importFrom("graphics", "axis", "layout", "legend", "par", "rect",
+              "title")
+importFrom("stats", "setNames")
 S3method("plot","gnbp")

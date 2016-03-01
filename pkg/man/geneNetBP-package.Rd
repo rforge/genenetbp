@@ -11,7 +11,7 @@
 Package: \tab geneNetBP\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
-Date: \tab 2015-12-24\cr
+Date: \tab 2016-02-29\cr
 License: \tab GPL-2\cr
 }
 This package implements structure learning and conditional probability learning methods from RHugin package to Quantative Trait Loci (QTL) data and provides functions to query and visualize the network beliefs. The function \code{\link{fit.gnbp}} can be used to learn conditional gaussian bayesian networks from genotype-phenotype data. The main function for absorbing evidence and quantifying the changes in beliefs is \code{\link{absorb.gnbp}}. A \code{plot} method is available for visualizing network beliefs.
@@ -29,17 +29,15 @@ Maintainer: Janhavi Moharil <janhavim@buffalo.edu>
 }
 \references{
 
+Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2016). "Belief Propagation in Genotype-Phenotype Networks", \emph{Stat Appl Genet Mol Biol}, 15(1):39-53.
+
 The RHugin Project website: \url{http://rhugin.r-forge.r-project.org}
 
 HUGIN EXPERT website: \url{http://www.hugin.com}
 
 HUGIN API Reference Manual \url{http://download.hugin.com/webdocs/manuals/api-manual.pdf}
 
-Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2015). Belief Propagation in Genotype-Phenotype Networks, \code{under review}
-
 }
 
-\seealso{
-\code{RHugin}
 }
 

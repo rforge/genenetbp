@@ -1,7 +1,9 @@
 \name{yeast}
 \docType{data}
 \alias{yeast}
-\title{\emph{Saccharomyces Cerevisiae} eQTL data from Kruglak \emph{et. al.} (2005)
+\alias{yeastgeno}
+\alias{yeastpheno}
+\title{Saccharomyces Cerevisiae eQTL data from Kruglak et. al. (2005)
 }
 \description{eQTL data from 112 F1 segregants from a cross between BY4716 and RM11-1a strains of \emph{Saccharomyces Cerevisiae}.
 }

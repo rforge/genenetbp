@@ -1,6 +1,8 @@
 \name{toy}
 \docType{data}
 \alias{toy}
+\alias{toygeno}
+\alias{toypheno}
 \title{Toy example dataset 
 }
 \description{Toy example, Simulated data set 
