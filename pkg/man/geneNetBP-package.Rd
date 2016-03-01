@@ -2,8 +2,7 @@
 \alias{geneNetBP-package}
 \alias{geneNetBP}
 \docType{package}
-\title{The geneNetBP package
-}
+\title{Belief Propagation in Genotype-Phenotype Networks}
 \description{The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package makes extensive use of \code{RHugin} package that provides an R interface for the Hugin Decision Engine. The package {RHugin} can be obtained from R-Forge by accessing the link given below. All the functions in the geneNetBP package are documented. For a complete list of functions, use the command ls(pos = "package:geneNetBP").
 }
 \details{
@@ -39,5 +38,5 @@ HUGIN API Reference Manual \url{http://download.hugin.com/webdocs/manuals/api-ma
 
 }
 
-}
+
 
