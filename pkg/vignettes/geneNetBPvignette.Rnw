@@ -52,7 +52,7 @@
 
 
 <<echo=FALSE,print=FALSE>>=
-require( geneNetBP )
+require(geneNetBP)
 prettyVersion <- packageDescription("geneNetBP")$Version
 prettyDate <- format(Sys.Date())
 @
