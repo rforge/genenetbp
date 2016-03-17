@@ -89,8 +89,8 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
   BNgraph<-RHugin::as.graph.RHuginDomain(x$gp)
   
   ## set node attributes
-  z<-RHugin::nodes(BNgraph)
-  names(z)<-RHugin::nodes(BNgraph)
+  z<-nodes(BNgraph)
+  names(z)<-nodes(BNgraph)
   
   nAttrs <- list()
   eAttrs <- list()
