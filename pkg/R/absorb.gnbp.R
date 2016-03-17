@@ -1,13 +1,70 @@
+###############################################################################
+# \name{absorb.gnbp}
+# 
+# \title{Absorb evidence and infer a genotype-phenotype network}
+# 
+# \description{
+#   Absorb a single piece or a spectrum of evidence for one or more continuous nodes 
+#  in a compiled RHugin domain, obtain the updated beliefs 
+#  and the Jeffrey's signed information. }
+# 
+#   \usage{
+#   absorb.gnbp(gpfit, node, evidence)
+#   }
+# 
+#   \arguments{
+# 
+#   \item{gpfit}{
+#   an object of class "gpfit". Output from \code{\link{fit.gnbp}}. 
+#   }
+#   
+#   \item{node}{
+#   a character vector specifying the names of the nodes for 
+# which the evidence is to be absorbed.
+#   }
+#   \item{evidence}{
+#   a matrix or a numeric vector of evidence. number of rows of the 
+# matrix or the length of the vector should be equal to the length of node. 
+#   }
+#   }
+#   
+#   \value{
+#   absorb.gnbp returns an object of class "gnbp". The functions 
+# summary and print can be used for objects of class "gnbp". 
+# An object of class "gnbp" is a list containing the following components
+#   
+#   \item{gp}{an RHugin domain that is triangulated,
+# compiled and with the latest absorbed evidence propagated }
+#   \item{gp_flag}{type of network}
+#   \item{node}{a character vector specifying the nodes 
+# for which evidence has been absorbed}
+#   \item{marginal}{a list of marginal probabilities for 
+# phenotypes (\code{pheno}) and genotypes (\code{geno})}
+#   \item{belief}{a list of updated beliefs for phenotypes 
+# (\code{pheno}) and genotypes (\code{geno})}
+#   \item{JSI}{a matrix of Jeffrey's signed information if 
+# network is \code{Conditional Gaussian}, otherwise \code{NULL} 
+# if network is \code{Discrete Bayesian}}
+# \item{FC}{a list of two. a matrix \code{FC} of fold changes and 
+# a matrix \code{pheno_state} of phenotype node beliefs - state with 
+# maxium probability.If network is \code{Conditional Gaussian},
+# a \code{NULL} value is returned.}
+#############################################################################
+
 absorb.gnbp=function(gpfit,node,evidence)
 
 {
+  
+  requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+  
+  
   ## get node attributes and network
   class_nodes=gpfit$gp_nodes
   network<-gpfit$gp
   type<-gpfit$gp_flag
   
   ## get d-connected nodes
-  dnodes<-get.dconnected.nodes(network,node)
+  dnodes<-RHugin::get.dconnected.nodes(network,node)
   dnodes<-class_nodes[match(setdiff(class_nodes[match(dnodes,class_nodes),1],node),class_nodes),]
   dnodes<-matrix(dnodes,ncol=4)
   
@@ -52,9 +109,9 @@ absorb.gnbp=function(gpfit,node,evidence)
     ##absorb evidence
     for (j in 1:length(node))
     {
-      set.finding(network,node[j],evidence[j,i])
+      RHugin::set.finding(network,node[j],evidence[j,i])
     }
-      propagate(network)
+    RHugin::propagate(network)
     
     ## get belief
     belief<-.get.belief.bn(network,dnodes)
@@ -241,7 +298,7 @@ absorb.gnbp=function(gpfit,node,evidence)
     for (j in 1:dim(dnodes)[1])
     {  
     
-      pmarginal<-get.marginal(network,dnodes[j,1])
+      pmarginal<-RHugin::get.marginal(network,dnodes[j,1])
       if(dnodes[j,2]=="numeric")
       {
         marg_mean[j,1]<-pmarginal$mean
@@ -296,7 +353,7 @@ rownames(marginal)=dnodes[,1]
   
   for (j in 1:(dim(dnodes)[1]))
   { 
-    temp<-get.belief(network,dnodes[j,1])
+    temp<-RHugin::get.belief(network,dnodes[j,1])
     
     if(dnodes[j,2]=="numeric")
     {

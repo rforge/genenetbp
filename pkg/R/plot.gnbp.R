@@ -1,8 +1,76 @@
-plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=10, fontcolor="black",...)
+# ###############################################################################
+# \name{plot.gnbp}
+# 
+# \title{Plot a Genotype-Phenotype Network}
+# 
+# \description{
+#   Plot method for gnbp objects. Plots genotype-phenotype network in which evidence has been absorbed and propagated and maps the beliefs or Jeffrey's signed information onto the network.
+# }
+# 
+#   \usage{
+#   \method{plot}{gnbp}(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=10, fontcolor="black",...)
+#   }
+#  
+# \arguments{
+#   \item{x}{
+#   An object of class gnbp
+#   }
+#   \item{y}{
+#   A character string. Valid options are \code{"JSI"} (default) 
+# or \code{"belief"} for Conditional Gaussian network. 
+# For Discrete Bayesian networks, the argument will be ignored 
+# and the phenotype states with maximum probability will be plotted.
+#   }
+#   \item{col.palette}{A list of character strings. 
+# For Conditional Gaussian networks, a list of 6 elements 
+# specifying colors for colormap.All 6 elements should be 
+# character strings specifying the colour for 
+#   \code{pos_high}= high end of gradient of positive values (default = "red")
+#   \code{pos_low}i=low end of gradient of positive values (default = "wheat1")
+#   \code{neg_high}=high end of gradient of positive values (default = "cyan")
+#   \code{neg_low}=low end of gradient of positive values (default = "blue")
+#   \code{dsep_col}= \emph{d}-separated nodes (default = "white")
+#   \code{qtl_col}= discrete nodes (QTLs) (default = "grey")
+#   \code{node_abs_col}= nodes for which evidence has 
+# been absorbed (default = "palegreen2")
+#   
+#   For Discrete Bayesian networks, a list of 4 elements 
+# specifying colors for colormap should be specified. All 4 elements 
+# should be character strings specifying the colour for 
+#   \code{col_nodes}- a vector of colors for phenotype states
+# should be specified. The length of the vector should be
+# equal to the maximum number of phenotype states possible.
+#   \code{dsep_col}= \emph{d}-separated nodes (default = "white")
+#   \code{qtl_col}= discrete nodes (QTLs) (default = "grey")
+#   \code{node_abs_col}= nodes for which evidence has been
+# absorbed (default = "palegreen2")
+#   
+#   }
+#   \item{col.length}{
+#   a positive integer (default = 100) specifying the 
+# resolution of the colormap (number of colors).
+#   }
+#   \item{ncol}{a positive integer specifying the column number 
+# of JSI / belief / FC to plot. By default, the first column will be plot}
+#   \item{fontsize}{fontsize for node labels}
+#   \item{fontcolor}{fontcolor for node labels}
+#   \item{...}{further arguments to the function \code{\link{plot}}. 
+# These will be ignored}
+#   }
+# 
+# \value{
+#   \code{x} is invisibly returned
+# }
+#############################################################################
+
+plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, 
+                   ncol = 1, fontsize=10, fontcolor="black",...)
 {
                   
+  requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+  
   ## extract data
-  Data<-get.cases(x$gp)
+  Data<-RHugin::get.cases(x$gp)
   
   ## get node attributes
   class_nodes=x$gp_nodes
@@ -11,13 +79,13 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
   type=x$gp_flag
   
   ## get d-connected nodes
-  dnodes<-get.dconnected.nodes(x$gp,x$node)
+  dnodes<-RHugin::get.dconnected.nodes(x$gp,x$node)
   dnodes<-class_nodes[match(setdiff(class_nodes[match(dnodes,class_nodes),1],x$node),class_nodes),]
   dnodes<-matrix(dnodes,ncol=4)
   colnames(dnodes)<-colnames(class_nodes)
   
   ## convert to graphNEL object for use with Rgraphviz
-  BNgraph<-as.graph.RHuginDomain(x$gp)
+  BNgraph<-RHugin::as.graph.RHuginDomain(x$gp)
   
   ## set node attributes
   z<-nodes(BNgraph)

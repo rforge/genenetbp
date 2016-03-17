@@ -1,10 +1,72 @@
-####################################
+#####################################################################################
+# \name{fit.gnbp}
+
+# \title{Fit a Conditional Gaussian Bayesian Network to QTL data}
+
+# \description{Learn the structure of a genotype-phenotype network from 
+#   quantitative trait loci (QTL) data and the conditional probability table 
+#   for each node in the network using the PC algorithm and the EM algorithm 
+#   implemented in the RHugin package. 
+# }
+# 
+# \usage{
+#   fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",
+#   alpha=0.001,tol=1e-04,maxit=0)
+# }
+# 
+# \arguments{
+#   \item{geno}{a data frame of column vectors of class factor 
+#   (or one that can be coerced to that class) and non-empty column names.  
+#   }
+#   \item{pheno}{a data frame of column vectors of class numeric if 
+# \code{type = "cg"} or class factor if \code{type = "db"} and non-empty column names. 
+#   }
+#   \item{constraints}{an optional list of constraints on the edges for 
+# specifying required and forbidden edges. See details.
+#   }
+#   \item{learn}{a boolean value. If TRUE (default), the network structure 
+# will be learnt using the PC algorithm in RHugin package. 
+# If FALSE, only conditional probabilities will be learnt.
+#   }
+#   \item{edgelist}{a list of edges to be provided if learn == FALSE.
+#   }
+#   \item{type}{specify the type of network. \code{"cg"} for 
+# \code{Conditional Gaussian} (default) and \code{"db"} for \code{Discrete Bayesian}.
+#   }
+#   \item{alpha}{a single numeric value specifying the significance level 
+# (for use with RHugin). Default is 0.001.
+#   }
+#   \item{tol}{a positive numeric value (optional) specifying the tolerance 
+# for EM algorithm to learn conditional probability tables (for use with RHugin).
+# Default value is 1e-04. See \code{learn.cpt} for details.
+#              
+#   }
+#   \item{maxit}{a positive integer value (optional) specifying the 
+# maximum number of iterations of EM algorithm to learn 
+# conditional probability tables (for use with RHugin). See \code{learn.cpt} for details.
+#   }
+# 
+#   \value{
+#     Returns an object of class "gpfit". 
+#     \item{gp}{a pointer to a compiled RHugin domain. 
+#       There is a cpt table associated with each node in the network.}
+#     \item{gp_nodes}{a data frame containing information about 
+#       nodes for internal use with other functions.}
+#     \item{gp_flag}{a character string specifying the type of 
+#         network (\code{Conditional Gaussian} or \code{Discrete Bayesian})}
+#     
+#   }
+
+###################################################################################
 ## Learn Bayesian Network Structure
 ## from QTL data
-####################################
-fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=0.001,tol=1e-04,maxit=0)
+###################################################################################
+fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
+                  alpha=0.001,tol=1e-04,maxit=0)
 
   {
+  
+    requireNamespace("RHugin") || throw("Package not loaded: RHugin");
   
     ## Geno Class Check ##
     for(i in 1:dim(geno)[2])
@@ -38,7 +100,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=
     #####################################
      
     ## Create a RHugin domain
-    network<-hugin.domain()
+    network<-RHugin::hugin.domain()
     Nnodes<-length(colnames(Data))
     
       
@@ -63,17 +125,17 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=
     for (node in 1:length(Xpheno))
     {
       if(class_nodes[Xpheno[node],"class"]=="numeric")
-        add.node(network,class_nodes[Xpheno[node],"node"],kind="continuous") 
+        RHugin::add.node(network,class_nodes[Xpheno[node],"node"],kind="continuous") 
       if(class_nodes[Xpheno[node],"class"]=="factor")
-        add.node(network,class_nodes[Xpheno[node],"node"],states=levels(Data[,class_nodes[Xpheno[node],"node"]]))    
+        RHUgin::add.node(network,class_nodes[Xpheno[node],"node"],states=levels(Data[,class_nodes[Xpheno[node],"node"]]))    
     }
 
     for (node in 1:length(Xgeno))
-      add.node(network,class_nodes[Xgeno[node],"node"],states=levels(Data[,class_nodes[Xgeno[node],"node"]]))
+      RHugin::add.node(network,class_nodes[Xgeno[node],"node"],states=levels(Data[,class_nodes[Xgeno[node],"node"]]))
 
     
     ## Set cases
-    set.cases(network,Data)
+    RHugin::set.cases(network,Data)
      
     if (learn=="TRUE")
     {
@@ -106,7 +168,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=
     ## Learn structure and cpt
     ####################################
      
-    learn.structure(network,alpha=alpha,constraints=all_constraints)
+    RHugin::learn.structure(network,alpha=alpha,constraints=all_constraints)
     
     }else
       
@@ -124,11 +186,11 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",alpha=
   
     ##Add experience table to all nodes
     for (node in 1:Nnodes)
-      get.table(network,colnames(Data)[node],type="experience")
+      RHugin::get.table(network,colnames(Data)[node],type="experience")
     
     ## Compile network and learn cpt
-    compile(network)
-    learn.cpt(network,tol=tol,maxit=maxit)
+    RHugin::compile(network)
+    RHugin::learn.cpt(network,tol=tol,maxit=maxit)
         
     gpfit<-list(gp=network,gp_nodes=class_nodes,gp_flag=type)
     
