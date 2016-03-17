@@ -90,7 +90,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
   
   ## set node attributes
   z<-graph::nodes(BNgraph)
-  names(z)<-nodes(BNgraph)
+  names(z)<-graph::nodes(BNgraph)
   
   nAttrs <- list()
   eAttrs <- list()
