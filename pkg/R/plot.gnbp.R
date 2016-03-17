@@ -89,7 +89,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
   BNgraph<-RHugin::as.graph.RHuginDomain(x$gp)
   
   ## set node attributes
-  z<-nodes(BNgraph)
+  z<-graph::nodes(BNgraph)
   names(z)<-nodes(BNgraph)
   
   nAttrs <- list()
@@ -104,7 +104,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
 
   
   nAttrs$shape<-rep("ellipse",length(z))
-  names(nAttrs$shape)<-nodes(BNgraph)
+  names(nAttrs$shape)<-graph::nodes(BNgraph)
   nAttrs$shape[class_nodes[which(class_nodes[,"type"]=="geno"),1]]<-"box"
   
   if (type == "cg")
@@ -125,7 +125,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
       
       X=length(dnodes[which(dnodes[,4]=="geno"),1])
       nAttrs$fillcolor<-rep(col.palette$dsep_col,length(z))
-      names(nAttrs$fillcolor)<-nodes(BNgraph)
+      names(nAttrs$fillcolor)<-graph::nodes(BNgraph)
       
         
         score_no<-seq(floor(range(score)[1]),ceiling(range(score)[2]),length.out=col.length)
@@ -207,7 +207,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=1
     
     ## set default color of all nodes
     nAttrs$fillcolor<-rep(col.palette$dsep_col,length(z))
-    names(nAttrs$fillcolor)<-nodes(BNgraph)
+    names(nAttrs$fillcolor)<-graph::nodes(BNgraph)
     
     ## set color for all nodes
     nAttrs$fillcolor<-colormap_network
