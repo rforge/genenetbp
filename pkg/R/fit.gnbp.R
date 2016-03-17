@@ -10,7 +10,9 @@
 # }
 # 
 # \usage{
-#   fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",...)
+#   fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
+#            alpha=0.001,tol=1e-04,maxit=0)
+
 # }
 # 
 # \arguments{
@@ -60,7 +62,8 @@
 ## Learn Bayesian Network Structure
 ## from QTL data
 ###################################################################################
-fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",...)
+fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
+                  alpha=0.001,tol=1e-04,maxit=0)
 
   {
   

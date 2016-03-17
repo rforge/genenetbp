@@ -7,8 +7,9 @@
 #   Plot method for gnbp objects. Plots genotype-phenotype network in which evidence has been absorbed and propagated and maps the beliefs or Jeffrey's signed information onto the network.
 # }
 # 
-#   \usage{
-#   \method{plot}{gnbp}(x, y="JSI",col.palette,col.length = 100,...)
+#   \usage
+#   \method{plot}{gnbp}(x, y="JSI",col.palette,col.length = 100, ncol = 1, 
+#                       fontsize=10, fontcolor="black",...)
 #   }
 #  
 # \arguments{
@@ -63,7 +64,8 @@
 # }
 #############################################################################
 
-plot.gnbp=function(x, y="JSI",col.palette,col.length = 100,...)
+plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=10, fontcolor="black",...)
+
 {
                   
   requireNamespace("RHugin") || warning("Package not loaded: RHugin");
@@ -88,7 +90,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100,...)
   
   ## set node attributes
   z<-RHugin::nodes(BNgraph)
-  names(z)<-nodes(BNgraph)
+  names(z)<-RHugin::nodes(BNgraph)
   
   nAttrs <- list()
   eAttrs <- list()
