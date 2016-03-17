@@ -55,7 +55,7 @@ absorb.gnbp=function(gpfit,node,evidence)
 
 {
   
-  requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+  requireNamespace("RHugin") || warning("Package not loaded: RHugin");
   
   
   ## get node attributes and network
@@ -155,7 +155,7 @@ absorb.gnbp=function(gpfit,node,evidence)
                                                           colnames(belief)[3:ncol(belief)]))))
     
     ##retract the evidence
-    retract(network)
+    RHugin::retract(network)
   }
   
  

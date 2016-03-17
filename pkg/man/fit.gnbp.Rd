@@ -5,7 +5,7 @@
 \description{Learn the structure of a genotype-phenotype network from quantitative trait loci (QTL) data and the conditional probability table for each node in the network using the PC algorithm and the EM algorithm implemented in the RHugin package. 
 }
 \usage{
-fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",alpha=0.001,tol=1e-04,maxit=0)
+fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

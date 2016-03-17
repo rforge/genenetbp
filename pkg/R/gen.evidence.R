@@ -45,7 +45,7 @@ gen.evidence=function(gpfit,node,std=2,length.out=10,std.equal=TRUE)
   
 {  
   
-  requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+  requireNamespace("RHugin") || warning("Package not loaded: RHugin");
   
   RHugin::retract(gpfit$gp)
   
@@ -60,7 +60,7 @@ gen.evidence=function(gpfit,node,std=2,length.out=10,std.equal=TRUE)
   
 
   ## calculate marginals
-  marg_node_abs<-get.marginal(gpfit$gp,node)
+  marg_node_abs<-RHugin::get.marginal(gpfit$gp,node)
   mean1<-marg_node_abs$mean
   var1<-diag(matrix(unlist(marg_node_abs$cov),nrow=length(node)))
 

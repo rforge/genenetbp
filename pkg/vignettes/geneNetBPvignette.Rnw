@@ -87,7 +87,7 @@ prettyDate <- format(Sys.Date())
 \noindent There are 3 datasets provided with this package. 
 
 \subsection{mouse} 
-\noindent The \emph{Mus Musculus} Kidney eQTL data (\code{mouse}) was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice \cite{hageman2011}. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{mousegeno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{mousepheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
+\noindent The \emph{Mus Musculus} Kidney eQTL data (\code{mouse}) was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice \cite{hageman2011uncovering}. The original data consists of 33,872 gene expression traits for 173 males. After linkage analysis and filtering based on location and significance of QTL, the data consists of 14 genes and their SNP markers corresponding to their QTL. Thus the final dataset has 2 variables \code{mousegeno}, data frame of 173 observations (genotype) of 5 variables (SNP markers)  and \code{mousepheno}, data frame of 173 observations (normalized gene expression) of 14 variables (genes).\\
 
 \noindent Load the dataset and view the first 3 observations:
 

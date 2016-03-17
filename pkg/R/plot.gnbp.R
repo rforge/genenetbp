@@ -8,7 +8,7 @@
 # }
 # 
 #   \usage{
-#   \method{plot}{gnbp}(x, y="JSI",col.palette,col.length = 100, ncol = 1, fontsize=10, fontcolor="black",...)
+#   \method{plot}{gnbp}(x, y="JSI",col.palette,col.length = 100,...)
 #   }
 #  
 # \arguments{
@@ -63,11 +63,10 @@
 # }
 #############################################################################
 
-plot.gnbp=function(x, y="JSI",col.palette,col.length = 100, 
-                   ncol = 1, fontsize=10, fontcolor="black",...)
+plot.gnbp=function(x, y="JSI",col.palette,col.length = 100,...)
 {
                   
-  requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+  requireNamespace("RHugin") || warning("Package not loaded: RHugin");
   
   ## extract data
   Data<-RHugin::get.cases(x$gp)
@@ -88,7 +87,7 @@ plot.gnbp=function(x, y="JSI",col.palette,col.length = 100,
   BNgraph<-RHugin::as.graph.RHuginDomain(x$gp)
   
   ## set node attributes
-  z<-nodes(BNgraph)
+  z<-RHugin::nodes(BNgraph)
   names(z)<-nodes(BNgraph)
   
   nAttrs <- list()

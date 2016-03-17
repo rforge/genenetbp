@@ -10,8 +10,7 @@
 # }
 # 
 # \usage{
-#   fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",
-#   alpha=0.001,tol=1e-04,maxit=0)
+#   fit.gnbp(geno,pheno,constraints,learn="TRUE",edgelist,type="cg",...)
 # }
 # 
 # \arguments{
@@ -61,12 +60,11 @@
 ## Learn Bayesian Network Structure
 ## from QTL data
 ###################################################################################
-fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
-                  alpha=0.001,tol=1e-04,maxit=0)
+fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",...)
 
   {
   
-    requireNamespace("RHugin") || throw("Package not loaded: RHugin");
+    requireNamespace("RHugin") || warning("Package not loaded: RHugin");
   
     ## Geno Class Check ##
     for(i in 1:dim(geno)[2])
@@ -127,7 +125,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
       if(class_nodes[Xpheno[node],"class"]=="numeric")
         RHugin::add.node(network,class_nodes[Xpheno[node],"node"],kind="continuous") 
       if(class_nodes[Xpheno[node],"class"]=="factor")
-        RHUgin::add.node(network,class_nodes[Xpheno[node],"node"],states=levels(Data[,class_nodes[Xpheno[node],"node"]]))    
+        RHugin::add.node(network,class_nodes[Xpheno[node],"node"],states=levels(Data[,class_nodes[Xpheno[node],"node"]]))    
     }
 
     for (node in 1:length(Xgeno))
@@ -179,7 +177,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",edgelist,type ="cg",
       for (i in 1:length(edgelist))
       {
         edges<-unlist(edgelist[[i]])
-        add.edge(network,edges[,2],edges[,1])
+        RHugin::add.edge(network,edges[,2],edges[,1])
       }
 
     }
