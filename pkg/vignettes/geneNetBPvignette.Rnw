@@ -31,7 +31,7 @@
 %\double-spacing
 
 % bibliography style
-\bibliographystyle{plainnat}
+\bibliographystyle{plos2009}
 
 %Text layout
 \topmargin 0.0cm
