@@ -278,7 +278,7 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \subsection{Mouse Example}
 
-Suppose we know the marginal mean of one of the nodes \code{Tlr12} is -0.99 and we want to enter this new information in the mouse network and see the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
+Suppose we know the marginal mean of one of the nodes \code{Tlr12} is -0.99 and we wish to enter this new information in the mouse network and see the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
 
 \subsubsection{absorb.gnbp}
 
