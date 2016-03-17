@@ -5,5 +5,4 @@ importFrom("grDevices", "rainbow")
 importFrom("graphics", "axis", "layout", "legend", "par", "rect",
               "title")
 importFrom("stats", "setNames")
-importFrom("graph","nodes")
 S3method("plot","gnbp")
