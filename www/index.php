@@ -35,7 +35,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <h1>The geneNetBP Package Homepage</h1>
 
-The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. 
+The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package is now available on <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>.
 
 The package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine (HDE) which is a commercial software developed by <a href="http://www.hugin.com">HUGIN EXPERT A/S</a> for building and making inference from Bayesian belief networks.  The RHugin package provides an interface to communicate with the HDE from within R. Please note that RHugin is currently not hosted on CRAN. The package RHugin is available on R-Forge and can be obtained <a href="http://rhugin.r-forge.r-project.org/">here</a>. 
 
@@ -51,16 +51,7 @@ The geneNetBP package requires HDE and the R package RHugin to be installed.
 
 <h3> The geneNetBP package </h3>
 
-The geneNetBP package is currently available on R-Forge and not on CRAN. It can be downloaded <a href="https://r-forge.r-project.org/R/?group_id=2155">here</a>. Alternatively you can install it by R install command (on Windows)
-
-<pre> install.packages(&quot;geneNetBP&quot;, repos=(&quot;http://R-Forge.R-project.org&quot;))</pre>
-
-<p>The R install command for Mac users to install from the source is </p>
-
-<pre> install.packages(&quot;geneNetBP&quot;, repos=(&quot;http://R-Forge.R-project.org&quot;),type=&quot;source&quot;)</pre>
-
-If this does not work, simply download the binary tar ball from R-Forge, <a href="https://r-forge.r-project.org/R/?group_id=2155">here</a>, and do a local installation. 
-
+The geneNetBP package version 1.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
 
 
 <h3> HUGIN Decision Engine </h3>
@@ -91,6 +82,14 @@ Both geneNetBP and RHugin depend on the Bioconductor packages <code>graph</code>
 <p> The package <code>scales</code> should automatically get installed with the package <geneNetBP>. If it does not, then you can manually install it. It is available on CRAN. Use R install command
 
 <pre> install.packages(&quot;scales&quot;)</pre>
+
+<p>to install them.</p>
+
+<h4> graph </h4>
+<p> The package <code>graph</code> should automatically get installed with the package <geneNetBP>. If it does not, then you can manually install it. It is available on CRAN. Use R install command
+
+<pre> install.packages(&quot;graph&quot;)</pre>
+
 
 </body>
 </html>
