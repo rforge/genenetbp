@@ -83,13 +83,6 @@ Both geneNetBP and RHugin depend on the Bioconductor packages <code>graph</code>
 
 <pre> install.packages(&quot;scales&quot;)</pre>
 
-<p>to install them.</p>
-
-<h4> graph </h4>
-<p> The package <code>graph</code> should automatically get installed with the package <geneNetBP>. If it does not, then you can manually install it. It is available on CRAN. Use R install command
-
-<pre> install.packages(&quot;graph&quot;)</pre>
-
 
 </body>
 </html>
