@@ -49,9 +49,9 @@ The <code>geneNetBP</code> package version 1.0.0 is now available and can be dow
 
 <h2>Installation</h2>
 
-The geneNetBP package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine (HDE) - a commercial software developed by <a href="http://www.hugin.com">HUGIN EXPERT A/S</a> for building and making inference from Bayesian belief networks.  The RHugin package provides an interface to communicate with the HDE from within R. Please note that RHugin is currently not hosted on CRAN, but is available on R-Forge and can be obtained <a href="http://rhugin.r-forge.r-project.org/">here</a>. 
+The geneNetBP package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine (HDE) - a commercial software developed by <a href="http://www.hugin.com">HUGIN EXPERT A/S</a> for building and making inference from Bayesian belief networks.  The RHugin package provides an interface to communicate with the HDE from within R. 
 
-The geneNetBP package requires HDE and the R package RHugin to be installed. 
+<p>The geneNetBP package <b>requires HDE and the R package RHugin</b> to be installed.</p> 
 
 <dl><h3> Installation Steps</h3> 
 	<dt><b> 1. Install Hugin Decision Engine:</b> </dt>
@@ -60,7 +60,8 @@ The geneNetBP package requires HDE and the R package RHugin to be installed.
 	</dd>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
-	<dd> Installation instructions for RHugin can be found 	on its project homepage <a href="http://rhugin.r-	forge.r-project.org/"> RHugin</a>.It is important to 	install the matching versions and the architecture (32/64 	bit) of Hugin Lite, <code>RHugin</code> and R as listed on 	RHugin 	project homepage.Please note that RHugin is 	required for 	proper functioning of geneNetBP. The 	package RHugin will 	not automatically load upon loading 	geneNetBP package. 	Please use library(RHugin) or require	(RHugin) to load it 	before using geneNetBP.
+	<dd> RHugin is available on R-Forge and NOT on CRAN. 
+	Installation instructions for RHugin can be found 	on 	its project homepage <a href="http://rhugin.r-	forge.r-	project.org/"> RHugin</a>.It is important to 	install 	the matching versions and the architecture (32/64 	bit) 	of Hugin Lite, <code>RHugin</code> and R as listed on 	RHugin 	project homepage.Please note that RHugin is 	required for 	proper functioning of geneNetBP. The 	package RHugin will 	not automatically load upon loading 	geneNetBP package. 	Please use library(RHugin) or require	(RHugin) to load it 	before using geneNetBP.
 	</dd>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
