@@ -41,7 +41,7 @@ The geneNetBP package provides functions to fit Conditional Gaussian Bayesian ne
 <h2> Download </h2>
 
 The geneNetBP package version 1.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
-
+<hr/>
 
 <hr />
 
