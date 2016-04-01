@@ -70,7 +70,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
   	source(&quot;http://bioconductor.org/biocLite.R&quot;)
   	biocLite(c(&quot;graph&quot;, &quot;Rgraphviz&quot;))
 	</pre>
-	<p> scales: </p>The package <code>scales</code> should 	automatically get installed with the package <code>	geneNetBP</code>. If it does not, then you can manually 	install it. It is available on CRAN. Use R install 	command
+	In addition to these, <code>geneNetBP</code> also depends 	on the package <code>scales</code> which is available on 	CRAN. The package <code>scales</code> should 	automatically get installed with <code>geneNetBP</code>. 	f it does not, then you can manually 	install it. Use R 	nstall command
 	<pre> install.packages(&quot;scales&quot;)</pre>
 	</dd>
 	
@@ -91,24 +91,24 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 
 <dl> 
 <dt></dt> 
-<dd><a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml">Belief Propagation in genotype-phenotype networks</a></dd> 
-<dd>Moharil, J., May, P.,Gaile, D.P. and Blair, R.H. (<b>2016</b>)</dd>
-<dd><i>Stat Appl Genet Mol Biol.</i> , Vol. 15(1), pp. 39-53</dd> 
+<dd><a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml">Belief Propagation in genotype-phenotype networks (<b>2016</b>)</a></dd> 
+<dd>Moharil, J., May, P.,Gaile, D.P. and Blair, R.H.</dd>
+<dd><i>Stat Appl Genet Mol Biol.</i> , Vol. 15(1), pp. 39-53</dd> <br>
 
 <dt></dt> 
-<dd><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.631&rep=rep1&type=pdf">Stable local computation with conditional gaussian distributions(<b>2001</b>)</a></dd> 
+<dd><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.631&rep=rep1&type=pdf">Stable local computation with conditional gaussian distributions (<b>2001</b>)</a></dd> 
 <dd>Lauritzen, S. L. and F. Jensen </dd> 
-<dd><i>Stat. Comput.</i>, Vol. 11(2), pp. 191-203</dd> 
+<dd><i>Stat. Comput.</i>, Vol. 11(2), pp. 191-203</dd> <br>
 
 <dt></dt> 
-<dd><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.2564&rep=rep1&type=pdf">Propagation of probabilities, means, and variances in mixed graphical association models(<b>1992</b>)</a></dd> 
+<dd><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.2564&rep=rep1&type=pdf">Propagation of probabilities, means, and variances in mixed graphical association models (<b>1992</b>)</a></dd> 
 <dd>Lauritzen, S. L.</dd> 
-<dd><i>J. Am. Statist. Assoc.</i>, Vol. 87, pp. 1098-1108</dd> 
+<dd><i>J. Am. Statist. Assoc.</i>, Vol. 87, pp. 1098-1108</dd><br>
 
 <dt></dt> 
-<dd><a href="http://www.jstor.org/stable/2345762?origin=JSTOR-pdf&seq=1#page_scan_tab_contents">Local computations with probabilities on graphical structures and their application to expert systems(<b>1988</b>)</a></dd> 
+<dd><a href="http://www.jstor.org/stable/2345762?origin=JSTOR-pdf&seq=1#page_scan_tab_contents">Local computations with probabilities on graphical structures and their application to expert systems (<b>1988</b>)</a></dd> 
 <dd>Lauritzen, S. L. and D. J. Spiegelhalter </dd> 
-<dd><i>J. Roy. Stat. Soc. B Met.</i>, Vol. 50 (2), pp. 157-224</dd> 
+<dd><i>J. Roy. Stat. Soc. B Met.</i>, Vol. 50 (2), pp. 157-224</dd> <br>
 
 
 </body>
