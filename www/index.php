@@ -35,9 +35,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <h1>The geneNetBP Homepage</h1>
 
-The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network (CG-BN) to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. 
-
-<p>geneNetBP facilitates the smooth transition from QTL mapping to graphical modeling to system-wide prediction after absorbing network evidence. Specifically, geneNetBP can be used to absorb and propagate phenotypic evidence through a given CG-BN representation of a genotype-phenotype network, compute the Jeffery’s Information across the network, and provide visualizations for interpretation.</p>
+The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network (CG-BN) to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package facilitates the smooth transition from QTL mapping to graphical modeling to system-wide prediction after absorbing network evidence. Specifically, <code>geneNetBP</code> can be used to absorb and propagate phenotypic evidence through a given CG-BN representation of a genotype-phenotype network, compute the Jeffery’s Information across the network, and provide visualizations for interpretation.
 
 
 <hr />
@@ -57,12 +55,12 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 	<dt><b> 1. Install Hugin Decision Engine:</b> </dt>
 	<dd> The <code>geneNetBP</code> package is compatible with 	the free 	demo version of Hugin Researcher/Developer, 	Hugin Lite 	Demo that can be obtained from <a 	href="http://www.hugin.com/productsservices/demo/hugin-	lite"> HUGIN</a>. The free demo version is limited to 	handle only 50 states and 500 cases.    
 	If you do not have Hugin installed in the default location 	you will need to set the HUGINHOME environment variable 	before using the RHugin package. Also, you will need to 	modify the HUGINHOME variable. Please see the instructions 	on the project homepage for <a href="http://rhugin.r-	forge.r-project.org/">RHugin</a>.
-	</dd>
+	</dd><br>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
 	<dd> RHugin is available on R-Forge and NOT on CRAN. 
 	Installation instructions for RHugin can be found 	on 	its project homepage <a href="http://rhugin.r-	forge.r-	project.org/"> RHugin</a>.It is important to 	install 	the matching versions and the architecture (32/64 	bit) 	of Hugin Lite, <code>RHugin</code> and R as listed on 	RHugin 	project homepage.Please note that RHugin is 	required for 	proper functioning of geneNetBP. The 	package RHugin will 	not automatically load upon loading 	geneNetBP package. 	Please use library(RHugin) or require	(RHugin) to load it 	before using geneNetBP.
-	</dd>
+	</dd><br>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
 	<dd> Both <code>geneNetBP</code> and <code>RHugin</code> 	depend on the Bioconductor 	packages <code>graph	</code> and <code>Rgraphviz</code>. 	Run the following 	commands to install them.
@@ -72,7 +70,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 	</pre>
 	In addition to these, <code>geneNetBP</code> also depends 	on the package <code>scales</code> which is available on 	CRAN. The package <code>scales</code> should 	automatically get installed with <code>geneNetBP</code>. 	f it does not, then you can manually 	install it. Use R 	nstall command
 	<pre> install.packages(&quot;scales&quot;)</pre>
-	</dd>
+	</dd><br>
 	
 	<dt><b> 4. Install the geneNetBP package:</b> </dt>
 	<dd> The geneNetBP package version 1.0.0 can be downloaded 	from <a href="https://cran.r-	project.org/web/packages/geneNetBP/">CRAN</a>. 
