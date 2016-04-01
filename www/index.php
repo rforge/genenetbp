@@ -89,5 +89,18 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 <hr />
 <h2>References</h2>
 
+<dl> 
+<dt></dt> 
+<dd><a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml">Belief Propagation in genotype-phenotype networks</a></dd> 
+<dd>Moharil, J., May, P.,Gaile, DP. and Blair, RH. (<b>2016</b>)</dd>
+<dd><i>Stat Appl Genet Mol Biol.</i> , Vol. 15(1), pp. 39-53</dd> 
+
+<dt></dt> 
+<dd><a href="http://dx.doi.org/10.1191/1471082X05st098oa">Held, L., Höhle, M. and Hofmann, M. (<b>2005</b>)</a></dd> 
+<dd><i>A statistical framework for the analysis of multivariate infectious disease surveillance counts</i></dd> 
+<dd>Statistical Modelling, Vol. 5(3), pp. 187-199</dd> 
+
+
+
 </body>
 </html>
