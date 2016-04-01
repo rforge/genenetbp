@@ -35,13 +35,15 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <h1>The geneNetBP Homepage</h1>
 
-The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package is now available on <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>.
+The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network (CG-BN) to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. 
+
+<p>geneNetBP facilitates the smooth transition from QTL mapping to graphical modeling to system-wide prediction after absorbing network evidence. Specifically, geneNetBP can be used to absorb and propagate phenotypic evidence through a given CG-BN representation of a genotype-phenotype network, compute the Jeffery’s Information across the network, and provide visualizations for interpretation.</p>
+
 
 <hr />
 <h2> Download </h2>
 
 The <code>geneNetBP</code> package version 1.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
-<hr/>
 
 <hr />
 
@@ -76,12 +78,14 @@ The geneNetBP package requires HDE and the R package RHugin to be installed.
 	</dd>
 
 </dl>
-<hr/>
+<hr />
 
 <h2>Documentation</h2>
 
+<hr />
 <h2>Examples</h2>
 
+<hr />
 <h2>References</h2>
 
 </body>
