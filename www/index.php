@@ -58,8 +58,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 	</dd><br>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
-	<dd> RHugin is available on R-Forge and NOT on CRAN. 
-	Installation instructions for RHugin can be found 	on 	its project homepage <a href="http://rhugin.r-	forge.r-	project.org/"> RHugin</a>.It is important to 	install 	the matching versions and the architecture (32/64 	bit) 	of Hugin Lite, <code>RHugin</code> and R as listed on 	RHugin 	project homepage.Please note that RHugin is 	required for 	proper functioning of geneNetBP. The 	package RHugin will 	not automatically load upon loading 	geneNetBP package. 	Please use library(RHugin) or require	(RHugin) to load it 	before using geneNetBP.
+	<dd> <code>RHugin</code> is available on R-Forge and NOT 	on CRAN. Installation instructions for <code>RHugin</code> 	can be found 	on 	its project homepage <a 	href="http://rhugin.r-	forge.r-	project.org/"> RHugin	</a>.It is important to 	install 	the matching versions 	and the architecture (32/64 	bit) 	of Hugin Lite, <code>	RHugin</code> and R as listed on 	<code>RHugin</code> 	project homepage.Please note that <code>RHugin</code> is 	required for 	proper functioning of <code>geneNetBP	</code>. The 	package <code>RHugin</code> will 	not 	automatically load upon loading 	<code>geneNetBP	</code>. 	Please use library(RHugin) or require	(RHugin) 	to load it 	before using geneNetBP.
 	</dd><br>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
@@ -68,7 +67,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
   	source(&quot;http://bioconductor.org/biocLite.R&quot;)
   	biocLite(c(&quot;graph&quot;, &quot;Rgraphviz&quot;))
 	</pre>
-	In addition to these, <code>geneNetBP</code> also depends 	on the package <code>scales</code> which is available on 	CRAN. The package <code>scales</code> should 	automatically get installed with <code>geneNetBP</code>. 	f it does not, then you can manually 	install it. Use R 	nstall command
+	In addition to these, <code>geneNetBP</code> also depends 	on the package <code>scales</code> which is available on 	CRAN. The package <code>scales</code> should 	automatically get installed with <code>geneNetBP</code>. 	If it does not, then you can manually 	install it. Use 	R 	install command
 	<pre> install.packages(&quot;scales&quot;)</pre>
 	</dd><br>
 	
