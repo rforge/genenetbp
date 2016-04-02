@@ -82,7 +82,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 
 <li type="circle"> The methods for predicting and visualizing system-wide effects of genotype-phenotype networks under perturbations are described in our publication <a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml"> Moharil J. et.al. (2016)</a></li> <br>
 
-<li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPvignette">geneNetBP vignette</a>]</li> <br>
+<li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPvignette.pdf">geneNetBP vignette</a>]</li> <br>
 
 <li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBP-manual.pdf">[geneNetBP-manual]</a></li><br>
 
