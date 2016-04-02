@@ -58,7 +58,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 	</dd><br>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
-	<dd> <code>RHugin</code> is available on R-Forge and NOT 	on CRAN. Installation instructions for <code>RHugin</code> 	can be found 	on 	its project homepage <a 	href="http://rhugin.r-	forge.r-	project.org/"> RHugin	</a>.It is important to 	install 	the matching versions 	and the architecture (32/64 	bit) 	of Hugin Lite, <code>	RHugin</code> and R as listed on 	<code>RHugin</code> 	project homepage.Please note that <code>RHugin</code> is 	required for 	proper functioning of <code>geneNetBP	</code>. The 	package <code>RHugin</code> will 	not 	automatically load upon loading 	<code>geneNetBP	</code>. 	Please use library(RHugin) or require	(RHugin) 	to load it 	before using geneNetBP.
+	<dd> <code>RHugin</code> is available on R-Forge and NOT 	on CRAN. Installation instructions for <code>RHugin</code> 	can be found 	on 	its project homepage <a 	href="http://rhugin.r-	forge.r-	project.org/"> RHugin	</a>.It is important to 	install 	the matching versions 	and the architecture (32/64 	bit) 	of Hugin Lite, <code>	RHugin</code> and R as listed on 	<code>RHugin</code> 	project homepage.Please note that <code>RHugin</code> is 	required for 	proper functioning of <code>geneNetBP	</code>. The 	package <code>RHugin</code> will 	not 	automatically load upon loading 	<code>geneNetBP	</code>. 	Please use <code>library(RHugin)</code> or 	<code>require(RHugin)</code> 	to load it 	before 	using 	geneNetBP.
 	</dd><br>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
