@@ -86,7 +86,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 
 <li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBP-manual.pdf">[geneNetBP-manual]</a></li><br>
 
-<li type="circle"> The belief propagation (stable scheme) is described in <a href="http://genenetbp.r-forge.r-project.org/geneNetBP-manual.pdf">Lauritzen S.L and Jensen F.</a></li>
+<li type="circle"> The belief propagation (stable scheme) is described in <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.631&rep=rep1&type=pdf">Lauritzen S.L and Jensen F.</a></li>
 
 <hr />
 <h2>References</h2>
