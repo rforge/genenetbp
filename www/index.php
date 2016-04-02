@@ -80,8 +80,13 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 
 <h2>Documentation</h2>
 
-<hr />
-<h2>Examples</h2>
+<li type="circle"> The methods for predicting and visualizing system-wide effects of genotype-phenotype networks under perturbations are described in our publication <a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml"> Moharil J. et.al. (2016)</a></li> <br>
+
+<li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPvignette">geneNetBP vignette</a>]</li> <br>
+
+<li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBP-manual.pdf">[geneNetBP-manual]</a></li><br>
+
+<li type="circle"> The belief propagation (stable scheme) is described in <a href="http://genenetbp.r-forge.r-project.org/geneNetBP-manual.pdf">Lauritzen S.L and Jensen F.</a></li>
 
 <hr />
 <h2>References</h2>
@@ -94,7 +99,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 
 <dt></dt> 
 <dd><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.631&rep=rep1&type=pdf">Stable local computation with conditional gaussian distributions (<b>2001</b>)</a></dd> 
-<dd>Lauritzen, S. L. and F. Jensen </dd> 
+<dd>Lauritzen, S. L. and Jensen F.</dd> 
 <dd><i>Stat. Comput.</i>, Vol. 11(2), pp. 191-203</dd> <br>
 
 <dt></dt> 
