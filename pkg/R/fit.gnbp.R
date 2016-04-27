@@ -182,7 +182,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
       
       if(class(graph)=="graphNEL")
       {
-        edges<-data.frame(igraph::get.edgelist(igraph::igraph.from.graphNEL(graph)))
+        edges<-data.frame(get.edgelist(igraph.from.graphNEL(graph)))
         RHugin::add.edge(network,edges[2],edges[1])   
       }
         
