@@ -35,8 +35,8 @@
 # \item{belief}{a list of updated beliefs for phenotypes (\code{pheno}) and genotypes (\code{geno})}
 # \item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise \code{NULL} if network is \code{Discrete Bayesian}}. 
 # \item{FC}{a list of two. a matrix \code{FC} of fold changes and a matrix \code{pheno_state} of phenotype node beliefs - state with maxium probability. If network is \code{Conditional Gaussian}, a \code{NULL} value is returned.}
-
-}
+#
+#}
 #############################################################################
 
 absorb.gnbp=function(object,node,evidence)
