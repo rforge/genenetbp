@@ -275,7 +275,7 @@ plot.dbn=function(x, y="state",col.palette,col.length = 100, fontsize=10, fontco
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
   {
-    if(!dsep(as.bn.fit(x$gp),class_nodes[i,1]),x$node)
+    if(!dsep(as.bn.fit(x$gp),x$node,class_nodes[i,1]))
         dnodes<-rbind(dnodes,class_nodes[i,])
   }
     dnodes<-dnodes[-which(dnodes[,1]==x$node),] 
