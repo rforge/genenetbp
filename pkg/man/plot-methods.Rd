@@ -2,7 +2,7 @@
 \alias{plot.gnbp}
 \alias{plot.dbn}
 \alias{plot.gpfit}
-\alias{plot.dbfit}
+\alias{plot.dbnfit}
 \title{
 Plot a Genotype-Phenotype Network
 }
@@ -63,7 +63,7 @@ Janhavi Moharil<janhavim@buffalo.edu>
 }
 
 \seealso{
-\code{\link{absorb.gnbp}, \code{\link{absorb.dbn}}, \code{fit.gnbp},\code{fit.dbn}
+\code{\link{absorb.gnbp}}, \code{\link{absorb.dbn}}, \code{fit.gnbp},\code{fit.dbn}
 }
 }
 

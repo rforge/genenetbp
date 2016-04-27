@@ -8,17 +8,16 @@ Absorb evidence and propagate beliefs in a genotype-phenotype network
 Absorb a single piece or a spectrum of evidence for one or more phenotype nodes, propagate the beliefs, obtain the updated beliefs and quantify the effects. 
 }
 \usage{
-## For Conditional Gaussian Bayesian Networks / Discrete Bayesian Networks (Implements RHugin)
+## For Conditional Gaussian Bayesian Networks
+## and Discrete Bayesian Networks (Implements RHugin)
 absorb.gnbp(object, node, evidence)
 ## For Discrete Bayesian Networks (Implements gRain)
 absorb.dbn(object, node, evidence)
 }
 \arguments{
-  \item{gpfit}{
+  \item{object}{
 an object of class "gpfit" (output from \code{\link{fit.gnbp}}) for \code{absorb.gnbp}or an object of class "dbnfit" (Output from \code{\link{fit.dbn}})for \code{absorb.dbn}. 
 }
-  \item{dbnfit}{
- 
 }
   \item{node}{
 a character vector specifying the names of the nodes for which the evidence is to be absorbed.
