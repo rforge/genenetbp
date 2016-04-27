@@ -1,67 +1,55 @@
-###############################################################################
-# \name{absorb.gnbp}
-# 
-# \title{Absorb evidence and infer a genotype-phenotype network}
-# 
-# \description{
-#   Absorb a single piece or a spectrum of evidence for one or more continuous nodes 
-#  in a compiled RHugin domain, obtain the updated beliefs 
-#  and the Jeffrey's signed information. }
-# 
-#   \usage{
-#   absorb.gnbp(gpfit, node, evidence)
-#   }
-# 
-#   \arguments{
-# 
+# \name{absorb-methods}
+# \alias{absorb.gnbp}
+# \alias{absorb.dbn}
+# \title{
+#   Absorb evidence and propagate beliefs in a genotype-phenotype network
+# }
+# \usage{
+#   ## For Conditional Gaussian Bayesian Networks / Discrete Bayesian Networks (Implements RHugin)
+#   absorb.gnbp(object, node, evidence)
+#   ## For Discrete Bayesian Networks (Implements gRain)
+#   absorb.dbn(object, node, evidence)
+# }
+# \arguments{
 #   \item{gpfit}{
-#   an object of class "gpfit". Output from \code{\link{fit.gnbp}}. 
+#     an object of class "gpfit" (output from \code{\link{fit.gnbp}}) for \code{absorb.gnbp}or an object of class "dbnfit" (Output from \code{\link{fit.dbn}})for \code{absorb.dbn}. 
 #   }
-#   
+#   \item{dbnfit}{
+#     
+#   }
 #   \item{node}{
-#   a character vector specifying the names of the nodes for 
-# which the evidence is to be absorbed.
+#     a character vector specifying the names of the nodes for which the evidence is to be absorbed.
 #   }
 #   \item{evidence}{
-#   a matrix or a numeric vector of evidence. number of rows of the 
-# matrix or the length of the vector should be equal to the length of node. 
+#     a matrix or a numeric vector of evidence. number of rows of the matrix or the length of the vector should be equal to the length of \code{node}. 
 #   }
-#   }
-#   
-#   \value{
-#   absorb.gnbp returns an object of class "gnbp". The functions 
-# summary and print can be used for objects of class "gnbp". 
-# An object of class "gnbp" is a list containing the following components
-#   
-#   \item{gp}{an RHugin domain that is triangulated,
-# compiled and with the latest absorbed evidence propagated }
-#   \item{gp_flag}{type of network}
-#   \item{node}{a character vector specifying the nodes 
-# for which evidence has been absorbed}
-#   \item{marginal}{a list of marginal probabilities for 
-# phenotypes (\code{pheno}) and genotypes (\code{geno})}
-#   \item{belief}{a list of updated beliefs for phenotypes 
-# (\code{pheno}) and genotypes (\code{geno})}
-#   \item{JSI}{a matrix of Jeffrey's signed information if 
-# network is \code{Conditional Gaussian}, otherwise \code{NULL} 
-# if network is \code{Discrete Bayesian}}
-# \item{FC}{a list of two. a matrix \code{FC} of fold changes and 
-# a matrix \code{pheno_state} of phenotype node beliefs - state with 
-# maxium probability.If network is \code{Conditional Gaussian},
-# a \code{NULL} value is returned.}
+# }
+# 
+# \value{
+# \code{absorb.gnbp} returns an object of class "gnbp" while \code{absorb.dbn} returns an object of class "dbn". An object of class "gnbp" or "dbn" is a list containing the following components
+# 
+# \item{gp}{an RHugin domain (for \code{absorb.gnbp}) or a grain object (for \code{absorb.dbn}) that is triangulated, compiled and with the latest absorbed evidence propagated.  }
+# \item{gp_flag}{type of network.}
+# \item{node}{a character vector specifying the nodes for which evidence has been absorbed}
+# \item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
+# \item{belief}{a list of updated beliefs for phenotypes (\code{pheno}) and genotypes (\code{geno})}
+# \item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise \code{NULL} if network is \code{Discrete Bayesian}}. 
+# \item{FC}{a list of two. a matrix \code{FC} of fold changes and a matrix \code{pheno_state} of phenotype node beliefs - state with maxium probability. If network is \code{Conditional Gaussian}, a \code{NULL} value is returned.}
+
+}
 #############################################################################
 
-absorb.gnbp=function(gpfit,node,evidence)
+absorb.gnbp=function(object,node,evidence)
 
 {
   
-  requireNamespace("RHugin") || warning("Package not loaded: RHugin");
+  requireNamespace("RHugin") || stop("Package not loaded: RHugin");
   
   
   ## get node attributes and network
-  class_nodes=gpfit$gp_nodes
-  network<-gpfit$gp
-  type<-gpfit$gp_flag
+  class_nodes=object$gp_nodes
+  network<-object$gp
+  type<-object$gp_flag
   
   ## get d-connected nodes
   dnodes<-RHugin::get.dconnected.nodes(network,node)
@@ -75,7 +63,7 @@ absorb.gnbp=function(gpfit,node,evidence)
   
   ## check if class of evidence is matrix
   if(class(evidence)!="matrix")
-    stop("In function(absorb.gpBP),'evidence' must be of class matrix")
+    stop("In function(absorb.gnbp),'evidence' must be of class matrix")
   
   ## create matrices to store phenotype results
   if (type == "cg")  
@@ -304,10 +292,11 @@ absorb.gnbp=function(gpfit,node,evidence)
         marg_mean[j,1]<-pmarginal$mean
         marg_var[j,1]<-unlist(pmarginal$cov)
       }
-    
+
+      
       if(dnodes[j,2]=="factor")
       {
-        marg_freq[j,]<-pmarginal$table[,2]
+        marg_freq[j,1:dnodes[j,4]]<-pmarginal$table[,2]
       }
     
     }

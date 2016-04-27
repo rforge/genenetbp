@@ -1,8 +1,12 @@
 exportPattern("^[^\\.]")
 export(fit.gnbp,gen.evidence,absorb.gnbp,plot.gnbp)
-import(Rgraphviz,scales,graph)
+import(Rgraphviz,scales,graph,bnlearn,gRain)
 importFrom("grDevices", "rainbow")
 importFrom("graphics", "axis", "layout", "legend", "par", "rect",
               "title")
 importFrom("stats", "setNames")
+importFrom("igraph","get.edgelist")
 S3method("plot","gnbp")
+S3method("plot","dbn")
+S3method("plot","gpfit")
+S3method("plot","dbnfit")
