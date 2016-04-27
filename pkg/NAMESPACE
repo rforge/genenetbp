@@ -1,6 +1,6 @@
 exportPattern("^[^\\.]")
 export(fit.gnbp,gen.evidence,absorb.gnbp,plot.gnbp)
-import(Rgraphviz,scales,graph,bnlearn,gRain)
+import(bnlearn,gRain,Rgraphviz,scales,graph)
 importFrom("grDevices", "rainbow")
 importFrom("graphics", "axis", "layout", "legend", "par", "rect",
               "title")
