@@ -18,7 +18,6 @@ absorb.dbn(object, node, evidence)
   \item{object}{
 an object of class "gpfit" (output from \code{\link{fit.gnbp}}) for \code{absorb.gnbp}or an object of class "dbnfit" (Output from \code{\link{fit.dbn}})for \code{absorb.dbn}. 
 }
-}
   \item{node}{
 a character vector specifying the names of the nodes for which the evidence is to be absorbed.
 }
