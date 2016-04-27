@@ -104,7 +104,7 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
    blM[blacklist[,"from"],blacklist[,"to"]]<-1
  }
   
-  blackL <- data.frame(get.edgelist(as(blM, "igraph")))
+  blackL <- data.frame(igraph::get.edgelist(as(blM, "igraph")))
   names(blackL) <- c("from", "to")
   
   if(!missing(whitelist))
