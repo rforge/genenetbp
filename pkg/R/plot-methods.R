@@ -150,10 +150,10 @@ plot.gnbp=function(x, y="JSI",ncol = 1, col.palette,col.length = 100, fontsize=1
      dnodes=c()
      for (i in 1:dim(class_nodes)[1])
      {
-       if(!dsep(as.bn.fit(x$gp),node,class_nodes[i,1]))
+       if(!dsep(as.bn.fit(x$gp),x$node,class_nodes[i,1]))
          dnodes<-rbind(dnodes,class_nodes[i,])
      }
-     dnodes<-dnodes[-which(dnodes[,1]==node),]
+     dnodes<-dnodes[-which(dnodes[,1]==x$node),]
   } 
   
   
@@ -266,6 +266,8 @@ plot.dbn=function(x, y="state",col.palette,col.length = 100, fontsize=10, fontco
   ## get network type
   type=x$gp_flag
   
+  ##get node for which evidence is absorbed.
+  
   ## convert to graphNEL object for use with Rgraphviz
   BNgraph<-as.graphNEL(as.bn.fit(x$gp))
     
@@ -273,10 +275,10 @@ plot.dbn=function(x, y="state",col.palette,col.length = 100, fontsize=10, fontco
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
   {
-    if(!dsep(as.bn.fit(x$gp),node,class_nodes[i,1]))
+    if(!dsep(as.bn.fit(x$gp),class_nodes[i,1]),x$node)
         dnodes<-rbind(dnodes,class_nodes[i,])
   }
-    dnodes<-dnodes[-which(dnodes[,1]==node),] 
+    dnodes<-dnodes[-which(dnodes[,1]==x$node),] 
   
   
   ## set node attributes
