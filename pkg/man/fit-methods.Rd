@@ -57,9 +57,9 @@ The function fit.dbn infers a discrete bayesian network structure from genotype-
 
 The supported algorithms from \pkg{\link{bnlearn}} are 
 \enumerate{
-\item{Score-based:}{\emph{Hill-Climbing} (\code{\link[bnlearn]{hc}},default), \emph{Tabu Search} (\code{\link[bnlearn]{tabu}})}
-\item{Constraint-based:}{\emph[bnlearn]{Grow-Shrink} (\code{\link[bnlearn]{gs}}), \emph{Incremental Association} (\code{\link[bnlearn]{iamb}}), \emph{Fast Incremental Association} (\code{\link[bnlearn]{fast.iamb}}), \emph{Interleaved Incremental Association} (\code{\link[bnlearn]{inter.iamb}})}
-\item{Hybrid:} \emph{Max-Min Hill-Climbing} (\code{\link[bnlearn]{mmhc}}). 
+\item{Score-based:}{ \emph{Hill-Climbing} (\code{\link[bnlearn]{hc}},default), \emph{Tabu Search} (\code{\link[bnlearn]{tabu}})}
+\item{Constraint-based:}{ \emph{Grow-Shrink} (\code{\link[bnlearn]{gs}}), \emph{Incremental Association} (\code{\link[bnlearn]{iamb}}), \emph{Fast Incremental Association} (\code{\link[bnlearn]{fast.iamb}}), \emph{Interleaved Incremental Association} (\code{\link[bnlearn]{inter.iamb}})}
+\item{Hybrid:}{ \emph{Max-Min Hill-Climbing} (\code{\link[bnlearn]{mmhc}}).} 
 }
 
 The algorithm can be specified by \code{method}. Structure learning functions are implemented with their default parameters. If different parameter values are desired, it is recommended to learn the network structure independently using the bnlearn package.The inferred structure can be input as a graph object to \code{fit.dbn} and then set learn="FALSE".
@@ -73,11 +73,9 @@ The algorithm can be specified by \code{method}. Structure learning functions ar
 \item{gp_flag}{a character string specifying the type of network : "cg" for (\code{Conditional Gaussian} or "db"/"dbn" for \code{Discrete Bayesian})}
 
 \code{fit.dbn} returns an object of class "dbnfit" containing the following components. 
-\item{dbn}{an object of class bn. See \code{\linkS3class{bn-class}} for details. This object contains the inferred network structure and the conditional probability tables for each node in the network.}
+\item{dbn}{an object of class bn. See \code{\link[bnlearn]{bn-class}} for details. This object contains the inferred network structure and the conditional probability tables for each node in the network.}
 \item{dbn_nodes}{a data frame containing information about nodes for internal use with other functions.}
 \item{dbn_flag}{a character string specifying the type of network \code{"dbn"} for \code{Discrete Bayesian})}
-}
-
 }
 
 \author{
