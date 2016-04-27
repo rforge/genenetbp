@@ -65,7 +65,6 @@ Janhavi Moharil<janhavim@buffalo.edu>
 \seealso{
 \code{\link{absorb.gnbp}}, \code{\link{absorb.dbn}}, \code{fit.gnbp},\code{fit.dbn}
 }
-}
 
 \examples{
 ## Fit, absorb and plot a genotype-phenotype network
