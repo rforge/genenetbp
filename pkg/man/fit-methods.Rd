@@ -110,10 +110,10 @@ for (i in 1:dim(hdlpheno)[2])
 }
 
 ## Simple example : Fit a discrete bayesian network to genotype-phenotype data
-fit.dbn(hdlgeno,hdlpheno)
+fit.dbn(hdlgeno,hdlpheno_dis)
 
 ## Fit a discrete bayesian network by Grow-Shrink method and plot it.
-hdlgs<-fit.dbn(hdlgeno,hdlpheno,method="gs")
+hdlgs<-fit.dbn(hdlgeno,hdlpheno_dis,method="gs")
 plot(hdlgs)
 
 
