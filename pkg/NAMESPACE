@@ -5,8 +5,6 @@ importFrom("grDevices", "rainbow")
 importFrom("graphics", "axis", "layout", "legend", "par", "rect",
               "title")
 importFrom("stats", "setNames")
-importFrom("igraph","get.edgelist","igraph.from.graphNEL")
-importFrom("scales","cscale","dscale","seq_gradient_pal","manual_pal")
 S3method("plot","gnbp")
 S3method("plot","dbn")
 S3method("plot","gpfit")
