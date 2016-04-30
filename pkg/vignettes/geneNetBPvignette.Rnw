@@ -600,21 +600,29 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 Consider the yeast network inferred in section 3.2. The phenotypes are discrete variables with 2 states (1,-1) in \code{Yeast} dataset. Like fit methods, there are two ways to absorb the phenotypic evidence in discrete bayesian networks, the function \code{absorb.dbn} that implements \pkg{gRain} or \code{absorb.gnbp} that implements \pkg{RHugin}. 
 
-\subsubsubsection{absorb.gnbp} 
 
-Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}. 
+\subsubsubsection{absorb.dbn} 
 
-<<H,eval=TRUE,figs.only=TRUE>>=
+<<I,eval=TRUE>>=
 ## Fit the network
-yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.1)
+yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis)
 ##Absorb evidence
-yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c(1)))
+yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("1","-1"),ncol=2))
 @
 
 
 
 
+\subsubsubsection{absorb.gnbp} 
 
+Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}. 
+
+<<H,eval=FALSE>>=
+## Fit the network
+yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.1)
+##Absorb evidence
+yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c(1)))
+@
 
 
 
