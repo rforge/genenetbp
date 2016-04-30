@@ -588,7 +588,7 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \subsection(Discrete Bayesian Networks)
 
-\subsubsection(Belief propagation & Fold change (FC))
+\subsubsection(Belief propagation and Fold change (FC))
 \noindent In Discrete Bayesian Networks, phenotype nodes are represented as $\{X_1, X_2, \ldots, X_p \}$. A node $X_i$, has the states, $X_i \in \{s_1, s_2, \ldots, s_n\}$, where $\sum_{k=1}^n s_k = 1$.  Let $X_{i}^0 = \{s_1^0, s_2^0, \ldots s_n^0\}$ denote the states of $X_i$ in the initial network, and $X_{i}^{pert} \in \{s_1^{pert}, s_2^{pert}, \ldots s_n^{pert}\}$ denotes the states of $X_i$ in the perturbed network. \\
 
 \noindent The node-wise change in marginals is quantified simply by the Fold Change (FC) as a measure of effect size for the state of maximal probability in the perturbed network.  Let $I^{*}$ be an indicator for the state of $X_{i}^{pert}$ with maximum probability.  That is, $I^*=1$ if $s_k^{pert} = \max P(s_k^{pert})$, and $0$ otherwise.  The node-wise change in marginals is:  
