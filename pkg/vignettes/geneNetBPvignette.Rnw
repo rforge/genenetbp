@@ -375,7 +375,7 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \subsubsection{Mouse Kidney eQTL Example}
 
-We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal) in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
+We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal) in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. The input to \code{absorb.gnbp} is an object of class \code{gpfit}, that is the output returned by the function \code{fit.gnbp}.
 
 \noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \code{d}-connected nodes. The following example illustrates how to absorb evidence in a genotype-phenotype network. \\
 
@@ -383,9 +383,9 @@ We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$mar
 
 \begin{Schunk}
 \begin{Sinput}
-> network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+> mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 > ## Absorb evidence
-> absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+> absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=matrix(-0.99))
 \end{Sinput}
 \begin{Soutput}
 $gp
