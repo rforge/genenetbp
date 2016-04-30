@@ -200,8 +200,11 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     ## Compile network and learn cpt
     RHugin::compile(network)
     RHugin::learn.cpt(network,tol=tol,maxit=maxit)
+    
+    ## get marginals
+    cpt<-.get.marginal.bn(network,class_nodes)
         
-    gpfit<-list(gp=network,gp_nodes=class_nodes,gp_flag=type)
+    gpfit<-list(gp=network,marginal=cpt,gp_nodes=class_nodes,gp_flag=type)
     
     class(gpfit)<-"gpfit"
     
@@ -236,6 +239,61 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
   return(qtl_constraints)
 }
 
-
+## get marginals 
+.get.marginal.bn=function(network,class_nodes)
+  
+{
+  
+  ## create matrices to store results
+  marg_mean<-matrix(nrow=dim(class_nodes)[1],ncol=1)
+  marg_var<-matrix(nrow=dim(class_nodes)[1],ncol=1)
+  marg_freq<-matrix(nrow=dim(class_nodes)[1],ncol=as.numeric(max(class_nodes[,3])))
+  
+  
+  ## get mean and var
+  for (j in 1:dim(class_nodes)[1])
+  {  
+    
+    pmarginal<-RHugin::get.marginal(network,class_nodes[j,1])
+    if(class_nodes[j,2]=="numeric")
+    {
+      marg_mean[j,1]<-pmarginal$mean
+      marg_var[j,1]<-unlist(pmarginal$cov)
+    }
+    
+    
+    if(class_nodes[j,2]=="factor")
+    {
+      marg_freq[j,1:class_nodes[j,4]]<-pmarginal$table[,2]
+    }
+    
+  }
+  
+  ## annotate rows and columns     
+  
+  if(length(marg_freq)!=0)
+  {
+    freqnames<-matrix(nrow=as.numeric(max(class_nodes[,3])),ncol=1)
+    
+    for (i in 1:max(class_nodes[,3]))
+      freqnames[i]=paste("state",i,sep="")
+    
+    colnames(marg_freq)=freqnames
+  }
+  
+  if(length(marg_mean)!=0)
+  {
+    colnames(marg_var)=c("var")
+    colnames(marg_mean)=c("mean")
+  }
+  
+  marginal<-cbind(cbind(marg_mean,marg_var),marg_freq)
+  rownames(marginal)=class_nodes[,1]
+  
+  ## return cpt
+  
+  return(marginal)
+  
+}
 
 

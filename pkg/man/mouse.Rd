@@ -1,8 +1,6 @@
 \name{mouse}
 \docType{data}
 \alias{mouse}
-\alias{mousegeno}
-\alias{mousepheno}
 \title{Mus Musculus Kidney eQTL data from Hageman et. al. (2011)
 } 
 \description{Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice.
@@ -10,12 +8,9 @@
 \usage{
 data(mouse)
 }
-\format{The data set \code{mouse} contains the following variables:
-\itemize{
-\item{mousegeno}{  a data frame of 173 observations of 5 variables. All column vectors are of class factor}
-\item{mousepheno}{ a data frame of 173 observations of 14 variables. All column vectors are of class numeric }
+\format{The data set \code{mouse} is a data frame consisting of 173 observations of 19 variables: genotype data (genotype states at 5 SNP markers) and phenotype data (normalized expression data of 14 genes).   Genotype data is of class \code{factor} and phenotype data is of  class \code{numeric}. }
 }
-}
+
 \details{
 Kidney eQTL data was obtained from a F2 inner-cross between inbred MRL/MpJ and SM/J strains of mice.
 }

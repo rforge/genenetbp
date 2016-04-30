@@ -16,7 +16,7 @@ absorb.dbn(object, node, evidence)
 }
 \arguments{
   \item{object}{
-an object of class "gpfit" (output from \code{\link{fit.gnbp}}) for \code{absorb.gnbp}or an object of class "dbnfit" (Output from \code{\link{fit.dbn}})for \code{absorb.dbn}. 
+an object of class "gpfit" (output from \code{\link{fit.gnbp}}) for \code{absorb.gnbp} or an object of class "dbnfit" (Output from \code{\link{fit.dbn}}) for \code{absorb.dbn}. 
 }
   \item{node}{
 a character vector specifying the names of the nodes for which the evidence is to be absorbed.
@@ -53,29 +53,33 @@ Janhavi Moharil<janhavim@buffalo.edu>
 }
 
 \seealso{
-\code{\link{gen.evidence}},\code{\link{plot-methods}}
+\code{\link{gen.evidence}}, \code{\link{plot.gnbp}}, \code{\link{plot.dbn}}
 }
 \examples{
 
 ## load the mouse kidney eQTL dataset
 data(mouse)
 
+## get genotype and phenotype data
+mousegeno<-mouse[,1:5]
+mousepheno<-mouse[,6:14]
+
 \dontrun{
 ## Simple example : Fit a bayesian network to genotype-phenotype data 
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 
 ## Absorb a single evidence for a single node
-absorb.gnbp(network,node="Tlr12",evidence=matrix(2.5))
+absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=matrix(2.5))
 
 ## Absorb a sequence of evidence for a single node generated using \code{\link{gen.evidence}
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-evidence<-gen.evidence(network,node="Tlr12")
-absorb.gnbp(network,node="Tlr12",evidence=evidence)
+mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+evidence<-gen.evidence(mouse.cgbn,node="Tlr12")
+absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=evidence)
 
 ##Absorb sequence of evidence for multiple nodes}
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-evidence<-gen.evidence(network,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
-absorb.gnbp(network,node=rownames(evidence),evidence=evidence)
+mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+evidence<-gen.evidence(mouse.cgbn,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
+absorb.gnbp(mouse.cgbn,node=rownames(evidence),evidence=evidence)
 }
 
 }

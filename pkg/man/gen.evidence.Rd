@@ -31,8 +31,6 @@ A matrix of evidence for each specified node
 
 \author{
 Janhavi Moharil<janhavim@buffalo.edu>
-
-Rachael Hageman-Blair<hageman@buffalo.edu> 
 }
 
 \seealso{
@@ -43,10 +41,10 @@ Rachael Hageman-Blair<hageman@buffalo.edu>
 ##Fit a network
 data(mouse)
 \dontrun{
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+mouse.cgbn<-fit.gnbp(mouse[,1:5],mouse[,6:14],alpha=0.1)
 
 ##Generate a sequence of evidence for a single node
-evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
+evidence<-gen.evidence(mouse.cgbn,node="Tlr12",std=2,length.out=20)
 }
 
 }

@@ -1,4 +1,4 @@
-\name{plot-methods}
+\name{plot.gnbp}
 \alias{plot.gnbp}
 \alias{plot.dbn}
 \alias{plot.gpfit}
@@ -26,6 +26,7 @@ An object of class "gnbp" (\code{plot.gnbp}), "dbn" (\code{plot.dbn}), "gpfit" (
 A character string. Valid options are \code{"JSI"} (default) or \code{"belief"} for Conditional Gaussian network and \code{"FC"} or \code{"state"} for Discrete Bayesian networks. \code{plot.dbn} plots only discrete bayesian networks. Note that \code{y} will be ignored for \code{plot.dbnfit} and \code{gpfit}
 }
   \item{ncol}{a positive integer specifying the column number of JSI / belief / FC to plot. By default, the first column will be used.}
+  
   \item{col.palette}{A list of character strings. For \code{"JSI"},\code{"belief"} and \code{"FC"} a list of 6 elements specifying colors for colormap.All 6 elements should be character strings specifying the colour for 
 \code{pos_high}= high end of gradient of positive values (default = "red" (JSI, belief), "darkmagenta",(FC))
 \code{pos_low}=low end of gradient of positive values (default = "wheat1" (JSI, belief), "palegoldenrod",(FC))
@@ -63,15 +64,15 @@ Janhavi Moharil<janhavim@buffalo.edu>
 }
 
 \seealso{
-\code{\link{absorb.gnbp}}, \code{\link{absorb.dbn}}, \code{fit.gnbp},\code{fit.dbn}
+\code{\link{absorb.gnbp}}, \code{\link{absorb.dbn}}, \code{\link{fit.gnbp}}, \code{\link{fit.dbn}}
 }
 
 \examples{
 ## Fit, absorb and plot a genotype-phenotype network
 data(mouse)
 \dontrun{
-network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
-network<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
-plot(network)
+mouse.cgbn<-fit.gnbp(mouse[,1:5],mouse[,6:14],alpha=0.1)
+mouse.cgbn.abs<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+plot(mouse.cgbn.abs)
 }
 }

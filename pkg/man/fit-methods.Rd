@@ -70,12 +70,12 @@ The algorithm can be specified by \code{method}. Structure learning functions ar
 
 \item{gp}{a pointer to a compiled RHugin domain that is the inferred network structure and the conditional probability tables for each node in the network.}
 \item{gp_nodes}{a data frame containing information about nodes for internal use with other functions.}
-\item{gp_flag}{a character string specifying the type of network : "cg" for (\code{Conditional Gaussian} or "db"/"dbn" for \code{Discrete Bayesian})}
+\item{gp_flag}{a character string specifying the type of network : "cg" for \code{Conditional Gaussian} or "db" for \code{Discrete Bayesian}.}
 
 \code{fit.dbn} returns an object of class "dbnfit" containing the following components. 
 \item{dbn}{an object of class bn. See \code{\link[bnlearn]{bn-class}} for details. This object contains the inferred network structure and the conditional probability tables for each node in the network.}
 \item{dbn_nodes}{a data frame containing information about nodes for internal use with other functions.}
-\item{dbn_flag}{a character string specifying the type of network \code{"dbn"} for \code{Discrete Bayesian})}
+\item{dbn_flag}{a character string specifying the type of network \code{"dbn"} for \code{Discrete Bayesian}.}
 }
 
 \author{
@@ -83,13 +83,17 @@ Janhavi Moharil <janhavim@buffalo.edu>
 }
 
 \seealso{
-\code{\link{plot-methods}}, \code{\link{absorb.gnbp}}, For discrete bayesian networks : \code{\link{fit.dbn}},\code{\link{absorb.dbn}}
+\code{\link{plot.gpfit}}, \code{\link{plot.dbnfit}}, \code{\link{absorb.gnbp}}, For discrete bayesian networks : \code{\link{fit.dbn}},\code{\link{absorb.dbn}}
 }
 
 \examples{
 \dontrun{
 ## load the mouse kidney eQTL dataset
 data(mouse)
+
+## get genotype and phenotype data
+mousegeno<-mouse[,1:5]
+mousepheno<-mouse[,6:14]
 
 ## Simple example : Fit a bayesian network to genotype-phenotype data using the default values
 fit.gnbp(mousegeno,mousepheno)

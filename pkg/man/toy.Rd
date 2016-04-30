@@ -1,8 +1,6 @@
 \name{toy}
 \docType{data}
 \alias{toy}
-\alias{toygeno}
-\alias{toypheno}
 \title{Toy example dataset 
 }
 \description{Toy example, Simulated data set 
@@ -10,12 +8,9 @@
 \usage{
 data(toy)
 }
-\format{The data set \code{toy} contains the following variables:
-\itemize{
-\item{toygeno}{ a data frame of 500 observations of 3 variables. All column vectors are of class factor}
-\item{toypheno}{ a data frame of 500 observations of 6 variables. All column vectors are of class numeric }
+\format{The data set \code{toy} is a data frame of 500 observations of 9 variables: genotype data (genotype states at 3 SNP markers) and phenotype data (6 variables).Genotypes are of class \code{factor} and phenotypes are of class \code{numeric}.
 }
-}
+
 \details{
 The simulated dataset consists of 3 genotypes each with 2 states and 6 phenotypes.
 }

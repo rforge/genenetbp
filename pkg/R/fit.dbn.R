@@ -191,7 +191,39 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
  colnames(class_nodes)=c("node","class","levels","type")
 
  
- dbnfit<-list(dbn=network,dbn_nodes=class_nodes,dbn_flag="dbn")
+ #########################################
+ ## get marginals
+ #########################################
+
+ network<-as.grain(network$dbn)
+ setEvidence(network)
+ grn<-querygrain(network)
+
+  ## create matrices to store results
+  cpt<-matrix(NA,nrow=dim(class_nodes)[1],ncol=as.numeric(max(class_nodes[,3])))
+  rownames(cpt)=class_nodes[,1]
+   
+  ## get marginals
+  for (j in 1:dim(class_nodes)[1]) 
+  {
+   cpt_temp<-unlist(grnstate[class_nodes[j,1]])
+   cpt[class_nodes[j,1],1:length(cpt_temp)]<-cbind(cpt_temp)
+  }
+   
+   ## annotate columns     
+   
+   if(length(cpt)!=0)
+   {
+     freqnames<-matrix(nrow=as.numeric(max(class_nodes[,3])),ncol=1)
+     for (i in 1:max(class_nodes[,3]))
+       freqnames[i]=paste("state",i,sep="")
+     
+     colnames(cpt)=freqnames
+   }
+   
+
+ ## Return variables
+ dbnfit<-list(dbn=network,marginal=cpt, dbn_nodes=class_nodes,dbn_flag="dbn")
  class(dbnfit)<-"dbnfit"
  
  return(dbnfit)
