@@ -290,10 +290,11 @@ plot(network)
 \noindent A discrete bayesian network can be learnt using 2 approaches. First one is by using \code{fit.gnbp} that implements the PC algorithm as described above. 
 
 We will first load the \code{yeast} dataset and extract the genotype and phenotype data as before.The first 9 columns are genotypes (categorical) and the next 16 columns are phenotypes (continuous).
+
 <<dataset,results=hide>>=
 data(yeast,package="geneNetBP")
 yeastgeno<-yeast[,1:9]
-yeastpheno<-yeast[,10:16]
+yeastpheno<-yeast[,10:25]
 @
 
 Since the phenotypes are continuous, we will discretize the data around the median.
@@ -308,10 +309,10 @@ for (i in 1:dim(yeastpheno)[2])
 }
 @
 
-\noindent A discrete bayesian network can be learnt using \code{fit.gnbp} by setting type = "db".
+\noindent A discrete bayesian network can be learnt using \code{fit.gnbp} by setting \code{type = "db"}.
 
 <<E,eval=FALSE>>=
-yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.2)
+yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.1)
 @
 
 The RHugin pointer to the inferred network structure is returned in the variable \code{$gp} of the list. It consists of 25 nodes and 14 edges. Here is a plot of the network structure.
@@ -322,13 +323,13 @@ plot(yeast.gnbp)
 
 \begin{figure}[H]
 \centering 
-\includegraphics{yeast_graph}
-\caption{Discrete Bayesian Network learnt from Yeast data}
+\includegraphics{yeast.gnbp}
+\caption{Discrete Bayesian Network learnt from Yeast data using (\code{fit.gnbp})}
 \end{figure} 
 
 The second approach to infer the network structure is by using \code{fit.dbn} that can implement several score-based and constraint-based learning methods from the package \pkg{bnlearn}. The default method is \emph{Hill-Climbing} (\code{method = "hc"}).
 
-<<F,results=TRUE,eval=TRUE>>=
+<<F,results=verbatim,eval=TRUE>>=
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis)
 @
 
@@ -595,7 +596,20 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \noindent Note that $FC\in [0,1)$ when the node is inhibited, $FC = 1$ when the node stays the same, and $FC > 1$ when the node is activated.\\
 
-\subsubsection{ example}
+\subsubsection{Yeast example}
+
+Consider the yeast network inferred in section 3.2. The phenotypes are discrete variables with 2 states (1,-1) in \code{Yeast} dataset. Like fit methods, there are two ways to absorb the phenotypic evidence in discrete bayesian networks, the function \code{absorb.dbn} that implements \pkg{gRain} or \code{absorb.gnbp} that implements \pkg{RHugin}. 
+
+\subsubsubsection{absorb.gnbp} 
+
+Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}. 
+
+<<H,eval=TRUE,figs.only=TRUE>>=
+## Fit the network
+yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.1)
+##Absorb evidence
+yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c(1)))
+@
 
 
 
