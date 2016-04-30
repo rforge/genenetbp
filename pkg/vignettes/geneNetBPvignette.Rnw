@@ -340,7 +340,11 @@ plot(yeast.dbn)
 
 %CPT Tables
 \subsection(Extracting Conditional Probability Distributions)
-In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. These can be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions. Additionally, the 
+In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions
+
+
+
+These can be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions. Additionally, the 
 
 
 

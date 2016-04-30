@@ -69,11 +69,13 @@ The algorithm can be specified by \code{method}. Structure learning functions ar
 \code{fit.gnbp} returns an object of class "gpfit" containing the following components.
 
 \item{gp}{a pointer to a compiled RHugin domain that is the inferred network structure and the conditional probability tables for each node in the network.}
+\item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
 \item{gp_nodes}{a data frame containing information about nodes for internal use with other functions.}
 \item{gp_flag}{a character string specifying the type of network : "cg" for \code{Conditional Gaussian} or "db" for \code{Discrete Bayesian}.}
 
 \code{fit.dbn} returns an object of class "dbnfit" containing the following components. 
 \item{dbn}{an object of class bn. See \code{\link[bnlearn]{bn-class}} for details. This object contains the inferred network structure and the conditional probability tables for each node in the network.}
+\item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
 \item{dbn_nodes}{a data frame containing information about nodes for internal use with other functions.}
 \item{dbn_flag}{a character string specifying the type of network \code{"dbn"} for \code{Discrete Bayesian}.}
 }
