@@ -329,12 +329,12 @@ plot(yeast.gnbp)
 
 The second approach to infer the network structure is by using \code{fit.dbn} that can implement several score-based and constraint-based learning methods from the package \pkg{bnlearn}. The default method is \emph{Hill-Climbing} (\code{method = "hc"}).
 
-<<F,results=verbatim,eval=TRUE>>=
+<<F,results=verbatim,eval=FALSE>>=
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis)
 @
 
 \begin{center}
-<<F1,figs.only=TRUE,eval=TRUE>>=
+<<F1,figs.only=TRUE,eval=FALSE>>=
 plot(yeast.dbn)
 @
 \end{center}
@@ -344,7 +344,7 @@ plot(yeast.dbn)
 To choose a different method, specify \code{method}. For example, to fit the network by \emph{Grow-Shrink} method,
 
 \begin{center}
-<<G,figs.only=TRUE,eval=TRUE>>=
+<<G,figs.only=TRUE,eval=FALSE>>=
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis,method="gs")
 plot(yeast.dbn)
 @
@@ -603,7 +603,7 @@ Consider the yeast network inferred in section 3.2. The phenotypes are discrete 
 
 \subsubsubsection{absorb.dbn} 
 
-<<I,eval=TRUE>>=
+<<I,eval=FALSE>>=
 ## Fit the network
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis)
 ##Absorb evidence
@@ -619,9 +619,9 @@ Like previously mentions, \code{absorb.gnbp} can be used with objects of class \
 
 <<H,eval=FALSE>>=
 ## Fit the network
-yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.1)
+yeast.gnbp<-fit.gnbp(yeastgeno,yeastpheno_dis,type="db",alpha=0.1)
 ##Absorb evidence
-yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c(1)))
+yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 @
 
 

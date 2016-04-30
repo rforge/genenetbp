@@ -195,9 +195,9 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
  ## get marginals
  #########################################
 
- network<-as.grain(network$dbn)
- setEvidence(network)
- grn<-querygrain(network)
+ network.grain<-as.grain(network$dbn)
+ setEvidence(network.grain)
+ grn<-querygrain(network.grain)
 
   ## create matrices to store results
   cpt<-matrix(NA,nrow=dim(class_nodes)[1],ncol=as.numeric(max(class_nodes[,3])))
