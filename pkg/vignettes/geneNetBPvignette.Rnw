@@ -138,7 +138,7 @@ data(yeast,package="geneNetBP")
 head(yeast,n=3)
 @
 
-\noindent Note that there are 2 possible genotype states denoted by 1 and 2. The genotypes are categorical variables and hence all columns in data frame \code{yeastgeno} have to be of class factor while the phenotypes are continuous variables with all columns in data frame \code{yeastpheno} of class numeric.\\ 
+\noindent Note that there are 2 possible genotype states denoted by 1 and 2. The genotypes are categorical variables and hence all genotype columns in data frame \code{yeast} have to be of class factor. The phenotypes are continuous variables and phenotype columns in data frame \code{yeast} of class numeric.\\ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Infering network structure}
@@ -290,7 +290,7 @@ plot(network)
 \noindent A discrete bayesian network can be learnt using 2 approaches. First one is by using \code{fit.gnbp} that implements the PC algorithm as described above. 
 
 We will first load the \code{yeast} dataset and extract the genotype and phenotype data as before.The first 9 columns are genotypes (categorical) and the next 16 columns are phenotypes (continuous).
-<<C,eval=FALSE>>=
+<<C,eval=TRUE,results=hide>>=
 data(mouse,package=geneNetBP)
 yeastgeno<-yeast[,1:9]
 yeastpheno<-yeast[,10:16]
@@ -310,56 +310,58 @@ for (i in 1:dim(yeastpheno)[2])
 
 \noindent A discrete bayesian network can be learnt using \code{fit.gnbp} by setting type = "db".
 
-<<C,results=verbatim,eval=TRUE,fig=TRUE>>=
+<<E,eval=FALSE>>=
 yeast.gnbp<-fit.gnbp(yeastgeno, yeastpheno_dis,type="db",alpha=0.2)
 @
 
 The RHugin pointer to the inferred network structure is returned in the variable \code{$gp} of the list. It consists of 25 nodes and 14 edges. Here is a plot of the network structure.
 
-\begin{center}
-<<D,fig=TRUE,eval=TRUE>>=
+<<E1,eval=FALSE>>=
 plot(yeast.gnbp)
 @
-\end{center}
+
+\begin{figure}[H]
+\centering 
+\includegraphics{mouse_graph}
+\caption{Discrete Bayesian Network learnt from Yeast data}
+\end{figure} 
 
 The second approach to infer the network structure is by using \code{fit.dbn} that can implement several score-based and constraint-based learning methods from the package \pkg{bnlearn}. The default method is \emph{Hill-Climbing} (\code{method = "hc"}).
 
-<<E,results=verbatim,eval=TRUE>>=
+<<F,results=TRUE,eval=TRUE>>=
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis)
+@
+
+\begin{center}
+<<F1,figs.only=TRUE,eval=TRUE>>=
 plot(yeast.dbn)
 @
+\end{center}
 
 \code{fit.dbn} return an object of class \code{dbnfit which is a list several elements. The inferred network is returned as a "bn.fit" object in \code{$dbn} variable of the list.
 
 To choose a different method, specify \code{method}. For example, to fit the network by \emph{Grow-Shrink} method,
 
-<<E,results=verbatim,eval=TRUE>>=
+\begin{center}
+<<G,figs.only=TRUE,eval=TRUE>>=
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis,method="gs")
 plot(yeast.dbn)
 @
+\end{center}
 
 %CPT Tables
 \subsection(Extracting Conditional Probability Distributions)
-In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions
+In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions are returned in the second element \code{marginal} of the list in both \code{dbnfit} and \code{gpfit} objects. 
 
-
-
-These can be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions. Additionally, the 
-
-
-
-
-
-
-
+\noindent In addition, the conditional distributions can also be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Absorbing evidence and Network Comparison}
 \subsection{Conditional Gaussian Bayesian Networks}  
 
-\noindent New evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
+\noindent in CG-BN, new evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
 
-\noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence.For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
+\noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence. For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
 
 \noindent A symmetric version of the Kullback-Leibler information, known as Jeffrey's information is calculated to compare the marginal belief in the original network $X_i^{\rm 0} \sim N( \mu_0, \sigma_0^2)$ to the absorbed network $X_i^{\rm abs} \sim N( \mu_{\rm abs}, \sigma_{\rm abs}^2)$.  Jeffrey's information, which is computed for all continuous unabsorbed nodes in the network,  is given as: 
   \[ J \left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right) = I^{\rm KL}\left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right)  + I^{\rm KL}\left( X_{i}^{\rm abs}, X_{i}^{\rm 0} \right)   \]
@@ -371,11 +373,11 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \noindent The changes in belief are measured only for the nodes that are \emph{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \emph{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs.\\
 
-\subsubsection{Mouse Example}
+\subsubsection{Mouse Kidney eQTL Example}
 
-Suppose we know the marginal mean of one of the nodes \code{Tlr12} is -0.99 and we wish to enter this new information in the mouse network and see the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
+We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal) in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. 
 
-\noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \code{d}-connected nodes. The following example illustrates how to absorb evidence after fitting a network to QTL data using geneNetBP package. \\
+\noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \code{d}-connected nodes. The following example illustrates how to absorb evidence in a genotype-phenotype network. \\
 
 \noindent 1. Absorb a single evidence for a single node
 
@@ -538,7 +540,7 @@ attr(,"class")
 \end{Soutput}
 \end{Schunk}
 
-\noindent Note that the function absorb.gnbp requires the argument \code{evidence} to be of class matrix. If only a single value of evidence is to be entered, this can be done by simply using the function matrix(), as above.\\
+\noindent Note that the function \code{absorb.gnbp} requires the argument \code{evidence} to be of class matrix. If only a single value of evidence is to be entered, this can be done by simply using the function matrix(), as above.\\
 
 \noindent \code{absorb.gnbp} returns an object of class "gnbp" which is a list of several variables. \\
 
