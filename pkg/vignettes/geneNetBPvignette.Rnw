@@ -690,28 +690,33 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 
 \section{Belief propagation in known networks}
 
-\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation in a simulated toy example.\\
+\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
 
-\noindent First create a list of known edges from parent to child.\\ 
+\subsection{Toy Example}
+Suppose the interactions between the variables in the \code{toy} dataset are known. There are two ways to enter this network structure in the fit methods: 1.specify a list of edges or 2. input a graph structure of class "graphNEL". In this section we will use the first approach with \code{fit.gnbp}
+
+\noindent First create a data frame of known edges from parent to child.\\ 
 
 <<L,results=hide,eval=FALSE>>=
   ## Load the toy dataset
   data(toy)
-## Create a list of edges ("from (parent)", "to (child)")
-edgelist=list()
-edgelist[[1]]<-cbind("Q1","X1")
-edgelist[[2]]<-cbind("Q2","X1")
-edgelist[[3]]<-cbind("Q2","X2")
-edgelist[[4]]<-cbind("Q2","X4")
-edgelist[[5]]<-cbind("X1","X2")
-edgelist[[6]]<-cbind("Q3","X2")
-edgelist[[7]]<-cbind("Q3","X3")
-edgelist[[8]]<-cbind("X2","X5")
-edgelist[[9]]<-cbind("X2","X6")
-edgelist[[10]]<-cbind("X4","X6")
+## Create a matrix of edges ("from (parent)", "to (child)")
+edgelist=data.frame(matrix(NA,ncol=2,nrow=10))
+edgelist[1,]<-cbind("Q1","X1")
+edgelist[2,]<-cbind("Q2","X1")
+edgelist[3,]<-cbind("Q2","X2")
+edgelist[4,]<-cbind("Q2","X4")
+edgelist[5,]<-cbind("X1","X2")
+edgelist[6,]<-cbind("Q3","X2")
+edgelist[7,]<-cbind("Q3","X3")
+edgelist[8,]<-cbind("X2","X5")
+edgelist[9,]<-cbind("X2","X6")
+edgelist[10,]<-cbind("X4","X6")
+## label the columns
+colnames(edgelist)<-c("from","to")
 @
   
-  \noindent In \code{fit.gnbp} provide the edgelist and set \code{learn = FALSE}. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.\\
+  \noindent In \code{fit.gnbp} provide the edgelist by setting \code{graph=edgelist} and set \code{learn = FALSE}. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.\\
 
 
 \begin{Schunk}
