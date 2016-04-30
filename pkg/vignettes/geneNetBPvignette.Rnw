@@ -108,8 +108,8 @@ head(mouse,n=3)
 \noindent Load the dataset and view the first 3 observations:
 
 <<dataset,results=verbatim>>=
-data(mouse,package="geneNetBP")
-head(mouse,n=3)
+data(hdl,package="geneNetBP")
+head(hdl,n=3)
 @
 
 \noindent Note that there are 3 possible genotype states MM (homozygous) denoted by 1, H (heterozygous) by 2 and SS (homozygous) by 3. 
@@ -120,7 +120,7 @@ head(mouse,n=3)
 
 \begin{figure}[H]
   \centering
-  \includegraphics[trim=0 450 300 80,clip,height=6cm,width=6cm]{toy_graph}
+  \includegraphics{toy_graph}
   \caption{Toy network example.}
 \end{figure}
 
@@ -693,7 +693,7 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 \noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
 
 \subsection{Specifying edges, Toy example}
-Suppose the interactions between the variables in the \code{toy} dataset are known. There are two ways to enter this network structure in the fit methods: 1.specify a list of edges or 2. input a graph structure of class "graphNEL". In this section we will use the first approach with \code{fit.gnbp}
+Suppose the interactions between the variables in the \code{toy} dataset are known as shown in Section 2. There are two ways to enter this network structure in the fit methods: 1.specify a list of edges or 2. input a graph structure of class "graphNEL". In this section we will use the first approach with \code{fit.gnbp}
 
 \noindent First create a data frame of known edges from parent to child.\\ 
 
@@ -716,12 +716,12 @@ edgelist[10,]<-cbind("X4","X6")
 colnames(edgelist)<-c("from","to")
 @
   
-  \noindent In \code{fit.gnbp} provide the edgelist by setting \code{graph=edgelist} and set \code{learn = FALSE}. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.\\
+\noindent In \code{fit.gnbp} provide the edgelist by setting \code{graph=edgelist} and set \code{learn = FALSE}. This will skip the learning and only conditional probabilities will be calculated for each node in the network based on the given network structure and data. Absorbing evidence and propagating the beliefs subsequently is then straightforward.\\
 
 
 \begin{Schunk}
 \begin{Sinput}
-> network<-fit.gnbp(toygeno,toypheno,learn=FALSE,edgelist=edgelist)
+> network<-fit.gnbp(toygeno,toypheno,learn=FALSE,graph=edgelist)
 > ##Generate evidence
 > evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
 > network<-absorb.gnbp(network,node="X2",evidence=evidence)
@@ -736,11 +736,13 @@ colnames(edgelist)<-c("from","to")
 \end{figure}
 
 %HDL example
-\subsection{Specifying graphNEL objects, HDL Example)}
- 
-A graph structure can also be directly input to both the fit methods. If additional biological information is known, that can also be provided as \code{constraints} in \code{fit.gnbp} and as \code{whitelist} and \code{blacklist} in \code{fit.dbn}. The following example illustrates this using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data.
+\subsection{HDL Example}
 
-First we will fit a CG-BN to \code{hdl} data using\code{fit.gnbp}.
+\subsubsection{Specifying biological information}
+
+If additional biological information is known, that can be provided as \code{constraints} in \code{fit.gnbp} and as \code{whitelist} and \code{blacklist} in \code{fit.dbn}. 
+
+We will fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. Since HDL 
 
 <<J,eval=FALSE>>=
 ## load data
@@ -760,6 +762,9 @@ for (i in 1:dim(hdlpheno)[2])
 
 @
 
+\subsection{Specifying graphNEL objects)}
+ 
+A graph structure can also be directly input to both the fit methods. The following example illustrates this using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data.
 
 
 
