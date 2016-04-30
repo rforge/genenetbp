@@ -290,8 +290,8 @@ plot(network)
 \noindent A discrete bayesian network can be learnt using 2 approaches. First one is by using \code{fit.gnbp} that implements the PC algorithm as described above. 
 
 We will first load the \code{yeast} dataset and extract the genotype and phenotype data as before.The first 9 columns are genotypes (categorical) and the next 16 columns are phenotypes (continuous).
-<<C,eval=TRUE,results=hide>>=
-data(mouse,package=geneNetBP)
+<<dataset,results=hide>>=
+data(yeast,package="geneNetBP")
 yeastgeno<-yeast[,1:9]
 yeastpheno<-yeast[,10:16]
 @
@@ -322,7 +322,7 @@ plot(yeast.gnbp)
 
 \begin{figure}[H]
 \centering 
-\includegraphics{mouse_graph}
+\includegraphics{yeast_graph}
 \caption{Discrete Bayesian Network learnt from Yeast data}
 \end{figure} 
 
@@ -358,10 +358,12 @@ In both CG-BN and discrete Bayesian networks, there are conditional probability 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Absorbing evidence and Network Comparison}
 \subsection{Conditional Gaussian Bayesian Networks}  
-
+\subsubsection{Belief propagation}
 \noindent in CG-BN, new evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
 
 \noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence. For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
+
+\subsubsection{Jeffrey's Signed Information (JSI)}
 
 \noindent A symmetric version of the Kullback-Leibler information, known as Jeffrey's information is calculated to compare the marginal belief in the original network $X_i^{\rm 0} \sim N( \mu_0, \sigma_0^2)$ to the absorbed network $X_i^{\rm abs} \sim N( \mu_{\rm abs}, \sigma_{\rm abs}^2)$.  Jeffrey's information, which is computed for all continuous unabsorbed nodes in the network,  is given as: 
   \[ J \left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right) = I^{\rm KL}\left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right)  + I^{\rm KL}\left( X_{i}^{\rm abs}, X_{i}^{\rm 0} \right)   \]
@@ -552,9 +554,9 @@ attr(,"class")
 
 \begin{Schunk}
 \begin{Sinput}
-> network<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
+> mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 > ##Absorb evidence
-> absorb.gnbp(network,node="Tlr12",evidence=t(matrix(c(2.5,3,3.5,4))))
+> absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=t(matrix(c(2.5,3,3.5,4))))
 \end{Sinput}
 \end{Schunk}
 
@@ -565,11 +567,11 @@ attr(,"class")
 
 \begin{Schunk}
 \begin{Sinput}
-> network<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+> mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 > ##Generate evidence
-> evidence<-gen.evidence(network,node="Tlr12",std=2,length.out=20)
+> ev<-gen.evidence(mouse.cgbn,node="Tlr12",std=2,length.out=20)
 > ##absorb evidence
-> absorb.gnbp(network,node="Tlr12",evidence=evidence)
+> absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=ev)
 \end{Sinput}
 \end{Schunk}
 
@@ -584,6 +586,25 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 \end{figure} 
 
 \subsection(Discrete Bayesian Networks)
+
+\subsubsection(Belief propagation & Fold change (FC))
+\noindent In Discrete Bayesian Networks, phenotype nodes are represented as $\{X_1, X_2, \ldots, X_p \}$. A node $X_i$, has the states, $X_i \in \{s_1, s_2, \ldots, s_n\}$, where $\sum_{k=1}^n s_k = 1$.  Let $X_{i}^0 = \{s_1^0, s_2^0, \ldots s_n^0\}$ denote the states of $X_i$ in the initial network, and $X_{i}^{pert} \in \{s_1^{pert}, s_2^{pert}, \ldots s_n^{pert}\}$ denotes the states of $X_i$ in the perturbed network. \\
+
+\noindent The node-wise change in marginals is quantified simply by the Fold Change (FC) as a measure of effect size for the state of maximal probability in the perturbed network.  Let $I^{*}$ be an indicator for the state of $X_{i}^{pert}$ with maximum probability.  That is, $I^*=1$ if $s_k^{pert} = \max P(s_k^{pert})$, and $0$ otherwise.  The node-wise change in marginals is:  
+\[FC(X_i)  = I^*\cdot\frac{P(s_k^{pert})}{P(s_k^{0})}. \]
+
+\noindent Note that $FC\in [0,1)$ when the node is inhibited, $FC = 1$ when the node stays the same, and $FC > 1$ when the node is activated.\\
+
+\subsubsection{ example}
+
+
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualizing network changes}
