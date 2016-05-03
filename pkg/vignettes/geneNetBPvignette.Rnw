@@ -76,18 +76,18 @@ prettyDate <- format(Sys.Date())
 
 \section{Introduction}
 
-\noindent The \code{geneNetBP} package leverages belief propagation methods in genotype-phenotype networks inferred from Quantitative Trait Loci (QTL) data. The network structure can be perturbed by absorbing phenotypic evidence and the system-wide effects on the network are quantified in a nodewise manner. The package implements methods specifically to fit Conditional Gaussian Bayesian Network (CG-BN) or Discrete Bayesian Network to QTL data, absorb phenotype evidence and quantify and visualize the changes in network beliefs. For detailed description of methods, refer to our href{http://www.degruyter.com/view/j/sagmb.2016.15.issue-1/sagmb-2015-0058/sagmb-2015-0058.xml?format=INT}{SAGMB} publication. To cite "geneNetBP", use:\\
+\noindent The \code{geneNetBP} package leverages belief propagation methods in genotype-phenotype networks inferred from Quantitative Trait Loci (QTL) data. The network structure can be perturbed by absorbing phenotypic evidence and the system-wide effects on the network are quantified in a nodewise manner. The package implements methods specifically to fit Conditional Gaussian Bayesian Network (CG-BN) or Discrete Bayesian Network to QTL data, absorb phenotype evidence and quantify and visualize the changes in network beliefs. For detailed description of methods, refer to our \href{http://www.degruyter.com/view/j/sagmb.2016.15.issue-1/sagmb-2015-0058/sagmb-2015-0058.xml?format=INT}{SAGMB} publication. To cite "geneNetBP", use:\\
 
-\code{Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2016). "Belief Propagation in Genotype-Phenotype Networks", Stat Appl Genet Mol Biol, 15(1):39-53.}\\
+\emph{Janhavi Moharil, Paul May, Daniel P. Gaile, Rachael Hageman Blair (2016). "Belief Propagation in Genotype-Phenotype Networks.", Stat Appl Genet Mol Biol, 15(1):39-53.}\\
 
-\noindent For belief propagation in CG-BN, the package makes extensive use of the package \pkg{RHugin} that provides an R interface for the Hugin Decision Engine, a commercial software for building and infering Bayesian belief networks. Note that \pkg{RHugin} is currently not available on CRAN and is hosted on R-Forge. \code{geneNetBP} requires both Hugin and RHugin to be installed. \pkg{RHugin} can be downloaded from \url{http://rhugin.r-forge.r-project.org}. The Hugin Decision Engine can be downloaded from \url{http://www.hugin.com}. Detailed installation instructions of the \code{geneNetBP} package and package dependencies are available on the \href{http://genenetbp.r-forge.r-project.org/}{geneNetBP} project homepage. Please note that \pkg{RHugin} is required for the functioning of CG-BN implementation \code{geneNetBP}. The package \pkg{RHugin} will not automatically load upon loading \code{geneNetBP} package. Please use \code{library(RHugin)} or \code{require(RHugin) to load \pkg{RHugin} before using \code{geneNetBP}}.\\
+\noindent For belief propagation in CG-BN, the package makes extensive use of the package \pkg{RHugin} that provides an R interface for the Hugin Decision Engine, a commercial software for building and infering Bayesian belief networks. Note that \pkg{RHugin} is currently not available on CRAN and is hosted on R-Forge. \code{geneNetBP} requires both Hugin and RHugin to be installed. \pkg{RHugin} can be downloaded from \url{http://rhugin.r-forge.r-project.org}. The Hugin Decision Engine can be downloaded from \url{http://www.hugin.com}. Detailed installation instructions of the \code{geneNetBP} package and package dependencies are available on the \href{http://genenetbp.r-forge.r-project.org/}{geneNetBP} project homepage. Note that \pkg{RHugin} is required for the functioning of CG-BN implementation of \code{geneNetBP}. The package \pkg{RHugin} will not automatically load upon loading \code{geneNetBP} package. Use \code{library(RHugin)} or \code{require(RHugin) to load \pkg{RHugin} before using \code{geneNetBP}}.\\
 
 \noindent For belief propagation in discrete bayesian networks where both the genotypes and phenotypes are categorical data, the structural learning in \code{geneNetBP} version 2.0.0 is implemented using the package \pkg{bnlearn} while belief propagation is implemented using the package \pkg{gRain}. Both the packages are available on CRAN. \code{HuginLite} can also be used to infer networks from discrete data, however the demo version is restricted to 50 states and 500 cases. For larger datasets, the discrete bayesian network learning and inference using functions that implement \pkg{bnlearn} and \pkg{gRain} is recommended.\\
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section{Datasets}
 
-\noindent There are 3 datasets provided with this package. 
+\noindent There are 4 datasets provided with this package. 
 
 %% mouse
 \subsection{mouse} 
@@ -353,15 +353,15 @@ plot(yeast.dbn)
 
 %CPT Tables
 \subsection{Extracting Conditional Probability Distributions}
-In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions are returned in the second element \code{marginal} of the list in both \code{dbnfit} and \code{gpfit} objects. 
+In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions are returned in the second element \code{marginal} of the list in both \code{dbnfit} and \code{gpfit} objects.\\ 
 
-\noindent In addition, the conditional distributions can also be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions.  
+\noindent In addition, the conditional distributions can also be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Refer to \pkg{RHugin} manual for more help on these functions.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Absorbing evidence and Network Comparison}
 \subsection{Conditional Gaussian Bayesian Networks}  
 \subsubsection{Belief propagation}
-\noindent in CG-BN, new evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
+\noindent In a CG-BN, new evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
 
 \noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence. For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
 
@@ -689,15 +689,17 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 
 \subsection{Plotting Discrete Bayesian Networks}
 
-For discrete bayesian networks inferred by \code{absorb.gnbp}
+For discrete bayesian networks, a generic plot method is available for both "gnbp" and "dbn" objects. 
+
+
 
 
 %
 \section{Specifying Additional Biological Information}
 
-If additional biological information is known such as known or forbidden interactions between variables or the network hierarchy, it can be incorporated into the learning process. Such information can be provided in the \code{constraints} option of \code{fit.gnbp} and as \code{whitelist} and/or \code{blacklist} in \code{fit.dbn}. An example illustrating this:
+If additional biological information is known such as known or forbidden interactions between variables or the network hierarchy, it can be incorporated into the learning process. Such information can be provided in the \code{constraints} option of \code{fit.gnbp} and as \code{whitelist} and/or \code{blacklist} in \code{fit.dbn}. An example illustrating this:\\
 
-Fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data.  
+\noindent Fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data.  
 
 <<J,results=hide,eval=FALSE>>=
 ## load data
@@ -707,7 +709,7 @@ hdlgeno<-hdl[,1:5]
 hdlpheno<-hdl[,6:15]
 @
 
-This dataset has 5 SNP markers and 10 phenotypes that include HDL levels and 9 genes. Since HDL levels is the observed characteristic, the genes should precede HDL in the network. In other words, HDL should be downstream and it cannot be a parent of rest of the variables in the network.  This information can be included in the learning process by providing a list of constraints that defines the edges \textbf{from} HDL to \textbf{to} genes as forbidden.\\
+This dataset has 5 SNP markers and 10 phenotypes that include HDL levels and 9 genes. Since HDL levels is the observed characteristic, the genes should precede HDL in the network. In other words, HDL should be downstream and it cannot be a parent of rest of the variables in the network.  This information can be included in the learning process by providing a list of constraints that defines the edges \textbf{from} HDL \textbf{to} genes as forbidden.\\
 
 <<K,eval=FALSE>>=
 ## create an empty vector for the blacklist
@@ -725,6 +727,8 @@ constraints<-list(directed=list(forbidden=directed.forbidden,
 
 ## Fit a CG-BN
 hdl.cgbn<-fit.gnbp(hdlgeno,hdlpheno_dis,constraints=constraints,alpha=0.08)
+## Plot the network
+plot(hdl.cgbn)
 @
 
 \begin{figure}[H]
@@ -739,16 +743,16 @@ As desired, HDL is downstream of the genes in the network. For \code{fit.dbn}, t
 
 \noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by setting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
 
-\subsection{Specifying graphNEL objects)}
+\subsection{Specifying graphNEL objects}
  
-One way to specify a known network is to provide the graph structure directly as an input (a graphNEL object) to the fit methods. The following example illustrates how to input a known graph structure using the \code{fit.dbn} function. Consider a discrete bayesian network implementation of HDL network. Assume that the HDL network structure is known. we will input the structure that we learnt in the previous section to \code{fit.dbn}.
+\noindent One way to specify a known network is to provide the graph structure directly as an input (a graphNEL object) to the fit methods. The following example illustrates how to input a known graph structure using the \code{fit.dbn} function. Consider a discrete bayesian network implementation of HDL network. Assume that the HDL network structure is known. We will input the structure that we learnt in the previous section to \code{fit.dbn}.
 
 <<L, eval=FALSE>>=
 ## Convert the RHugindomain to a graphNEL object
 bngraph<-RHugin::as.graph.RHuginDomain(hdl.cgbn$gp)
 @
 
-For discrete bayesian network, discretize the phenotypes around median. To fit the network parameters, set \code{learn==FALSE} and specify the graph.\\
+\noindent For discrete bayesian network, discretize the phenotypes around median. To fit the network parameters, set \code{learn==FALSE} and specify the graph.\\
 
 <<M,eval=FALSE>>=
 ## discretize the data around median
