@@ -280,7 +280,7 @@ plot(network)
 %Discrete Bayesian Network
 \subsection{Fit a Discrete Bayesian Network to QTL data}
 \subsubsection{Model}
-\noindent The model for a Discrete Bayesian Network is very similar to the CG-BN. The graphical model is still represented by a Directed Acyclic Graph (DAG). The QTL variables are discrete. The \bold{phenotypes} however are also \bold{discrete} and not continuous unlike in the CG-BN representation. The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$.  \\
+\noindent The model for a Discrete Bayesian Network is very similar to the CG-BN. The graphical model is still represented by a Directed Acyclic Graph (DAG). The QTL variables are discrete. The \textbf{phenotypes} however are also \textbf{discrete} and not continuous unlike in the CG-BN representation. The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$.  \\
 
 \noindent Model Assumptions are restated as:
 \noindent 1. Genotypes precede the phenotypes.\\  
@@ -602,7 +602,7 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 Consider the yeast network inferred in section 3.2. The phenotypes are discrete variables with 2 states (1,-1) in \code{Yeast} dataset. Like fit methods, there are two ways to absorb the phenotypic evidence in discrete bayesian networks, the function \code{absorb.dbn} that implements \pkg{gRain} or \code{absorb.gnbp} that implements \pkg{RHugin}.\\ 
 
 
-\bold{absorb.dbn}\\
+\textbf{absorb.dbn}\\
 
 <<I,eval=FALSE>>=
 ## Fit the network
@@ -612,7 +612,7 @@ yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("1","-1"),ncol=2))
 @
 
 
-\bold{absorb.gnbp} \\
+\textbf{absorb.gnbp} \\
 
 Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}.\\ 
 
@@ -650,11 +650,11 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 \caption{Evidence absorption in single node}
 \end{figure} 
 
-\noindent The plot method will draw the network with Jeffrey's signed information mapped onto it by a colormap. There is an option to plot beliefs (updated marginal means) which can be entered through the argument y (see help for \code{plot.gnbp}).\\
+\noindent The plot method will draw the network with Jeffrey's signed information mapped onto it by a colormap. There is an option to plot beliefs (updated marginal means) which can be entered through the argument \code{y} (see help for \code{plot.gnbp}).\\
 
 \noindent The \code{d}-separated nodes are white while the colored nodes are \code{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
 
-\subsection{Plot options}
+\subsection{Plot options in plot.gnbp}
 
 \noindent Colormap options such as end colors for the positive and negative gradients and the resolution of the colormap can be customized. The resolution of the colormap can be specified by \code{col.length}. The argument \code{col.palette} can be used to specify the end colors.\\ 
 
@@ -687,6 +687,7 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 \end{Sinput}
 \end{Schunk}
 
+
 %
 \section{Specifying Additional Biological Information}
 
@@ -702,7 +703,7 @@ hdlgeno<-hdl[,1:5]
 hdlpheno<-hdl[,6:15]
 @
 
-This dataset has 5 SNP markers and 10 phenotypes that include HDL levels and 9 genes. Since HDL levels is the observed characteristic, the genes should precede HDL in the network. In other words, HDL should be downstream and it cannot be a parent of rest of the variables in the network.  This information can be included in the learning process by providing a list of constraints that defines the edges \bold{from} HDL to \bold{to} genes as forbidden.\\
+This dataset has 5 SNP markers and 10 phenotypes that include HDL levels and 9 genes. Since HDL levels is the observed characteristic, the genes should precede HDL in the network. In other words, HDL should be downstream and it cannot be a parent of rest of the variables in the network.  This information can be included in the learning process by providing a list of constraints that defines the edges \textbf{from} HDL to \textbf{to} genes as forbidden.\\
 
 <<K,eval=FALSE>>=
 ## create an empty vector for the blacklist
@@ -743,7 +744,7 @@ One way to specify a known network is to provide the graph structure directly as
 bngraph<-RHugin::as.graph.RHuginDomain(hdl.cgbn$gp)
 @
 
-For discrete bayesian network, discretize the phenotypes around median. To fit the network parameters, set \code{learn==FALSE} and specify the graph.
+For discrete bayesian network, discretize the phenotypes around median. To fit the network parameters, set \code{learn==FALSE} and specify the graph.\\
 
 <<M,eval=FALSE>>=
 ## discretize the data around median
@@ -760,7 +761,7 @@ hdl.dbn<-fit.dbn(hdlgeno,hdlpheno_dis,graph=bngraph,learn ="FALSE")
 
 
 \subsection{Specifying edges, Toy example}
-The second way to specify an existing network is by providing a data frame of edges. Consider the \code{toy} network in section 2. The interactions between the variables in the \code{toy} dataset are known. To specify the  toy network as a CG-BN and learn the conditional probabilities: \\ 
+The second way to specify an existing network is by providing a data frame of edges. Consider the \code{toy} network in section 2. The interactions between the variables in the \code{toy} dataset are known. To specify the toy network as a CG-BN and learn the conditional probabilities: \\ 
 
 \noindent First create a data frame of known edges from parent to child.\\ 
 
@@ -788,11 +789,12 @@ colnames(edgelist)<-c("from","to")
 
 \begin{Schunk}
 \begin{Sinput}
-> network<-fit.gnbp(toygeno,toypheno,learn=FALSE,graph=edgelist)
+> ## Specify the network and learn conditional probabilities
+> toy.cgbn<-fit.gnbp(toygeno,toypheno,learn=FALSE,graph=edgelist)
 > ##Generate evidence
-> evidence<-gen.evidence(network,node="X2",std=2,length.out=20)
-> network<-absorb.gnbp(network,node="X2",evidence=evidence)
-> plot(x=network,y="JSI",ncol=17,fontsize = 5)
+> evidence<-gen.evidence(toy.cgbn,node="X2",std=2,length.out=20)
+> toy.cgbn.abs<-absorb.gnbp(toy.cgbn,node="X2",evidence=evidence)
+> plot(x=toy.cgbn.abs,y="JSI",ncol=17,fontsize = 5)
 \end{Sinput}
 \end{Schunk}
 
