@@ -674,7 +674,7 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 
 \noindent The plot method will always map the JSI or beliefs onto the network for a single piece of evidence. Incase a spectrum of evidence is absorbed for a single/multiple node(s), then the evidence for which we wish to visualize the network changes can be chosen by specifying the corresponding column number of JSI or belief matrix through the argument \code{ncol}.\\
 
-\noindent For example we absorbed a sequence of evidence for \code{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.\\
+\noindent For example if we absorbed a sequence of evidence for \code{Tlr12} and we wish to visualize the belief changes for evidence = 1.767, we can do this as follows.\\
 
 \begin{Schunk}
 \begin{Sinput}
@@ -693,7 +693,7 @@ If additional biological information is known such as known or forbidden interac
 
 Fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. 
 
-<<J,results=hide>>=
+<<J,results=hide,eval=FALSE>>=
 ## load data
 data(hdl)
 ##get the genotype and phenotype data
@@ -726,7 +726,7 @@ constraints<-list(directed=list(forbidden=directed.forbidden,
                                 required=NULL), undirected=NULL)
 
 ## Fit a CG-BN
-cgbn<-fit.gnbp(hdlgeno,hdlpheno,constraints=constraints,alpha=0.08)
+cgbn<-fit.gnbp(hdlgeno,hdlpheno_dis,constraints=constraints,alpha=0.08)
 @
 
 \begin{figure}[H]
@@ -735,6 +735,9 @@ cgbn<-fit.gnbp(hdlgeno,hdlpheno,constraints=constraints,alpha=0.08)
 \caption{HDL network}
 \end{figure} 
 
+As desired, HDL is downstream of the genes in the network. Note that is also possible to specify undirected edges (required or forbidden), however they will be ignored since the basis of our model is a directed acyclic graph.
+
+The \code{whitelist} option in \code{fit.dbn} can be used to specify the required edges while the \code{blacklist} option can be used to specify forbidden edges.
 
 \section{Belief propagation in known networks}
 
