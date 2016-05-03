@@ -339,7 +339,7 @@ plot(yeast.dbn)
 @
 \end{center}
 
-\code{fit.dbn} return an object of class \code{dbnfit which is a list several elements. The inferred network is returned as a "bn.fit" object in \code{$dbn} variable of the list.
+\code{fit.dbn} return an object of class \code{dbnfit} which is a list several elements. The inferred network is returned as a "bn.fit" object in \code{$dbn} variable of the list.
 
 To choose a different method, specify \code{method}. For example, to fit the network by \emph{Grow-Shrink} method,
 
@@ -351,7 +351,7 @@ plot(yeast.dbn)
 \end{center}
 
 %CPT Tables
-\subsection(Extracting Conditional Probability Distributions)
+\subsection{Extracting Conditional Probability Distributions}
 In both CG-BN and discrete Bayesian networks, there are conditional probability tables associated with each node in the network. The marginal distributions are returned in the second element \code{marginal} of the list in both \code{dbnfit} and \code{gpfit} objects. 
 
 \noindent In addition, the conditional distributions can also be accessed by using the package specific functions. For example, \code{get.marginal} from the package \pkg{RHugin} can be used to compute the marginal distributions in an RHugin domain. Another useful function is \code{get.table} to extract the CPT, experience or fading table associated with any node in an RHugin domain. Please refer to \pkg{RHugin} manual for more help on these functions.  
@@ -378,9 +378,9 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \subsubsection{Mouse Kidney eQTL Example}
 
-We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal) in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. The input to \code{absorb.gnbp} is an object of class \code{gpfit}, that is the output returned by the function \code{fit.gnbp}.
+We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal} in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. The input to \code{absorb.gnbp} is an object of class \code{gpfit}, that is the output returned by the function \code{fit.gnbp}.
 
-\noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \code{d}-connected nodes. The following example illustrates how to absorb evidence in a genotype-phenotype network. \\
+\noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \emph{d}-connected nodes. The following example illustrates how to absorb evidence in a genotype-phenotype network. \\
 
 \noindent 1. Absorb a single evidence for a single node
 
@@ -586,9 +586,9 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 \caption{Plot produced by \code{absorb.gnbp}}
 \end{figure} 
 
-\subsection(Discrete Bayesian Networks)
+\subsection{Discrete Bayesian Networks}
 
-\subsubsection(Belief propagation and Fold change (FC))
+\subsubsection{Belief propagation and Fold change (FC)}
 \noindent In Discrete Bayesian Networks, phenotype nodes are represented as $\{X_1, X_2, \ldots, X_p \}$. A node $X_i$, has the states, $X_i \in \{s_1, s_2, \ldots, s_n\}$, where $\sum_{k=1}^n s_k = 1$.  Let $X_{i}^0 = \{s_1^0, s_2^0, \ldots s_n^0\}$ denote the states of $X_i$ in the initial network, and $X_{i}^{pert} \in \{s_1^{pert}, s_2^{pert}, \ldots s_n^{pert}\}$ denotes the states of $X_i$ in the perturbed network. \\
 
 \noindent The node-wise change in marginals is quantified simply by the Fold Change (FC) as a measure of effect size for the state of maximal probability in the perturbed network.  Let $I^{*}$ be an indicator for the state of $X_{i}^{pert}$ with maximum probability.  That is, $I^*=1$ if $s_k^{pert} = \max P(s_k^{pert})$, and $0$ otherwise.  The node-wise change in marginals is:  
@@ -598,10 +598,10 @@ When a sequence of evidence is absorbed for a single node in the network, \code{
 
 \subsubsection{Yeast example}
 
-Consider the yeast network inferred in section 3.2. The phenotypes are discrete variables with 2 states (1,-1) in \code{Yeast} dataset. Like fit methods, there are two ways to absorb the phenotypic evidence in discrete bayesian networks, the function \code{absorb.dbn} that implements \pkg{gRain} or \code{absorb.gnbp} that implements \pkg{RHugin}. 
+Consider the yeast network inferred in section 3.2. The phenotypes are discrete variables with 2 states (1,-1) in \code{Yeast} dataset. Like fit methods, there are two ways to absorb the phenotypic evidence in discrete bayesian networks, the function \code{absorb.dbn} that implements \pkg{gRain} or \code{absorb.gnbp} that implements \pkg{RHugin}.\\ 
 
 
-\subsubsubsection{absorb.dbn} 
+\bold{absorb.dbn}\\
 
 <<I,eval=FALSE>>=
 ## Fit the network
@@ -611,11 +611,9 @@ yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("1","-1"),ncol=2))
 @
 
 
+\bold{absorb.gnbp} \\
 
-
-\subsubsubsection{absorb.gnbp} 
-
-Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}. 
+Like previously mentions, \code{absorb.gnbp} can be used with objects of class \code{gpfit} that are output from \code{fit.gnbp}.\\ 
 
 <<H,eval=FALSE>>=
 ## Fit the network
@@ -631,9 +629,9 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualizing network changes}
 
-\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "gnbp". The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
+\subsection{A complete example of CG-BN}
 
-\subsection{A complete example}
+\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "gnbp". The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
 
 \noindent A complete example that fits a network, absorbs evidence and plots the network:\\
 
@@ -688,6 +686,28 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 \end{Sinput}
 \end{Schunk}
 
+%
+\section{Specifying Additional Biological Information}
+
+If additional biological information is known, that can be provided as \code{constraints} in \code{fit.gnbp} and as \code{whitelist} and \code{blacklist} in \code{fit.dbn}. 
+
+We will fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. 
+
+<<J,eval=FALSE>>=
+## load data
+data(hdl)
+##get the genotype and phenotype data
+hdlgeno<-hdl[,1:5]
+hdlpheno<-hdl[,6:15]
+@
+
+Since HDL 
+
+<<>>=
+
+@
+
+
 \section{Belief propagation in known networks}
 
 \noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
@@ -735,21 +755,12 @@ colnames(edgelist)<-c("from","to")
 \caption{Belief propagation in known network}
 \end{figure}
 
-%HDL example
-\subsection{HDL Example}
 
-\subsubsection{Specifying biological information}
 
-If additional biological information is known, that can be provided as \code{constraints} in \code{fit.gnbp} and as \code{whitelist} and \code{blacklist} in \code{fit.dbn}. 
-
-We will fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. Since HDL 
-
-<<J,eval=FALSE>>=
-## load data
-data(hdl)
-##get the genotype and phenotype data
-hdlgeno<-hdl[,1:5]
-hdlpheno<-hdl[,6:15]
+\subsection{Specifying graphNEL objects)}
+ 
+A graph structure can also be directly input to both the fit methods. The following example illustrates this using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data.
+<<>>=
 ## discretize the data around median
 hdlpheno_dis<-hdlpheno
 for (i in 1:dim(hdlpheno)[2])
@@ -758,13 +769,7 @@ for (i in 1:dim(hdlpheno)[2])
   hdlpheno_dis[which(hdlpheno[,i]<median(hdlpheno[,i])),i]<-"-1"
   hdlpheno_dis[,i]<-as.factor(hdlpheno_dis[,i])
 }
-
-
 @
-
-\subsection{Specifying graphNEL objects)}
- 
-A graph structure can also be directly input to both the fit methods. The following example illustrates this using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data.
 
 
 
