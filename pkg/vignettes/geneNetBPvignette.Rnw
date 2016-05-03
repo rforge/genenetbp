@@ -378,7 +378,7 @@ is used to demonstrate the direction of change after the absorption of evidence.
 
 \subsubsection{Mouse Kidney eQTL Example}
 
-We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{$marginal} in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. The input to \code{absorb.gnbp} is an object of class \code{gpfit}, that is the output returned by the function \code{fit.gnbp}.
+We know that the marginal mean of the node \code{Tlr12} is -0.99 (see \code{marginal} in section 3.1.2) and we wish to enter this new information in the mouse network and compute the updated states of other nodes. New evidence for single or multiple nodes can be entered using the function \code{absorb.gnbp} which absorbs evidence and propagates the beliefs. The input to \code{absorb.gnbp} is an object of class \code{gpfit}, that is the output returned by the function \code{fit.gnbp}.
 
 \noindent The function \code{absorb.gnbp} uses the \pkg{RHugin} package to absorb the evidence in the specified nodes and update the beliefs of all nodes and then calculates Jeffrey's signed information for all \emph{d}-connected nodes. The following example illustrates how to absorb evidence in a genotype-phenotype network. \\
 
@@ -735,9 +735,9 @@ cgbn<-fit.gnbp(hdlgeno,hdlpheno_dis,constraints=constraints,alpha=0.08)
 \caption{HDL network}
 \end{figure} 
 
-As desired, HDL is downstream of the genes in the network. Note that is also possible to specify undirected edges (required or forbidden), however they will be ignored since the basis of our model is a directed acyclic graph.
+As desired, HDL is downstream of the genes in the network. Note that is also possible to specify undirected edges (required or forbidden), however they will be ignored since the basis of our model is a directed acyclic graph.\\
 
-The \code{whitelist} option in \code{fit.dbn} can be used to specify the required edges while the \code{blacklist} option can be used to specify forbidden edges.
+For \code{fit.dbn}, the \code{whitelist} option can be used to specify the required edges while the \code{blacklist} option can be used to specify forbidden edges.
 
 \section{Belief propagation in known networks}
 
