@@ -630,11 +630,11 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualizing network changes}
 
+\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. The plot method will convert network into an object of class "graphNEL" by using Rgraphviz package. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
+
 \subsection{A complete example of CG-BN}
 
-\noindent A generic plot method for plotting the genotype-phenotype network in which evidence has been absorbed and propagated is available. It is important to note that the input to this plot method is an object of class "gnbp". The plot method will convert the RHugin domain into an object of class "graphNEL" by using Rgraphviz package. The argument nodeAttrs to plot method for graph objects in Rgraphviz package is then used to customize the plot. \\
-
-\noindent A complete example that fits a network, absorbs evidence and plots the network:\\
+\noindent For CG-BN, a generic plot method \code{plot.gnbp} will be called for objects of class "gnbp". A complete example that fits a CG-BN, absorbs evidence and plots the network:\\
 
 \begin{Schunk}
 \begin{Sinput}
@@ -654,7 +654,7 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 
 \noindent The \code{d}-separated nodes are white while the colored nodes are \code{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
 
-\subsection{Plot options in plot.gnbp}
+\subsubsection{Plot options in plot.gnbp}
 
 \noindent Colormap options such as end colors for the positive and negative gradients and the resolution of the colormap can be customized. The resolution of the colormap can be specified by \code{col.length}. The argument \code{col.palette} can be used to specify the end colors.\\ 
 
@@ -686,6 +686,10 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 > plot(x=network,y="belief",ncol=20)
 \end{Sinput}
 \end{Schunk}
+
+\subsection{Plotting Discrete Bayesian Networks}
+
+For discrete bayesian networks inferred by \code{absorb.gnbp}
 
 
 %
