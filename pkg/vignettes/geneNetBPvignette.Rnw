@@ -689,28 +689,66 @@ yeast.gnbp.abs<-absorb.gnbp(yeast.gnbp,"COX10",matrix(c("1")))
 %
 \section{Specifying Additional Biological Information}
 
-If additional biological information is known, that can be provided as \code{constraints} in \code{fit.gnbp} and as \code{whitelist} and \code{blacklist} in \code{fit.dbn}. 
+If additional biological information is known such as known or forbidden interactions between variables or the network hierarchy, it can be incorporated into the learning process. Such information can be provided in the \code{constraints} option of \code{fit.gnbp} and as \code{whitelist} and/or \code{blacklist} in \code{fit.dbn}. An example illustrating this:
 
-We will fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. 
+Fit a CG-BN to \code{hdl} data using\code{fit.gnbp}. To do this, load the data and discretize phenotypes around median. 
 
-<<J,eval=FALSE>>=
+<<J,results=hide>>=
 ## load data
 data(hdl)
 ##get the genotype and phenotype data
 hdlgeno<-hdl[,1:5]
 hdlpheno<-hdl[,6:15]
+## discretize the data around median
+hdlpheno_dis<-hdlpheno
+for (i in 1:dim(hdlpheno)[2])
+{
+  hdlpheno_dis[which(hdlpheno[,i]>=median(hdlpheno[,i])),i]<-"1"
+  hdlpheno_dis[which(hdlpheno[,i]<median(hdlpheno[,i])),i]<-"-1"
+  hdlpheno_dis[,i]<-as.factor(hdlpheno_dis[,i])
+}
 @
 
-Since HDL 
+This dataset has 5 SNP markers and 10 phenotypes that include HDL levels and 9 genes. Since HDL levels is the observed characteristic, the genes should precede HDL in the network. In other words, HDL should be downstream and it cannot be a parent of rest of the variables in the network.  This information can be included in the learning process by providing a list of constraints that defines the edges \bold{from} HDL to \bold{to} genes as forbidden.\\
+
+<<K,eval=FALSE>>=
+## create an empty vector for the blacklist
+blackL<-c()
+# fill in the forbidden edges. For example :"HDL"->"Nr1i3"
+for(i in 2:dim(hdlpheno_dis)[2])
+blackL=rbind(blackL,cbind(colnames(hdlpheno_dis)[1],colnames(hdlpheno_dis)[i]))
+## Form a list
+directed.forbidden <- vector("list", nrow(blackL))
+for (i in 1:nrow(blackL))
+  directed.forbidden[[i]] <- blackL[i,]
+
+constraints<-list(directed=list(forbidden=directed.forbidden,
+                                required=NULL), undirected=NULL)
+
+## Fit a CG-BN
+cgbn<-fit.gnbp(hdlgeno,hdlpheno,constraints=constraints,alpha=0.08)
+@
+
+\begin{figure}[H]
+\centering 
+\includegraphics{hdl_gnbp}
+\caption{HDL network}
+\end{figure} 
+
+
+\section{Belief propagation in known networks}
+
+\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
+
+\subsection{Specifying graphNEL objects)}
+ 
+A graph structure can also be directly input to both the fit methods. The following example illustrates how to input a known graph structure using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data. We inferred the 
 
 <<>>=
 
 @
 
 
-\section{Belief propagation in known networks}
-
-\noindent Belief propagation can be implemented in known genotype-phenotype networks. If the network structure is known apriori from a knowledge database, then learning step can be skipped in \code{fit.gnbp} by seting \code{learn = FALSE}. The conditional probabilities will still need to be learnt. This section demonstrates how to specify known networks and subsequent belief propagation. \\
 
 \subsection{Specifying edges, Toy example}
 Suppose the interactions between the variables in the \code{toy} dataset are known as shown in Section 2. There are two ways to enter this network structure in the fit methods: 1.specify a list of edges or 2. input a graph structure of class "graphNEL". In this section we will use the first approach with \code{fit.gnbp}
@@ -754,24 +792,6 @@ colnames(edgelist)<-c("from","to")
 \includegraphics{toy_network_belief}
 \caption{Belief propagation in known network}
 \end{figure}
-
-
-
-\subsection{Specifying graphNEL objects)}
- 
-A graph structure can also be directly input to both the fit methods. The following example illustrates this using the \code{fit.dbn} function to fit a discrete bayesian network to HDL data.
-<<>>=
-## discretize the data around median
-hdlpheno_dis<-hdlpheno
-for (i in 1:dim(hdlpheno)[2])
-{
-  hdlpheno_dis[which(hdlpheno[,i]>=median(hdlpheno[,i])),i]<-"1"
-  hdlpheno_dis[which(hdlpheno[,i]<median(hdlpheno[,i])),i]<-"-1"
-  hdlpheno_dis[,i]<-as.factor(hdlpheno_dis[,i])
-}
-@
-
-
 
 
 % References
