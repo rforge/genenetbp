@@ -339,7 +339,7 @@ plot(yeast.dbn)
 @
 \end{center}
 
-\code{fit.dbn} return an object of class \code{dbnfit} which is a list several elements. The inferred network is returned as a "bn.fit" object in \code{$dbn} variable of the list.
+\code{fit.dbn} return an object of class \code{dbnfit} which is a list several elements. The inferred network is returned as a "bn.fit" object in \code{dbn} variable of the list.
 
 To choose a different method, specify \code{method}. For example, to fit the network by \emph{Grow-Shrink} method,
 
