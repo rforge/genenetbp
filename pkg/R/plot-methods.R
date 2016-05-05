@@ -8,11 +8,11 @@
 # }
 #   \usage{
 #   \method{plot}{gnbp}(x, y="JSI",ncol = 1, col.palette,col.length = 100, 
-#   fontsize=10, fontcolor="black",...)
+#   fontsize=14, fontcolor="black",...)
 #   \method{plot}{dbn}(x, y="state",col.palette,col.length = 100, 
-#   fontsize=10, fontcolor="black",...)  
-#   \method{plot}{gpfit}(x, fontsize=10, fontcolor="black",...)
-#   \method{plot}{dbnfit}(x, fontsize=10, fontcolor="black",...)            
+#   fontsize=14, fontcolor="black",...)  
+#   \method{plot}{gpfit}(x, fontsize=14, fontcolor="black",...)
+#   \method{plot}{dbnfit}(x, fontsize=14, fontcolor="black",...)            
 #   
 #   }
 #   \arguments{
@@ -49,7 +49,7 @@
 #############################################################################
 
 ## plot.gpfit plots output from fit.gnbp
-plot.gpfit=function(x,fontsize=10, fontcolor="black",...)
+plot.gpfit=function(x,fontsize=14, fontcolor="black",...)
 {
   ## get node attributes
   class_nodes=x$gp_nodes
@@ -83,7 +83,7 @@ plot.gpfit=function(x,fontsize=10, fontcolor="black",...)
 
 
 ## plot.dbnfit plots output from fit.gnbp
-plot.dbnfit=function(x,fontsize=10, fontcolor="black",...)
+plot.dbnfit=function(x,fontsize=14, fontcolor="black",...)
 {
   ## get node attributes
   class_nodes=x$dbn_nodes
@@ -114,7 +114,7 @@ plot.dbnfit=function(x,fontsize=10, fontcolor="black",...)
 }
 
 ## plot.gnbp plots cgbn and discrete bayesian networks, output from absorb.gnbp
-plot.gnbp=function(x, y="JSI",ncol = 1, col.palette,col.length = 100, fontsize=10, fontcolor="black",...)
+plot.gnbp=function(x, y="JSI",ncol = 1, col.palette,col.length = 100, fontsize=14, fontcolor="black",...)
 
 {
   ## get node attributes
@@ -257,7 +257,7 @@ invisible(x)
 #################################################################################################
 ## plot.dbn : plots discrete bayesian networks. output from absorb.dbn
 #################################################################################################
-plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=10, fontcolor="black",...)
+plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=14, fontcolor="black",...)
   
 {
   ## get node attributes

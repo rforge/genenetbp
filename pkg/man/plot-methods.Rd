@@ -11,11 +11,11 @@ Plot methods for genotype-phenotype networks. \code{plot.gnbp} and \code{plot.db
 }
 \usage{
 \method{plot}{gnbp}(x, y="JSI",ncol = 1, col.palette,col.length = 100, 
-                    fontsize=10, fontcolor="black",...)
+                    fontsize=14, fontcolor="black",...)
 \method{plot}{dbn}(x, y="state",ncol = 1, col.palette,col.length = 100, 
-                    fontsize=10, fontcolor="black",...)  
-\method{plot}{gpfit}(x, fontsize=10, fontcolor="black",...)
-\method{plot}{dbnfit}(x, fontsize=10, fontcolor="black",...)            
+                    fontsize=14, fontcolor="black",...)  
+\method{plot}{gpfit}(x, fontsize=14, fontcolor="black",...)
+\method{plot}{dbnfit}(x, fontsize=14, fontcolor="black",...)            
                     
 }
 \arguments{
