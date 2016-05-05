@@ -152,7 +152,7 @@ head(yeast,n=3)
 \subsection{Fit a CG-BN to QTL data}
 % Model
 \subsubsection{Model}
-\noindent The graphical model is represented by a Directed Acyclic Graph (DAG). The nodes in the graph represent the model variables, which may be discrete (QTL) or continuous (phenotypes). The phenotypes (e.g., metabolites, gene-expression, or clinical traits etc) are assumed to be continuous and follow a normal distribution.  The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$.  \\
+\noindent The graphical model is represented by a Directed Acyclic Graph (DAG). The nodes in the graph represent the model variables, which may be discrete (QTL) or continuous (phenotypes). The phenotypes (e.g., metabolites, gene-expression, or clinical traits etc) are assumed to be continuous and follow a normal distribution.  The data consists of $n$ phenotypes ($X$) and $m$ genotypes at Single Nucleotide Polymorphism (SNP) markers and is defined as: $D=\{X_1, \ldots, X_n, Q_1, \ldots, Q_m\}$ \cite{moharil2016}.  \\
 
 \noindent Model Assumptions:\\
 
@@ -442,7 +442,7 @@ In both CG-BN and discrete Bayesian networks, there are conditional probability 
 \subsubsection{Belief propagation}
 \noindent In a CG-BN, new evidence can be entered by setting phenotypes in the network to a particular value, $X_i = x_i^{*}$.  The evidence can pertain to a single node or multiple nodes in the network.\\
 
-\noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence. For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals.\\  
+\noindent Through message passing, the probability distributions are updated (called as beliefs) after taking into account new evidence. Updated beliefs for discrete nodes (genotypes) are simply updated estimated frequencies under the new evidence. For continuous nodes (phenotypes), the updated beliefs are in terms of revised parameters for the Gaussian distribution. The original and absorbed network are compared node-wise by quantifying the change in marginals \cite{moharil2016}.\\  
 
 \subsubsection{Jeffrey's Signed Information (JSI)}
 
@@ -454,7 +454,7 @@ For ease of interpretation, the signed Jeffrey's information
 \[\rm{sign}(\mu_0-\mu_{\rm{abs}})\cdot   J\left( X_{i}^{\rm 0}, X_{i}^{\rm abs} \right)\]
 is used to demonstrate the direction of change after the absorption of evidence.\\  
 
-\noindent The changes in belief are measured only for the nodes that are \emph{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \emph{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs.\\
+\noindent The changes in belief are measured only for the nodes that are \emph{d}-connected (conditionally dependent) to the entered evidence. Nodes that are \emph{d}-separated from absorbed evidence are not influenced, and, consequently, do not change beliefs \cite{moharil2016}.\\
 
 \subsubsection{Mouse Kidney eQTL Example}
 
@@ -472,23 +472,23 @@ Suppose the marginal mean of the node \code{Tlr12} is known to be -0.99 and we w
 \end{Sinput}
 \begin{Soutput}
 $gp
-A Hugin domain: there are 19 nodes and 31 edges
+  A Hugin domain: there are 19 nodes and 31 edges
 
 
 $gp_flag
 [1] "cg"
 
 $gp_nodes
-node      class     levels type   
-[1,] "Cyp4a31" "numeric" "0"    "pheno"
-[2,] "Slc5a9"  "numeric" "0"    "pheno"
-[3,] "Slc6a9"  "numeric" "0"    "pheno"
-[4,] "Hmgcl"   "numeric" "0"    "pheno"
-[5,] "Ptp4a2"  "numeric" "0"    "pheno"
-[6,] "Ak2"     "numeric" "0"    "pheno"
-[7,] "Zbtb8a"  "numeric" "0"    "pheno"
-[8,] "Stx12"   "numeric" "0"    "pheno"
-[9,] "Trspap1" "numeric" "0"    "pheno"
+      node      class     levels type   
+ [1,] "Cyp4a31" "numeric" "0"    "pheno"
+ [2,] "Slc5a9"  "numeric" "0"    "pheno"
+ [3,] "Slc6a9"  "numeric" "0"    "pheno"
+ [4,] "Hmgcl"   "numeric" "0"    "pheno"
+ [5,] "Ptp4a2"  "numeric" "0"    "pheno"
+ [6,] "Ak2"     "numeric" "0"    "pheno"
+ [7,] "Zbtb8a"  "numeric" "0"    "pheno"
+ [8,] "Stx12"   "numeric" "0"    "pheno"
+ [9,] "Trspap1" "numeric" "0"    "pheno"
 [10,] "Mecr"    "numeric" "0"    "pheno"
 [11,] "Wdtc1"   "numeric" "0"    "pheno"
 [12,] "Atpif1"  "numeric" "0"    "pheno"
@@ -501,7 +501,7 @@ node      class     levels type
 [19,] "Qchr2"   "factor"  "3"    "geno" 
 
 $evidence
-[,1]
+      [,1]
 [1,] -0.99
 
 $node
@@ -510,49 +510,49 @@ $node
 $marginal
 $marginal$pheno
 $marginal$pheno$mean
-[,1]
-Rbbp4    2.317482e-17
-Atpif1   2.190113e-03
-Wdtc1    2.514671e-17
-Mecr    -1.551256e-16
-Trspap1  4.239712e-03
-Stx12    4.433032e-17
-Zbtb8a  -2.003327e-17
-Ak2     -7.153821e-03
-Ptp4a2   3.519799e-03
-Hmgcl   -7.136515e-03
-Slc6a9  -1.957688e-02
-Slc5a9   2.471620e-02
-Cyp4a31  1.914642e-02
+             [,1]
+Rbbp4   -1.861688
+Atpif1   1.422979
+Wdtc1   -1.337797
+Mecr     1.763548
+Trspap1  1.542416
+Stx12   -2.158548
+Zbtb8a   1.651529
+Ak2     -1.750306
+Ptp4a2   1.605447
+Hmgcl   -1.510483
+Slc6a9  -1.597839
+Slc5a9   2.563926
+Cyp4a31  1.986147
 
 $marginal$pheno$var
-[,1]
-Rbbp4   0.9557443
-Atpif1  0.9027874
-Wdtc1   0.9574396
-Mecr    0.9550281
-Trspap1 0.8530483
-Stx12   0.9575380
-Zbtb8a  0.9551227
-Ak2     0.7696464
-Ptp4a2  0.8550665
-Hmgcl   0.8509102
-Slc6a9  0.7939058
-Slc5a9  0.8538129
-Cyp4a31 0.8965621
+             [,1]
+Rbbp4   0.4355289
+Atpif1  0.6287408
+Wdtc1   0.6681516
+Mecr    0.4523099
+Trspap1 0.5783863
+Stx12   0.5753043
+Zbtb8a  0.8421576
+Ak2     0.3662566
+Ptp4a2  0.5067402
+Hmgcl   0.4827669
+Slc6a9  0.6866278
+Slc5a9  0.7536230
+Cyp4a31 0.8364398
 
 
 $marginal$geno
 $marginal$geno$freq
-state1    state2   state3
-Qchr4 0.2312139 0.4682081 0.300578
+         state1       state2       state3
+Qchr4 0.9999584 1.677966e-05 2.486464e-05
 
 
 
 $belief
 $belief$pheno
 $belief$pheno$mean
-[,1]
+         ev= -0.99
 Rbbp4    0.8776457
 Atpif1  -0.6538109
 Wdtc1    0.6669131
@@ -568,7 +568,7 @@ Slc5a9  -0.6510656
 Cyp4a31 -0.5043484
 
 $belief$pheno$var
-[,1]
+        ev= -0.99
 Rbbp4   0.4859803
 Atpif1  0.6226163
 Wdtc1   0.6627283
@@ -586,34 +586,33 @@ Cyp4a31 0.6995273
 
 $belief$geno
 $belief$geno$state1
-[,1]
+        ev= -0.99
 Qchr4 0.007944801
 
 $belief$geno$state2
-[,1]
+      ev= -0.99
 Qchr4 0.2152284
 
 $belief$geno$state3
-[,1]
+      ev= -0.99
 Qchr4 0.7768268
 
 
-
 $JSI
-[,1]
-Rbbp4    0.71650239
-Atpif1  -0.32687548
-Wdtc1    0.31813768
-Mecr    -0.79365404
-Trspap1 -0.36674950
-Stx12    0.69209864
-Zbtb8a  -0.01550701
-Ak2      0.40056441
-Ptp4a2  -0.42017671
-Hmgcl    0.39734466
-Slc6a9   0.28567820
-Slc5a9  -0.41106696
-Cyp4a31 -0.18983139
+        ev= -0.99
+Rbbp4    8.170598
+Atpif1  -3.446810
+Wdtc1    3.019770
+Mecr    -7.802502
+Trspap1 -4.236904
+Stx12    8.626269
+Zbtb8a  -1.907443
+Ak2      6.794457
+Ptp4a2  -5.048643
+Hmgcl    4.645022
+Slc6a9   3.762566
+Slc5a9  -8.379301
+Cyp4a31 -4.078569
 
 $FC
 NULL
@@ -1072,15 +1071,31 @@ yeast.dbn<-fit.dbn(yeastgeno,yeastpheno)
 ## Absorb evidence
 yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix("1"))
 ## Plot the network
-plot(yeast.dbn.abs)
+plot(yeast.dbn.abs,ncol=2,fontsize=14)
 @
 
+\begin{figure}[H]
+\centering 
+\includegraphics{yeast_db_cox10}
+\caption{Yeast network after absorbing evidence (\emph{COX10}="1")}
+\end{figure}
 
 \noindent The plot method will map the phenotype states with maximum probability on the network by a colormap. 
 \noindent The \code{d}-separated nodes are white while the colored nodes are \code{d}-connected, with the color indicating the strength and direction of change . By default, the continuous nodes are of shape "ellipse" and a "box" shape is used for discrete nodes. The node for which evidence is absorbed is colored green (default color).\\
 
 \noindent There is also an option to plot Fold Changes (\code{FC}) which can be entered through the argument \code{y} (see help for \code{plot.gnbp}).\\
 
+<<K,eval=FALSE>>=
+plot.dbn(yeast.dbn.abs,y="FC",ncol=2,fontsize=14)
+@
+
+\begin{figure}[H]
+\centering 
+\includegraphics{yeast_db_cox10_FC}
+\caption{Fold Changes in Yeast network after absorbing evidence (\emph{COX10}="1")}
+\end{figure}
+
+When \code{y="FC"} is specified, the fold changes for the specified column (evidence) are mapped on the network. FC are positive values. FC of 1 indicates no change from the marginal, greater than 1 indicates the updated mean is higher than the marginal mean while less than 1 indicates vice-versa.
 
 %
 \section{Specifying Additional Biological Information}

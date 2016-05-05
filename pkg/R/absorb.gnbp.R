@@ -153,12 +153,17 @@ absorb.gnbp=function(object,node,evidence)
     rownames(JSI)=dnodes[X,1]
     rownames(belief_mean)=dnodes[X,1]
     rownames(belief_var)=dnodes[X,1]
+    colnames(JSI)=paste("ev=",as.character(evidence))
+    colnames(belief_mean)=paste("ev=",as.character(evidence))
+    colnames(belief_var)=paste("ev=",as.character(evidence))
   }
 
   if (type == "db")
   {
     rownames(FC)=dnodes[Z,1]
     rownames(pheno_state)=dnodes[Z,1]
+    colnames(FC)=paste("ev=",as.character(evidence))
+    colnames(pheno_state)=paste("ev=",as.character(evidence))
     
     FC=list(FC=FC,pheno_state=pheno_state)
     
@@ -170,6 +175,7 @@ absorb.gnbp=function(object,node,evidence)
                                      dimnames=list(rownames(belief_pheno_freq),NULL))
       
       name<-paste("state",j,sep="")
+      colnames(belief_pheno_freq_temp)<-paste("ev=",as.character(evidence))
       belief_pheno_freq_list[[name]]= belief_pheno_freq_temp
     }
     
@@ -192,6 +198,7 @@ absorb.gnbp=function(object,node,evidence)
                                 dimnames=list(rownames(belief_geno_freq),NULL))
       
       name<-paste("state",j,sep="")
+      colnames(belief_geno_freq_temp)<-paste("ev=",as.character(evidence))
       belief_geno_freq_list[[name]]= belief_geno_freq_temp
     }
     
