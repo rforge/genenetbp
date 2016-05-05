@@ -257,7 +257,7 @@ invisible(x)
 #################################################################################################
 ## plot.dbn : plots discrete bayesian networks. output from absorb.dbn
 #################################################################################################
-plot.dbn=function(x, y="state",col.palette,col.length = 100, fontsize=10, fontcolor="black",...)
+plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=10, fontcolor="black",...)
   
 {
   ## get node attributes
@@ -304,7 +304,7 @@ plot.dbn=function(x, y="state",col.palette,col.length = 100, fontsize=10, fontco
     {
       
       if(missing(col.palette))
-        colpalette=list(pos_high="darkmagenta",pos_low="palegoldenrod",
+        col.palette=list(pos_high="darkmagenta",pos_low="palegoldenrod",
                         neg_high="palegoldenrod",neg_low="gold2",
                         dsep_col="white",qtl_col="grey",node_abs_col="palegreen2")
       

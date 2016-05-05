@@ -173,7 +173,7 @@ absorb.dbn=function(object,node,evidence)
                  belief=list(pheno = belief_pheno_freq_list,geno = belief_geno_freq_list),
                  FC=FC)
   
-  class(results)<-"gnbp"
+  class(results)<-"dbn"
   
   return(results)
   

@@ -32,14 +32,14 @@ The function \code{absorb.dbn} is compatible with the output produced by \code{f
 }
 
 \value{
-\code{absorb.gnbp} returns an object of class "gnbp" while \code{absorb.dbn} returns an object of class "dbn". An object of class "gnbp" or "dbn" is a list containing the following components
+\code{absorb.gnbp} returns an object of class "gnbp" while \code{absorb.dbn} returns an object of class "dbn". An object of class "gnbp" or "dbn" is a list containing the following components.
 
 \item{gp}{an RHugin domain (for \code{absorb.gnbp}) or a grain object (for \code{absorb.dbn}) that is triangulated, compiled and with the latest absorbed evidence propagated.  }
 \item{gp_flag}{type of network.}
 \item{node}{a character vector specifying the nodes for which evidence has been absorbed}
 \item{marginal}{a list of marginal probabilities for phenotypes (\code{pheno}) and genotypes (\code{geno})}
 \item{belief}{a list of updated beliefs for phenotypes (\code{pheno}) and genotypes (\code{geno})}
-\item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise \code{NULL} if network is \code{Discrete Bayesian}}. 
+\item{JSI}{a matrix of Jeffrey's signed information if network is \code{Conditional Gaussian}, otherwise \code{NULL} if network is \code{Discrete Bayesian}.}
 \item{FC}{a list of two. a matrix \code{FC} of fold changes and a matrix \code{pheno_state} of phenotype node beliefs - state with maxium probability. If network is \code{Conditional Gaussian}, a \code{NULL} value is returned.}
 
 The marginals, beliefs and JSI or FC are calculated for only \emph{d}-connected nodes.
@@ -49,7 +49,7 @@ If a sequence of evidence is absorbed for a single node in a Conditional Gaussia
 }
 
 \author{
-Janhavi Moharil<janhavim@buffalo.edu>
+Janhavi Moharil <janhavim@buffalo.edu>
 }
 
 \seealso{
@@ -62,7 +62,7 @@ data(mouse)
 
 ## get genotype and phenotype data
 mousegeno<-mouse[,1:5]
-mousepheno<-mouse[,6:14]
+mousepheno<-mouse[,6:19]
 
 \dontrun{
 ## Simple example : Fit a bayesian network to genotype-phenotype data 
@@ -81,5 +81,4 @@ mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha=0.1)
 evidence<-gen.evidence(mouse.cgbn,node=c("Ak2","Ptp4a2","Hmgcl"),std=2,std.equal=TRUE)
 absorb.gnbp(mouse.cgbn,node=rownames(evidence),evidence=evidence)
 }
-
 }

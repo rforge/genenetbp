@@ -296,7 +296,7 @@ absorb.gnbp=function(object,node,evidence)
       
       if(dnodes[j,2]=="factor")
       {
-        marg_freq[j,1:dnodes[j,4]]<-pmarginal$table[,2]
+        marg_freq[j,1:length(pmarginal$table[,2])]<-pmarginal$table[,2]
       }
     
     }

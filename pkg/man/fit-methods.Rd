@@ -95,7 +95,7 @@ data(mouse)
 
 ## get genotype and phenotype data
 mousegeno<-mouse[,1:5]
-mousepheno<-mouse[,6:14]
+mousepheno<-mouse[,6:19]
 
 ## Simple example : Fit a bayesian network to genotype-phenotype data using the default values
 fit.gnbp(mousegeno,mousepheno)
@@ -103,25 +103,18 @@ fit.gnbp(mousegeno,mousepheno)
 ## Fit a bayesian network to genotype-phenotype data at a specified significance level
 fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 
-## load HDL dataset
-data(hdl)
+## load yeast dataset
+data(yeast)
 
-## Discretize data around median
-hdlpheno_dis<-hdlpheno
-for (i in 1:dim(hdlpheno)[2])
-{
-  hdlpheno_dis[which(hdlpheno[,i]>=median(hdlpheno[,i])),i]<-"1"
-  hdlpheno_dis[which(hdlpheno[,i]<median(hdlpheno[,i])),i]<-"-1"
-  hdlpheno_dis[,i]<-as.factor(hdlpheno_dis[,i])
-}
+## get genotype and phenotype data
+yeastgeno<-yeast[,1:12]
+yeastpheno<-yeast[,13:50]
 
 ## Simple example : Fit a discrete bayesian network to genotype-phenotype data
-fit.dbn(hdlgeno,hdlpheno_dis)
+fit.dbn(yeastgeno,yeastpheno)
 
 ## Fit a discrete bayesian network by Grow-Shrink method and plot it.
-hdlgs<-fit.dbn(hdlgeno,hdlpheno_dis,method="gs")
+yeast.dbn.gs<-fit.dbn(yeastgeno,yeastpheno,method="gs")
 plot(hdlgs)
-
-
 }
 }

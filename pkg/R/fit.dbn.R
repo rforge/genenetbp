@@ -143,12 +143,11 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
 
   # Fit the graphical independence network
   network<-bnlearn::bn.fit(Data.bn,Data)
+
  
- 
- }else
+ }else{
     
-  {
-    if (missing(graph))
+   if (missing(graph))
       stop("if learn == FALSE, a graph structure (graphNEL object or data.frame of edges) must be provided.")
   
     if(class(graph)=="graphNEL")
@@ -195,7 +194,7 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
  ## get marginals
  #########################################
 
- network.grain<-as.grain(network$dbn)
+ network.grain<-as.grain(network)
  setEvidence(network.grain)
  grn<-querygrain(network.grain)
 
@@ -206,7 +205,7 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
   ## get marginals
   for (j in 1:dim(class_nodes)[1]) 
   {
-   cpt_temp<-unlist(grnstate[class_nodes[j,1]])
+   cpt_temp<-unlist(grn[class_nodes[j,1]])
    cpt[class_nodes[j,1],1:length(cpt_temp)]<-cbind(cpt_temp)
   }
    
@@ -221,9 +220,15 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
      colnames(cpt)=freqnames
    }
    
+ X=which(class_nodes[,"type"]=="pheno")
+ Y=which(class_nodes[,"type"]=="geno")
 
+ phenomarginal<- cpt[class_nodes[X,1],1:as.numeric(max(class_nodes[X,3]))]
+ genomarginal<- cpt[class_nodes[Y,1],1:as.numeric(max(class_nodes[Y,3]))]
+ 
  ## Return variables
- dbnfit<-list(dbn=network,marginal=cpt, dbn_nodes=class_nodes,dbn_flag="dbn")
+ dbnfit<-list(dbn=network,marginal=list(pheno=list(freq=phenomarginal),geno=list(freq=genomarginal)),
+              dbn_nodes=class_nodes,dbn_flag="dbn")
  class(dbnfit)<-"dbnfit"
  
  return(dbnfit)

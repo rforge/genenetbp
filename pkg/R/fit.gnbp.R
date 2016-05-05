@@ -119,7 +119,6 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     class_nodes=cbind(class_nodes,t(cbind(t(rep("pheno",dim(pheno)[2])),t(rep("geno",dim(geno)[2])))))
     
     colnames(class_nodes)=c("node","class","levels","type")
-    
      
     Xpheno=which(class_nodes[,"type"]=="pheno")
     Xgeno=which(class_nodes[,"type"]=="geno")
@@ -145,7 +144,8 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     {
  
     # Disallow interaction between discrete nodes
-    qtl_constraints<-.GenConstraints(class_nodes)
+    qtl_constraints<-.GenConstraints(class_nodes,type)
+  
     
       if(!missing(constraints))
       {
@@ -203,8 +203,37 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     
     ## get marginals
     cpt<-.get.marginal.bn(network,class_nodes)
-        
-    gpfit<-list(gp=network,marginal=cpt,gp_nodes=class_nodes,gp_flag=type)
+    
+    ## Get geno and pheno col nos.
+    Y=which(class_nodes[,"type"]=="geno")
+    X=which(class_nodes[,"type"]=="pheno")
+    
+    ## Genotype frequencies (marginals)
+    genomarginal<- matrix(cpt[class_nodes[Y,1],3:ncol(cpt)],
+                          nrow = length(class_nodes[Y,1]),
+                          ncol = as.numeric(max(class_nodes[Y,3])),
+                          dimnames = list(class_nodes[Y,1],colnames(cpt)[3:ncol(cpt)]))
+    
+    genomarginal = list(freq = genomarginal)
+    
+    if (type == "db")
+    {
+      phenomarginal<- matrix(cpt[class_nodes[X,1],3:ncol(cpt)],
+                             nrow = length(class_nodes[X,1]),
+                             ncol = as.numeric(max(class_nodes[X,3])),
+                             dimnames = list(class_nodes[X,1],colnames(cpt)[3:ncol(cpt)]))
+     
+      phenomarginal = list(freq = phenomarginal)
+    }
+
+    if (type == "cg")    
+    {
+      phenomarginal=list(mean = as.matrix(cpt[class_nodes[X,1],1]),
+                               var = as.matrix(cpt[class_nodes[X,1],2]))
+    }
+    
+    gpfit<-list(gp=network,marginal=list(pheno=phenomarginal,geno=genomarginal),
+                gp_nodes=class_nodes,gp_flag=type)
     
     class(gpfit)<-"gpfit"
     
@@ -212,7 +241,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
    
   }  
 
-.GenConstraints=function(class_nodes)
+.GenConstraints=function(class_nodes,type)
 {
   X=which(class_nodes[,"type"]=="geno")
   blackL<-matrix(0,nrow=choose(length(X),2) ,ncol=2)
@@ -223,7 +252,6 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
       blackL[k,]=cbind(class_nodes[X[i],1],class_nodes[X[j],1])
       k=k+1
     }
-  
 
   undirected.forbidden <- vector("list", nrow(blackL))
   
@@ -233,9 +261,28 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
   }
   
   undirected <- list(required = NULL,forbidden = undirected.forbidden)
+  directed<-NULL
+  
+  if (type=="db")
+  {
+    Y = which(class_nodes[,"type"]=="pheno")
+    
+    for (i in 1:length(Y))
+      for( j in 1:length(X))
+        blackL=rbind(blackL,cbind(class_nodes[Y[i]],class_nodes[X[j]])) 
+    
+    directed.forbidden <- vector("list", nrow(blackL))
+    
+    for (i in 1:nrow(blackL))
+    {
+      directed.forbidden[[i]] <- blackL[i,]
+    }
+    
+    directed <- list(required = NULL,forbidden = directed.forbidden)
+  }
   
   # put into constraints list
-  qtl_constraints <- list(directed = NULL, undirected = undirected)
+  qtl_constraints <- list(directed = directed, undirected = undirected)
   return(qtl_constraints)
 }
 
@@ -264,7 +311,10 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     
     if(class_nodes[j,2]=="factor")
     {
-      marg_freq[j,1:class_nodes[j,4]]<-pmarginal$table[,2]
+#       print(marg_freq)
+#       print(pmarginal$table)
+#       print(class_nodes)
+      marg_freq[j,1:length(pmarginal$table[,2])]<-pmarginal$table[,2]
     }
     
   }
