@@ -683,7 +683,7 @@ Consider the yeast network inferred in Section 3.2. The phenotypes are discrete 
 ## Fit the network
 yeast.dbn<-fit.dbn(yeastgeno,yeastpheno)
 ##Absorb evidence
-yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("1","-1"),ncol=2))
+yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("-1","1"),ncol=2))
 @
 
 \begin{Schunk}
@@ -692,7 +692,7 @@ yeast.dbn.abs<-absorb.dbn(yeast.dbn,"COX10",matrix(c("1","-1"),ncol=2))
 > yeast.dbn.abs
 $gp
 Independence network: Compiled: FALSE Propagated: FALSE 
-  Nodes: chr [1:50] "HEM3" "BAP2" "ERG9" "PHA2" "ERG6" "ERG12" "TAT1" "FLX1" "MSY1" "GRX5" "VMA13" "LAT1" ...
+  Nodes: chr [1:50] "HEM3" "BAP2" "ERG9" "PHA2" "ERG6" "ERG12" "TAT1" "FLX1" "MSY1" ...
 
 $gp_flag
 [1] "db"
@@ -714,29 +714,29 @@ $gp_nodes
 [13,] "NCP1"    "factor" "2"    "pheno"
 [14,] "SLM5"    "factor" "2"    "pheno"
 [15,] "MSE1"    "factor" "2"    "pheno"
-[16,] "COX10"   "factor" "2"    "pheno"
-[17,] "ALD6"    "factor" "2"    "pheno"
-[18,] "HIS3"    "factor" "2"    "pheno"
-[19,] "NAM2"    "factor" "2"    "pheno"
-[20,] "ACS1"    "factor" "2"    "pheno"
-[21,] "YNL045W" "factor" "2"    "pheno"
-[22,] "RBK1"    "factor" "2"    "pheno"
-[23,] "YMR293C" "factor" "2"    "pheno"
-[24,] "LCB4"    "factor" "2"    "pheno"
-[25,] "PPA2"    "factor" "2"    "pheno"
-[26,] "DIA4"    "factor" "2"    "pheno"
-[27,] "MIR1"    "factor" "2"    "pheno"
-[28,] "YEL047C" "factor" "2"    "pheno"
-[29,] "MSK1"    "factor" "2"    "pheno"
-[30,] "TRP3"    "factor" "2"    "pheno"
-[31,] "THI22"   "factor" "2"    "pheno"
-[32,] "TNA1"    "factor" "2"    "pheno"
-[33,] "MSD1"    "factor" "2"    "pheno"
-[34,] "YER152C" "factor" "2"    "pheno"
-[35,] "TAT2"    "factor" "2"    "pheno"
-[36,] "TYS1"    "factor" "2"    "pheno"
-[37,] "YAT2"    "factor" "2"    "pheno"
-[38,] "YEL041W" "factor" "2"    "pheno"
+[16,] "ALD6"    "factor" "2"    "pheno"
+[17,] "HIS3"    "factor" "2"    "pheno"
+[18,] "NAM2"    "factor" "2"    "pheno"
+[19,] "ACS1"    "factor" "2"    "pheno"
+[20,] "YNL045W" "factor" "2"    "pheno"
+[21,] "RBK1"    "factor" "2"    "pheno"
+[22,] "YMR293C" "factor" "2"    "pheno"
+[23,] "LCB4"    "factor" "2"    "pheno"
+[24,] "PPA2"    "factor" "2"    "pheno"
+[25,] "DIA4"    "factor" "2"    "pheno"
+[26,] "MIR1"    "factor" "2"    "pheno"
+[27,] "YEL047C" "factor" "2"    "pheno"
+[28,] "MSK1"    "factor" "2"    "pheno"
+[29,] "TRP3"    "factor" "2"    "pheno"
+[30,] "THI22"   "factor" "2"    "pheno"
+[31,] "TNA1"    "factor" "2"    "pheno"
+[32,] "MSD1"    "factor" "2"    "pheno"
+[33,] "YER152C" "factor" "2"    "pheno"
+[34,] "TAT2"    "factor" "2"    "pheno"
+[35,] "TYS1"    "factor" "2"    "pheno"
+[36,] "YAT2"    "factor" "2"    "pheno"
+[37,] "YEL041W" "factor" "2"    "pheno"
+[38,] "COX10"   "factor" "2"    "pheno"
 [39,] "Qchr4"   "factor" "2"    "geno" 
 [40,] "Qchr3"   "factor" "2"    "geno" 
 [41,] "Qchr12"  "factor" "2"    "geno" 
@@ -752,7 +752,7 @@ $gp_nodes
 
 $evidence
      [,1] [,2]
-[1,] "1"  "-1"
+[1,] "-1" "1" 
 
 $node
 [1] "COX10"
@@ -770,33 +770,32 @@ TAT1     0.492  0.508
 FLX1     0.484  0.516
 MSY1     0.499  0.501
 GRX5     0.495  0.505
-VMA13    0.487  0.513
-LAT1     0.490  0.510
+VMA13    0.485  0.515
+LAT1     0.489  0.511
 NCP1     0.498  0.502
-SLM5     0.484  0.516
+SLM5     0.489  0.511
 MSE1     0.480  0.520
 ALD6     0.507  0.493
 HIS3     0.480  0.520
 NAM2     0.499  0.501
 ACS1     0.504  0.496
-YNL045W  0.472  0.528
-RBK1     0.501  0.499
-YMR293C  0.497  0.503
+YNL045W  0.470  0.530
+RBK1     0.497  0.503
+YMR293C  0.502  0.498
 LCB4     0.503  0.497
 PPA2     0.499  0.501
-DIA4     0.489  0.511
+DIA4     0.493  0.507
 MIR1     0.492  0.508
 YEL047C  0.500  0.500
 MSK1     0.499  0.501
 TRP3     0.489  0.511
 THI22    0.499  0.501
-TNA1     0.495  0.505
-MSD1     0.492  0.508
+TNA1     0.496  0.504
+MSD1     0.493  0.507
 YER152C  0.503  0.497
-TAT2     0.498  0.502
+TAT2     0.500  0.500
 TYS1     0.499  0.501
 YAT2     0.490  0.510
-YEL041W  0.500  0.500
 
 
 $marginal$geno
@@ -812,179 +811,175 @@ Qchr13  0.491  0.509
 $belief
 $belief$pheno
 $belief$pheno$state1
-          [,1]  [,2]
-HEM3    0.4826 0.525
-BAP2    0.5072 0.493
-PHA2    0.4245 0.564
-ERG6    0.5002 0.500
-ERG12   0.5202 0.463
-TAT1    0.4912 0.493
-FLX1    0.4221 0.546
-MSY1    0.0917 0.912
-GRX5    0.3791 0.613
-VMA13   0.7030 0.269
-LAT1    0.5475 0.431
-NCP1    0.5785 0.416
-SLM5    0.0941 0.879
-MSE1    0.2467 0.716
-ALD6    0.5042 0.509
-HIS3    0.4939 0.466
-NAM2    0.2294 0.773
-ACS1    0.4684 0.539
-YNL045W 0.6331 0.308
-RBK1    0.7842 0.215
-YMR293C 0.1071 0.893
-LCB4    0.5031 0.502
-PPA2    0.2402 0.762
-DIA4    0.2246 0.757
-MIR1    0.3892 0.597
-YEL047C 0.6458 0.353
-MSK1    0.1938 0.809
-TRP3    0.4965 0.481
-THI22   0.4990 0.499
-TNA1    0.4111 0.580
-MSD1    0.1890 0.800
-YER152C 0.5352 0.471
-TAT2    0.3058 0.694
-TYS1    0.6035 0.393
-YAT2    0.5176 0.462
-YEL041W 0.5207 0.479
+        ev= -1  ev= 1
+HEM3     0.525 0.4826
+BAP2     0.492 0.5080
+PHA2     0.562 0.4244
+ERG6     0.500 0.5002
+ERG12    0.463 0.5203
+TAT1     0.493 0.4911
+FLX1     0.545 0.4220
+MSY1     0.903 0.0902
+GRX5     0.611 0.3785
+VMA13    0.269 0.7030
+LAT1     0.431 0.5475
+NCP1     0.418 0.5788
+SLM5     0.880 0.0943
+MSE1     0.712 0.2463
+ALD6     0.510 0.5040
+HIS3     0.465 0.4953
+NAM2     0.783 0.2125
+ACS1     0.540 0.4662
+YNL045W  0.308 0.6330
+RBK1     0.212 0.7851
+YMR293C  0.893 0.1071
+LCB4     0.502 0.5032
+PPA2     0.758 0.2377
+DIA4     0.758 0.2247
+MIR1     0.596 0.3881
+YEL047C  0.356 0.6463
+MSK1     0.802 0.1927
+TRP3     0.479 0.4988
+THI22    0.499 0.4990
+TNA1     0.581 0.4098
+MSD1     0.795 0.1887
+YER152C  0.471 0.5353
+TAT2     0.672 0.3259
+TYS1     0.389 0.6101
+YAT2     0.462 0.5187
 
 $belief$pheno$state2
-         [,1]   [,2]
-HEM3    0.517 0.4750
-BAP2    0.493 0.5074
-PHA2    0.575 0.4363
-ERG6    0.500 0.4996
-ERG12   0.480 0.5373
-TAT1    0.509 0.5074
-FLX1    0.578 0.4542
-MSY1    0.908 0.0884
-GRX5    0.621 0.3866
-VMA13   0.297 0.7312
-LAT1    0.452 0.5685
-NCP1    0.422 0.5836
-SLM5    0.906 0.1205
-MSE1    0.753 0.2842
-ALD6    0.496 0.4906
-HIS3    0.506 0.5339
-NAM2    0.771 0.2266
-ACS1    0.532 0.4608
-YNL045W 0.367 0.6918
-RBK1    0.216 0.7855
-YMR293C 0.893 0.1071
-LCB4    0.497 0.4979
-PPA2    0.760 0.2379
-DIA4    0.775 0.2425
-MIR1    0.611 0.4029
-YEL047C 0.354 0.6470
-MSK1    0.806 0.1913
-TRP3    0.504 0.5194
-THI22   0.501 0.5007
-TNA1    0.589 0.4203
-MSD1    0.811 0.2004
-YER152C 0.465 0.5294
-TAT2    0.694 0.3065
-TYS1    0.396 0.6071
-YAT2    0.482 0.5380
-YEL041W 0.479 0.5210
+        ev= -1 ev= 1
+HEM3    0.4750 0.517
+BAP2    0.5079 0.492
+PHA2    0.4379 0.576
+ERG6    0.4996 0.500
+ERG12   0.5367 0.480
+TAT1    0.5074 0.509
+FLX1    0.4552 0.578
+MSY1    0.0971 0.910
+GRX5    0.3889 0.621
+VMA13   0.7312 0.297
+LAT1    0.5686 0.452
+NCP1    0.5818 0.421
+SLM5    0.1204 0.906
+MSE1    0.2879 0.754
+ALD6    0.4904 0.496
+HIS3    0.5350 0.505
+NAM2    0.2166 0.787
+ACS1    0.4595 0.534
+YNL045W 0.6919 0.367
+RBK1    0.7875 0.215
+YMR293C 0.1071 0.893
+LCB4    0.4979 0.497
+PPA2    0.2419 0.762
+DIA4    0.2424 0.775
+MIR1    0.4045 0.612
+YEL047C 0.6439 0.354
+MSK1    0.1978 0.807
+TRP3    0.5215 0.501
+THI22   0.5007 0.501
+TNA1    0.4194 0.590
+MSD1    0.2051 0.811
+YER152C 0.5288 0.465
+TAT2    0.3281 0.674
+TYS1    0.6110 0.390
+YAT2    0.5383 0.481
 
 
 $belief$geno
 $belief$geno$state1
-        [,1]  [,2]
-Qchr3  0.458 0.470
-Qchr2  0.570 0.573
-Qchr16 0.450 0.605
-Qchr13 0.492 0.490
+       ev= -1 ev= 1
+Qchr3   0.471 0.458
+Qchr2   0.573 0.570
+Qchr16  0.603 0.450
+Qchr13  0.490 0.492
 
 $belief$geno$state2
-        [,1]  [,2]
-Qchr3  0.542 0.530
-Qchr2  0.430 0.427
-Qchr16 0.550 0.395
-Qchr13 0.508 0.510
+       ev= -1 ev= 1
+Qchr3   0.529 0.542
+Qchr2   0.427 0.430
+Qchr16  0.397 0.550
+Qchr13  0.510 0.508
 
 
 
 $FC
 $FC$FC
-         [,1]  [,2]
-HEM3    1.042 1.042
-BAP2    1.014 1.015
-PHA2    1.136 1.142
-ERG6    1.000 1.000
-ERG12   1.058 1.057
-TAT1    1.001 0.999
-FLX1    1.119 1.129
-MSY1    1.812 1.828
-GRX5    1.230 1.238
-VMA13   1.442 1.427
-LAT1    1.118 1.115
-NCP1    1.161 1.163
-SLM5    1.755 1.817
-MSE1    1.447 1.493
-ALD6    0.995 1.005
-HIS3    0.973 1.027
-NAM2    1.539 1.549
-ACS1    1.071 1.071
-YNL045W 1.342 1.310
-RBK1    1.564 1.575
-YMR293C 1.776 1.796
-LCB4    1.001 0.999
-PPA2    1.517 1.526
-DIA4    1.518 1.549
-MIR1    1.203 1.213
-YEL047C 1.290 1.295
-MSK1    1.609 1.621
-TRP3    0.985 1.016
-THI22   1.000 1.000
-TNA1    1.166 1.172
-MSD1    1.597 1.625
-YER152C 1.064 1.065
-TAT2    1.384 1.392
-TYS1    1.209 1.212
-YAT2    1.056 1.055
-YEL041W 1.041 1.042
+        ev= -1 ev= 1
+HEM3     1.042 1.043
+BAP2     1.016 1.016
+PHA2     1.139 1.137
+ERG6     1.000 1.000
+ERG12    1.056 1.058
+TAT1     0.999 1.002
+FLX1     1.126 1.120
+MSY1     1.811 1.815
+GRX5     1.234 1.232
+VMA13    1.419 1.450
+LAT1     1.113 1.119
+NCP1     1.159 1.162
+SLM5     1.799 1.772
+MSE1     1.482 1.450
+ALD6     1.006 0.994
+HIS3     1.029 0.971
+NAM2     1.569 1.573
+ACS1     1.073 1.075
+YNL045W  1.305 1.348
+RBK1     1.567 1.579
+YMR293C  1.778 1.793
+LCB4     0.999 1.001
+PPA2     1.519 1.522
+DIA4     1.538 1.528
+MIR1     1.210 1.205
+YEL047C  1.289 1.291
+MSK1     1.608 1.611
+TRP3     1.020 0.980
+THI22    1.000 1.000
+TNA1     1.171 1.170
+MSD1     1.611 1.601
+YER152C  1.064 1.064
+TAT2     1.344 1.348
+TYS1     1.220 1.223
+YAT2     1.056 1.058
 
 $FC$pheno_state
-        [,1] [,2]
-HEM3       2    1
-BAP2       1    2
-PHA2       2    1
-ERG6       1    1
-ERG12      1    2
-TAT1       2    2
-FLX1       2    1
-MSY1       2    1
-GRX5       2    1
-VMA13      1    2
-LAT1       1    2
-NCP1       1    2
-SLM5       2    1
-MSE1       2    1
-ALD6       1    1
-HIS3       2    2
-NAM2       2    1
-ACS1       2    1
-YNL045W    1    2
-RBK1       1    2
-YMR293C    2    1
-LCB4       1    1
-PPA2       2    1
-DIA4       2    1
-MIR1       2    1
-YEL047C    1    2
-MSK1       2    1
-TRP3       2    2
-THI22      2    2
-TNA1       2    1
-MSD1       2    1
-YER152C    1    2
-TAT2       2    1
-TYS1       1    2
-YAT2       1    2
-YEL041W    1    2
+        ev= -1 ev= 1
+HEM3         1     2
+BAP2         2     1
+PHA2         1     2
+ERG6         1     1
+ERG12        2     1
+TAT1         2     2
+FLX1         1     2
+MSY1         1     2
+GRX5         1     2
+VMA13        2     1
+LAT1         2     1
+NCP1         2     1
+SLM5         1     2
+MSE1         1     2
+ALD6         1     1
+HIS3         2     2
+NAM2         1     2
+ACS1         1     2
+YNL045W      2     1
+RBK1         2     1
+YMR293C      1     2
+LCB4         1     1
+PPA2         1     2
+DIA4         1     2
+MIR1         1     2
+YEL047C      2     1
+MSK1         1     2
+TRP3         2     2
+THI22        2     2
+TNA1         1     2
+MSD1         1     2
+YER152C      2     1
+TAT2         1     2
+TYS1         2     1
+YAT2         2     1
 
 
 attr(,"class")
