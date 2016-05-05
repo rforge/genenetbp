@@ -1044,7 +1044,7 @@ attr(,"class")
 
 \begin{figure}[H]
 \centering 
-\includegraphics[height=13cm]{mouse_network_tlr12_colpalette}
+\includegraphics[height=15cm]{mouse_network_tlr12_colpalette}
 \caption{Mouse network with custom color palette}
 \end{figure} 
 
