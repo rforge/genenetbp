@@ -35,21 +35,22 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <h1>The geneNetBP Homepage</h1>
 
-The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network (CG-BN) to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package facilitates the smooth transition from QTL mapping to graphical modeling to system-wide prediction after absorbing network evidence. Specifically, <code>geneNetBP</code> can be used to absorb and propagate phenotypic evidence through a given CG-BN representation of a genotype-phenotype network, compute the Jeffrey&rsquos Information across the network, and provide visualizations for interpretation.
+The geneNetBP package provides functions to fit Conditional Gaussian Bayesian network (CG-BN) and Discrete Bayesian network to genotype-phenotype or Quantitative Trait Loci (QTL) data, absorb evidence in the genotype-phenotype network and quantify and visualize the changes in network beliefs. The package facilitates the smooth transition from QTL mapping to graphical modeling to system-wide prediction after absorbing network evidence. Specifically, <code>geneNetBP</code> can be used to absorb and propagate phenotypic evidence through a given CG-BN representation of a genotype-phenotype network, compute the updated beliefs across the network, quantify the effects (Jeffrey&#8217s Signed Information & Fold Changes) and provide visualizations for interpretation.
 
 
 <hr />
 <h2> Download </h2>
 
-The <code>geneNetBP</code> package version 1.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
+The <code>geneNetBP</code> package version 2.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
 
+<p>The <code>geneNetBP</code> package version 1.0.0 is archived and will no longer be supported. It is however available for download on <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>.</p>
 <hr />
 
 <h2>Installation</h2>
 
-The geneNetBP package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine (HDE) - a commercial software developed by <a href="http://www.hugin.com">HUGIN EXPERT A/S</a> for building and making inference from Bayesian belief networks.  The RHugin package provides an interface to communicate with the HDE from within R. 
+For CG-BN implementation, the geneNetBP package makes extensive use of RHugin package that provides an R interface for the Hugin Decision Engine (HDE) - a commercial software developed by <a href="http://www.hugin.com">HUGIN EXPERT A/S</a> for building and making inference from Bayesian belief networks.  The RHugin package provides an interface to communicate with the HDE from within R. 
 
-<p>The geneNetBP package <b>requires HDE and the R package RHugin</b> to be installed.</p> 
+<p>For learning and belief propagation in CG-BN, the geneNetBP package <b>requires HDE and the R package RHugin</b> to be installed.</p> 
 
 <dl><h3> Installation Steps</h3> 
 	<dt><b> 1. Install Hugin Decision Engine:</b> </dt>
@@ -72,7 +73,7 @@ The geneNetBP package makes extensive use of RHugin package that provides an R i
 	</dd><br>
 	
 	<dt><b> 4. Install the geneNetBP package:</b> </dt>
-	<dd> The geneNetBP package version 1.0.0 can be downloaded 	from <a href="https://cran.r-	project.org/web/packages/geneNetBP/">CRAN</a>. 
+	<dd> The geneNetBP package version 2.0.0 can be downloaded 	from <a href="https://cran.r-	project.org/web/packages/geneNetBP/">CRAN</a>. 
 	</dd>
 
 </dl>
