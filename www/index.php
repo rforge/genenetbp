@@ -59,17 +59,22 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
 	</dd><br>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
-	<dd> <code>RHugin</code> is available on R-Forge and NOT 	on CRAN. Installation instructions for <code>RHugin</code> 	can be found 	on 	its project homepage <a 	href="http://rhugin.r-	forge.r-	project.org/"> RHugin	</a>.It is important to 	install 	the matching versions 	and the architecture (32/64 	bit) 	of Hugin Lite, <code>	RHugin</code> and R as listed on 	<code>RHugin</code> 	project homepage.Please note that <code>RHugin</code> is 	required for 	proper functioning of <code>geneNetBP	</code>. The 	package <code>RHugin</code> will 	not 	automatically load upon loading 	<code>geneNetBP	</code>. 	Please use <code>library(RHugin)</code> or 	<code>require(RHugin)</code> 	to load it 	before 	using 	geneNetBP.
+	<dd> <code>RHugin</code> is available on R-Forge and NOT 	on CRAN. Installation instructions for <code>RHugin</code> 	can be found 	on 	its project homepage <a 	href="http://rhugin.r-	forge.r-	project.org/"> RHugin	</a>.It is important to 	install 	the matching versions 	and the architecture (32/64 	bit) 	of Hugin Lite, <code>	RHugin</code> and R as listed on 	<code>RHugin</code> 	project homepage. Please note that <code>RHugin</code> is 	required for proper functioning of CG-BN implementation	<code>geneNetBP	</code>. The 	package <code>RHugin	</code> will 	not 	automatically load upon loading 	<code>geneNetBP	</code>. 	Please use <code>library(RHugin)	</code> or 	<code>require(RHugin)</code> 	to load it 	before 	using 	geneNetBP.
 	</dd><br>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
-	<dd> Both <code>geneNetBP</code> and <code>RHugin</code> 	depend on the Bioconductor 	packages <code>graph	</code> and <code>Rgraphviz</code>. 	Run the following 	commands to install them.
+	<dd> Discrete bayesian networks learning and inference is 	implemented using algorithms from the packages <code>	bnlearn</code> and <code><gRain></code>. <code>geneNetBP	</code> depends 	on these packages which are available 	on 	CRAN. These packages should get installed 	automatically with 	<code>geneNetBP</code>. You can 	manually install them by using R 	install command
+	<pre> install.packages(&quot;bnlearn&quot;)</pre>
+	<pre> install.packages(&quot;gRain&quot;)</pre>
+
+	<p> In addition to these, both <code>geneNetBP</code> and 	<code>RHugin</code> 	depend on the Bioconductor 	packages <code>graph	</code> and <code>Rgraphviz</code>. 	Run the following 	commands to install them.</p>
 	<pre>
   	source(&quot;http://bioconductor.org/biocLite.R&quot;)
   	biocLite(c(&quot;graph&quot;, &quot;Rgraphviz&quot;))
 	</pre>
-	In addition to these, <code>geneNetBP</code> also depends 	on the package <code>scales</code> which is available on 	CRAN. The package <code>scales</code> should 	automatically get installed with <code>geneNetBP</code>. 	If it does not, then you can manually 	install it. Use 	R 	install command
-	<pre> install.packages(&quot;scales&quot;)</pre>
+	
+	<p> Note that <code>geneNetBP v2.0.0</code> does not 	depend on the package <code>scales</code> unlike <code> 	v1.0.0</code>. 	
+	
 	</dd><br>
 	
 	<dt><b> 4. Install the geneNetBP package:</b> </dt>
@@ -83,7 +88,7 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
 
 <li type="circle"> The methods for predicting and visualizing system-wide effects of genotype-phenotype networks under perturbations are described in our publication <a href="http://www.degruyter.com/view/j/sagmb.ahead-of-print/sagmb-2015-0058/sagmb-2015-0058.xml"> Moharil J. et.al. (2016)</a></li> <br>
 
-<li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0_vignette.pdf">geneNetBP 2.0.0 vignette</a>]</li> <br>
+<li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0_vignette.pdf">geneNetBPv2.0.0-vignette</a>]</li> <br>
 
 <li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0-manual.pdf">[geneNetBPv2.0.0-manual]</a></li><br>
 
