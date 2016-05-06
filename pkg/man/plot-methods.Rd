@@ -1,4 +1,4 @@
-\name{plot.gnbp}
+\name{plot methods}
 \alias{plot.gnbp}
 \alias{plot.dbn}
 \alias{plot.gpfit}
