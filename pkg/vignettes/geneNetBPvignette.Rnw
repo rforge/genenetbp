@@ -656,7 +656,7 @@ attr(,"class")
 \end{Schunk}
 
 
-\noindent A function \code{gen.evidence} is useful to generate evidence for a node based on it's marginal distribution. This is particularly useful when network perturbation to assess the network behaviour is of interest.\\
+\noindent A function \code{gen.evidence} is useful to generate evidence for a node, based on it's marginal distribution. This is particularly useful when network perturbation to assess the network behaviour is of interest.\\
 
 \noindent To generate a spectrum of evidence for \code{Tlr12} within $\pm$$2$ standard deviations of it's marginal distribution, we input the inferred network to \code{gen.evidence}.
 

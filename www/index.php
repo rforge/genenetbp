@@ -63,7 +63,7 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
 	</dd><br>
 
 	<dt><b> 3. Install other package dependencies:</b></dt> 
-	<dd> Discrete bayesian networks learning and inference is 	implemented using algorithms from the packages <code>	bnlearn</code> and <code><gRain></code>. <code>geneNetBP	</code> depends 	on these packages which are available 	on 	CRAN. These packages should get installed 	automatically with 	<code>geneNetBP</code>. You can 	manually install them by using R 	install command
+	<dd> Discrete bayesian networks learning and inference is 	implemented using algorithms from the packages <code>	bnlearn</code> and <code>gRain</code>. <code>geneNetBP	</code> depends 	on these packages which are available 	on 	CRAN. These packages should get installed 	automatically with 	<code>geneNetBP</code>. You can 	manually install them by using R 	install command
 	<pre> install.packages(&quot;bnlearn&quot;)</pre>
 	<pre> install.packages(&quot;gRain&quot;)</pre>
 
