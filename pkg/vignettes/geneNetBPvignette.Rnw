@@ -89,6 +89,8 @@ prettyDate <- format(Sys.Date())
 
 <<A,eval=TRUE>>=
 library(geneNetBP)
+@
+<<B,eval=FALSE>>=
 library(RHugin) ## Needed for CG-BN implementation
 @
 
