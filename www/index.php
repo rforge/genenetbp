@@ -90,7 +90,7 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
 
 <li type="circle"> The package vignette illustrates the methods with examples (including how to reproduce results from the publication) and provides tutorials on each function. [<a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0_vignette.pdf">geneNetBPv2.0.0-vignette</a>]</li> <br>
 
-<li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0-manual.pdf">[geneNetBPv2.0.0-manual]</a></li><br>
+<li type="circle"> A complete list of currently available functions and datasets included in the package. <a href="http://genenetbp.r-forge.r-project.org/geneNetBPv2.0.0_manual.pdf">[geneNetBPv2.0.0-manual]</a></li><br>
 
 <li type="circle"> The belief propagation (stable scheme) is described in <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.631&rep=rep1&type=pdf">Lauritzen S.L and Jensen F.</a></li>
 
