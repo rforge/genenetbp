@@ -73,7 +73,7 @@ data(mouse)
 \dontrun{
 mouse.cgbn<-fit.gnbp(mouse[,1:5],mouse[,6:19],alpha=0.1)
 plot(mouse.cgbn)
-mouse.cgbn.abs<-absorb.gnbp(network,node="Tlr12",evidence=matrix(-0.99))
+mouse.cgbn.abs<-absorb.gnbp(mouse.cgbn,node="Tlr12",evidence=matrix(-0.99))
 plot(mouse.cgbn.abs)
 }
 }

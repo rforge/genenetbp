@@ -41,7 +41,7 @@ Janhavi Moharil<janhavim@buffalo.edu>
 ##Fit a network
 data(mouse)
 \dontrun{
-mouse.cgbn<-fit.gnbp(mouse[,1:5],mouse[,6:14],alpha=0.1)
+mouse.cgbn<-fit.gnbp(mouse[,1:5],mouse[,6:19],alpha=0.1)
 
 ##Generate a sequence of evidence for a single node
 evidence<-gen.evidence(mouse.cgbn,node="Tlr12",std=2,length.out=20)

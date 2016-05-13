@@ -439,11 +439,11 @@ plot(yeast.dbn)
 
 \noindent \code{fit.dbn} return an object of class \code{dbnfit} which is a list of several elements. The inferred network is returned as a "bn.fit" object in \code{dbn} variable of the list. The conditional probabilities are returned in the \code{marginal} element of the list. Rest of the variables in the list are for internal use with other functions.\\
 
-\noindent To choose a different learning method, specify \code{method}. For example, to fit the network by \emph{Grow-Shrink} method,
+\noindent To choose a different learning method, specify \code{method}. For example, to fit the network by \emph{Max-Min Hill Climbing} method,
 
 \begin{center}
 <<G,figs.only=TRUE,eval=FALSE>>=
-yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis,method="gs")
+yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis,method="mmhc")
 @
 \end{center}
 
@@ -569,7 +569,7 @@ Qchr4 0.2312139 0.4682081 0.300578
 $belief
 $belief$pheno
 $belief$pheno$mean
-         ev= -0.99
+              [,1]
 Rbbp4    0.8776457
 Atpif1  -0.6538109
 Wdtc1    0.6669131
@@ -585,7 +585,7 @@ Slc5a9  -0.6510656
 Cyp4a31 -0.5043484
 
 $belief$pheno$var
-        ev= -0.99
+             [,1]
 Rbbp4   0.4859803
 Atpif1  0.6226163
 Wdtc1   0.6627283
@@ -603,20 +603,20 @@ Cyp4a31 0.6995273
 
 $belief$geno
 $belief$geno$state1
-        ev= -0.99
+             [,1]
 Qchr4 0.007944801
 
 $belief$geno$state2
-      ev= -0.99
+           [,1]
 Qchr4 0.2152284
 
 $belief$geno$state3
-      ev= -0.99
+           [,1]
 Qchr4 0.7768268
 
 
 $JSI
-          ev= -0.99
+               [,1]
 Rbbp4    0.71650239
 Atpif1  -0.32687548
 Wdtc1    0.31813768
@@ -825,7 +825,7 @@ Qchr13  0.491  0.509
 $belief
 $belief$pheno
 $belief$pheno$state1
-        ev= -1  ev= 1
+           [,1]  [,2]
 HEM3     0.525 0.4826
 BAP2     0.492 0.5080
 PHA2     0.562 0.4244
@@ -863,7 +863,7 @@ TYS1     0.389 0.6101
 YAT2     0.462 0.5187
 
 $belief$pheno$state2
-        ev= -1 ev= 1
+          [,1]  [,2]
 HEM3    0.4750 0.517
 BAP2    0.5079 0.492
 PHA2    0.4379 0.576
@@ -903,14 +903,14 @@ YAT2    0.5383 0.481
 
 $belief$geno
 $belief$geno$state1
-       ev= -1 ev= 1
+         [,1]  [,2]
 Qchr3   0.471 0.458
 Qchr2   0.573 0.570
 Qchr16  0.603 0.450
 Qchr13  0.490 0.492
 
 $belief$geno$state2
-       ev= -1 ev= 1
+         [,1]  [,2]
 Qchr3   0.529 0.542
 Qchr2   0.427 0.430
 Qchr16  0.397 0.550
@@ -920,7 +920,7 @@ Qchr13  0.510 0.508
 
 $FC
 $FC$FC
-        ev= -1 ev= 1
+          [,1]  [,2]
 HEM3     1.042 1.043
 BAP2     1.016 1.016
 PHA2     1.139 1.137
@@ -958,7 +958,7 @@ TYS1     1.220 1.223
 YAT2     1.056 1.058
 
 $FC$pheno_state
-        ev= -1 ev= 1
+          [,1]  [,2]
 HEM3         1     2
 BAP2         2     1
 PHA2         1     2

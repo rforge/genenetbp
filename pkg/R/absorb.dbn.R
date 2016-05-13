@@ -120,8 +120,8 @@ absorb.dbn=function(object,node,evidence)
   ## annotate rows and columns
     rownames(FC)=dnodes[Z,1]
     rownames(pheno_state)=dnodes[Z,1]
-    colnames(FC)=paste("ev=",as.character(evidence))
-    colnames(pheno_state)=paste("ev=",as.character(evidence))
+#     colnames(FC)=paste("ev=",as.character(evidence))
+#     colnames(pheno_state)=paste("ev=",as.character(evidence))
     
     FC=list(FC=FC,pheno_state=pheno_state)
 
@@ -135,7 +135,7 @@ absorb.dbn=function(object,node,evidence)
                                       dimnames=list(rownames(belief_pheno_freq),NULL))
       
       name<-paste("state",j,sep="")
-      colnames(belief_pheno_freq_temp)<-paste("ev=",as.character(evidence))
+#       colnames(belief_pheno_freq_temp)<-paste("ev=",as.character(evidence))
       belief_pheno_freq_list[[name]]= belief_pheno_freq_temp
     }
     
@@ -154,7 +154,7 @@ absorb.dbn=function(object,node,evidence)
                                      dimnames=list(rownames(belief_geno_freq),NULL))
       
       name<-paste("state",j,sep="")
-      colnames(belief_geno_freq_temp)<-paste("ev=",as.character(evidence))
+#       colnames(belief_geno_freq_temp)<-paste("ev=",as.character(evidence))
       belief_geno_freq_list[[name]]= belief_geno_freq_temp
     }
     

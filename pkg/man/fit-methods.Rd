@@ -85,7 +85,7 @@ Janhavi Moharil <janhavim@buffalo.edu>
 }
 
 \seealso{
-\code{\link{plot.gpfit}}, \code{\link{plot.dbnfit}}, \code{\link{absorb.gnbp}}, For discrete bayesian networks : \code{\link{fit.dbn}},\code{\link{absorb.dbn}}
+\code{\link{plot.gpfit}}, \code{\link{plot.dbnfit}}, \code{\link{absorb.gnbp}}, For discrete bayesian networks : \code{\link{fit.dbn}}, \code{\link{absorb.dbn}}
 }
 
 \examples{
@@ -100,8 +100,9 @@ mousepheno<-mouse[,6:19]
 ## Simple example : Fit a bayesian network to genotype-phenotype data using the default values
 fit.gnbp(mousegeno,mousepheno)
 
-## Fit a bayesian network to genotype-phenotype data at a specified significance level
-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+## Fit a bayesian network to genotype-phenotype data at a specified significance level and plot it
+mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
+plot(mouse.cgbn)
 
 ## load yeast dataset
 data(yeast)
@@ -113,8 +114,8 @@ yeastpheno<-yeast[,13:50]
 ## Simple example : Fit a discrete bayesian network to genotype-phenotype data
 fit.dbn(yeastgeno,yeastpheno)
 
-## Fit a discrete bayesian network by Grow-Shrink method and plot it.
-yeast.dbn.gs<-fit.dbn(yeastgeno,yeastpheno,method="gs")
-plot(hdlgs)
+## Fit a discrete bayesian network by Tabu method and plot it.
+yeast.dbn.tabu<-fit.dbn(yeastgeno,yeastpheno,method="tabu")
+plot(yeast.dbn.tabu)
 }
 }
