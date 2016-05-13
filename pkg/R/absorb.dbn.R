@@ -53,7 +53,6 @@ absorb.dbn=function(object,node,evidence)
       dnodes<-rbind(dnodes,class_nodes[i,])
   }
   dnodes<-dnodes[-which(dnodes[,1]==node),]
-
   
   ## check if class of evidence is matrix
   if(!is.matrix(evidence))
@@ -167,7 +166,7 @@ absorb.dbn=function(object,node,evidence)
 
   
   ## store & return results
-    results=list(gp=network,
+    results=list(gp=grn,
                  gp_flag="db",
                  gp_nodes=class_nodes,
                  evidence=evidence,
