@@ -380,7 +380,7 @@ plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=14,
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
   {
-    if(!dSep(blM,node,class_nodes[i,1],cond=NULL))
+    if(!dSep(blM,x$node,class_nodes[i,1],cond=NULL))
       dnodes<-rbind(dnodes,class_nodes[i,])
   }
   
