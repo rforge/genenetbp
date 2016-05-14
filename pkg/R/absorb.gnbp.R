@@ -59,7 +59,6 @@ absorb.gnbp=function(object,node,evidence)
   ## get marginal distribution
   marginal<-.get.marginal.bn(network,dnodes)
   
-  
   ## check if class of evidence is matrix
   if(class(evidence)!="matrix")
     stop("In function(absorb.gnbp),'evidence' must be of class matrix")
@@ -166,23 +165,24 @@ absorb.gnbp=function(object,node,evidence)
 #     colnames(pheno_state)=paste("ev=",as.character(evidence))
     
     FC=list(FC=FC,pheno_state=pheno_state)
+  
     
     for (j in 1:as.numeric(max(dnodes[Z,3])))
     {
-      belief_pheno_freq_temp = matrix(belief_pheno_freq[,seq(j,ncol(belief_pheno_freq),by=as.numeric(max(dnodes[Z,3])))],
+      belief_pheno_freq_temp = matrix(belief_pheno_freq[,seq(j,ncol(belief_pheno_freq),by=as.numeric(max(dnodes[,3])))],
                                      nrow=nrow(belief_pheno_freq),
                                      ncol=dim(evidence)[2],
                                      dimnames=list(rownames(belief_pheno_freq),NULL))
-      
+
       name<-paste("state",j,sep="")
 #       colnames(belief_pheno_freq_temp)<-paste("ev=",as.character(evidence))
       belief_pheno_freq_list[[name]]= belief_pheno_freq_temp
     }
     
-    phenomarginal<- matrix(marginal[dnodes[Z,1],3:ncol(marginal)],
+    phenomarginal<- matrix(marginal[dnodes[Z,1],3:(3-1+as.numeric(max(dnodes[Z,3])))],
                           nrow = length(dnodes[Z,1]),
                           ncol = as.numeric(max(dnodes[Z,3])),
-                          dimnames = list(dnodes[Z,1],colnames(marginal)[3:ncol(marginal)]))
+                          dimnames = list(dnodes[Z,1],colnames(marginal)[3:(3-1+as.numeric(max(dnodes[Z,3])))]))
   }
     
   ## create a list for belief genotype frequencies
@@ -192,7 +192,7 @@ absorb.gnbp=function(object,node,evidence)
     
     for (j in 1:as.numeric(max(dnodes[Y,3])))
     {
-      belief_geno_freq_temp = matrix(belief_geno_freq[,seq(j,ncol(belief_geno_freq),by=as.numeric(max(dnodes[Y,3])))],
+      belief_geno_freq_temp = matrix(belief_geno_freq[,seq(j,ncol(belief_geno_freq),by=as.numeric(max(dnodes[,3])))],
                                 nrow=nrow(belief_geno_freq),
                                 ncol=dim(evidence)[2],
                                 dimnames=list(rownames(belief_geno_freq),NULL))
@@ -205,7 +205,7 @@ absorb.gnbp=function(object,node,evidence)
    genomarginal<- matrix(marginal[dnodes[Y,1],3:ncol(marginal)],
            nrow = length(dnodes[Y,1]),
            ncol = as.numeric(max(dnodes[Y,3])),
-           dimnames = list(dnodes[Y,1],colnames(marginal)[3:ncol(marginal)]))
+           dimnames = list(dnodes[Y,1],colnames(marginal)[3:(3-1+as.numeric(max(dnodes[Y,3])))]))
     
     
   }else
@@ -357,8 +357,9 @@ rownames(marginal)=dnodes[,1]
       belief_var[j,1]<-temp[2]
     }
     
+    
     if(dnodes[j,2]=="factor")
-      belief_freq[j,]<-temp
+      belief_freq[j,1:length(temp)]<-temp
     
   }
   

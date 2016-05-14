@@ -135,7 +135,6 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
 
     for (node in 1:length(Xgeno))
       RHugin::add.node(network,class_nodes[Xgeno[node],"node"],states=levels(Data[,class_nodes[Xgeno[node],"node"]]))
-
     
     ## Set cases
     RHugin::set.cases(network,Data)
@@ -182,14 +181,18 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
       
       if(class(graph)=="graphNEL")
       {
-        edges<-data.frame(get.edgelist(igraph.from.graphNEL(graph)))
-        RHugin::add.edge(network,edges[2],edges[1])   
+        edges<-data.frame((get.edgelist(igraph.from.graphNEL(graph))))
+        edges[,1]<-as.character(edges[,1])
+        edges[,2]<-as.character(edges[,2])
+        
+        for (i in 1:dim(edges)[1])
+        RHugin::add.edge(network,edges[i,2],edges[i,1])   
       }
         
       if(class(graph)=="data.frame") 
       {
         for(i in 1:dim(graph)[1])
-          RHugin::add.edge(network,graph[2],graph[1])
+          RHugin::add.edge(network,graph[i,2],graph[i,1])
       }
     }
   
@@ -204,6 +207,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     ## get marginals
     cpt<-.get.marginal.bn(network,class_nodes)
     
+    
     ## Get geno and pheno col nos.
     Y=which(class_nodes[,"type"]=="geno")
     X=which(class_nodes[,"type"]=="pheno")
@@ -212,17 +216,21 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     genomarginal<- matrix(cpt[class_nodes[Y,1],3:ncol(cpt)],
                           nrow = length(class_nodes[Y,1]),
                           ncol = as.numeric(max(class_nodes[Y,3])),
-                          dimnames = list(class_nodes[Y,1],colnames(cpt)[3:ncol(cpt)]))
+                          dimnames = list(class_nodes[Y,1],colnames(cpt)[3:(3-1+as.numeric(max(dnodes[Y,3])))]))
     
     genomarginal = list(freq = genomarginal)
     
     if (type == "db")
     {
+     phenom = matrix(cpt[class_nodes[X,1],3:ncol(cpt)],
+                       nrow = length(class_nodes[X,1]),
+                       ncol = as.numeric(max(class_nodes[X,3])))
+     
       phenomarginal<- matrix(cpt[class_nodes[X,1],3:ncol(cpt)],
                              nrow = length(class_nodes[X,1]),
                              ncol = as.numeric(max(class_nodes[X,3])),
-                             dimnames = list(class_nodes[X,1],colnames(cpt)[3:ncol(cpt)]))
-     
+                             dimnames = list(class_nodes[X,1],colnames(cpt)[3:(3-1+as.numeric(max(dnodes[X,3])))]))
+      
       phenomarginal = list(freq = phenomarginal)
     }
 
