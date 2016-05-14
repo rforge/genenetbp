@@ -47,7 +47,7 @@ absorb.dbn=function(object,node,evidence)
   
   ## get d-connected nodes
   ## convert to graphNEL object
-  bngraph<-as.graphNEL(as.bn.fit(object$dbn))
+  bngraph<-as.graphNEL(object$dbn)
   blM<-grMAT(bngraph)
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
@@ -56,11 +56,16 @@ absorb.dbn=function(object,node,evidence)
       dnodes<-rbind(dnodes,class_nodes[i,])
   }
   
+
+  
   for (i in 1:length(node))
   {
     Xnode<-which(dnodes[,1]==node[i])
+    if(length(Xnode)!=0)
     dnodes<-dnodes[-Xnode,]
   }
+  
+
   
   ## check if class of evidence is matrix
   if(!is.matrix(evidence))
@@ -114,7 +119,7 @@ absorb.dbn=function(object,node,evidence)
                                                            ncol=as.numeric(max(dnodes[,3])),
                                                            dimnames=(list(dnodes[Z,1],
                                                                           colnames(belief)))))
-    print(colnames(belief))
+
     
     ## extract genotype beliefs
     if(length(Y)!=0)

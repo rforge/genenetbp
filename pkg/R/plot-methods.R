@@ -373,7 +373,7 @@ plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=14,
   ##get node for which evidence is absorbed.
   
   ## convert to graphNEL object for use with Rgraphviz
-  BNgraph<-as.graphNEL(as.bn.fit(x$gp))
+  BNgraph<-as.graphNEL(bnlearn::as.bn.fit(x$gp))
     
   ## get d-connected nodes
   blM<-grMAT(BNgraph)
@@ -387,8 +387,10 @@ plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=14,
   for (i in 1:length(x$node))
   {
     Xnode<-which(dnodes[,1]==x$node[i])
+    if(length(Xnode)!=0)
     dnodes<-dnodes[-Xnode,]
   }
+  
   
   ## set node attributes
   z<-graph::nodes(BNgraph)
