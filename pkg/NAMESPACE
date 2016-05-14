@@ -6,6 +6,7 @@ importFrom("graphics", "axis", "layout", "legend", "par", "rect",
               "title")
 importFrom("stats", "setNames")
 importFrom("igraph","get.edgelist","igraph.from.graphNEL")
+importFrom("gRbase","as.adjMAT")
 importFrom("scales","cscale","dscale","seq_gradient_pal","manual_pal")
 importFrom("ggm","dSep")
 S3method("plot","gnbp")

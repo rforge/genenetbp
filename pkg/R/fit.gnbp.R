@@ -216,7 +216,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
     genomarginal<- matrix(cpt[class_nodes[Y,1],3:ncol(cpt)],
                           nrow = length(class_nodes[Y,1]),
                           ncol = as.numeric(max(class_nodes[Y,3])),
-                          dimnames = list(class_nodes[Y,1],colnames(cpt)[3:(3-1+as.numeric(max(dnodes[Y,3])))]))
+                          dimnames = list(class_nodes[Y,1],colnames(cpt)[3:(3-1+as.numeric(max(class_nodes[Y,3])))]))
     
     genomarginal = list(freq = genomarginal)
     
@@ -229,7 +229,7 @@ fit.gnbp=function(geno,pheno,constraints,learn="TRUE",graph,type ="cg",
       phenomarginal<- matrix(cpt[class_nodes[X,1],3:ncol(cpt)],
                              nrow = length(class_nodes[X,1]),
                              ncol = as.numeric(max(class_nodes[X,3])),
-                             dimnames = list(class_nodes[X,1],colnames(cpt)[3:(3-1+as.numeric(max(dnodes[X,3])))]))
+                             dimnames = list(class_nodes[X,1],colnames(cpt)[3:(3-1+as.numeric(max(class_nodes[X,3])))]))
       
       phenomarginal = list(freq = phenomarginal)
     }
