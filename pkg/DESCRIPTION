@@ -7,7 +7,7 @@ Author: Janhavi Moharil
 Maintainer: Janhavi Moharil <janhavim@buffalo.edu>
 Depends: R (>= 3.1.0),Rgraphviz (>= 2.8.1), graph (>= 1.42.0), bnlearn (>= 3.7.1), gRain (>= 1.2-3)
 Suggests: RHugin
-Imports: igraph, scales, ggm, gRbase
+Imports: igraph, scales, ggm
 Additional_repositories: http://rhugin.r-forge.r-project.org/
 Description: Belief propagation methods in genotype-phenotype networks (Conditional Gaussian and Discrete Bayesian Networks) to propagate phenotypic evidence through the network.
 License: GPL-2
