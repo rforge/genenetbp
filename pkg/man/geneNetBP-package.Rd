@@ -10,7 +10,7 @@
 Package: \tab geneNetBP\cr
 Type: \tab Package\cr
 Version: \tab 1.0.0\cr
-Date: \tab 2016-04-22\cr
+Date: \tab 2016-05-14\cr
 License: \tab GPL-2\cr
 }
 This package implements structure learning and conditional probability learning methods from the packages \code{RHugin}, \pkg{gRain} and \pkg{bnlearn} to Quantative Trait Loci (QTL) data and provides functions to query and visualize the network beliefs. The function \code{\link{fit.gnbp}} can be used to learn conditional gaussian bayesian networks from genotype-phenotype data while and \code{\link{fit.dbn}} allows infering discrete bayesian networks from categorical data. The main function for absorbing evidence and quantifying the changes in beliefs is \code{\link{absorb.gnbp}} for CG-BN and \code{\link{absorb.dbn}} for discrete networks. A generic \code{plot} method is available for visualizing network beliefs. 
