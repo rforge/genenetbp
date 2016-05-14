@@ -48,7 +48,7 @@ absorb.dbn=function(object,node,evidence)
   ## get d-connected nodes
   ## convert to graphNEL object
   bngraph<-as.graphNEL(as.bn.fit(object$dbn))
-  blM<-as.adjMAT(bngraph)
+  blM<-grMAT(bngraph)
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
   {

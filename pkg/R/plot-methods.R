@@ -376,7 +376,7 @@ plot.dbn=function(x, y="state",ncol=1,col.palette,col.length = 100, fontsize=14,
   BNgraph<-as.graphNEL(as.bn.fit(x$gp))
     
   ## get d-connected nodes
-  blM<-as.adjMAT(BNgraph)
+  blM<-grMAT(BNgraph)
   dnodes=c()
   for (i in 1:dim(class_nodes)[1])
   {
