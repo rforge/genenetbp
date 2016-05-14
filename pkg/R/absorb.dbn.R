@@ -46,7 +46,7 @@ absorb.dbn=function(object,node,evidence)
   class_nodes=object$dbn_nodes
   
   ## get d-connected nodes
-  ## convert to graphNEL object
+  # convert to graphNEL object
   bngraph<-as.graphNEL(object$dbn)
   blM<-grMAT(bngraph)
   dnodes=c()

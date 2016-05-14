@@ -311,7 +311,7 @@ if (type == "db")
     ## generate colors for node states
     colormap<-dscale(factor(x$FC$pheno_state[,ncol]),manual_pal(col.palette$col_nodes))
     
-    ## add color for absorbed node
+    ## add color for absorbed nodes
     colormap_network<-colormap
     for (i in 1:length(x$node))
     {
