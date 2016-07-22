@@ -197,7 +197,7 @@ fit.dbn=function(geno,pheno,graph,learn="TRUE",method="hc",whitelist,blacklist)
  network.grain<-as.grain(network)
 ## using setEvidence gives error on Mac. network can be queried directly
 ## by querygrain.
-#  setEvidence(network.grain)
+ setEvidence(network.grain)
  grn<-querygrain(network.grain)
 
   ## create matrices to store results
