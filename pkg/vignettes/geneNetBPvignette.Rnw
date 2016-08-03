@@ -1155,7 +1155,7 @@ plot(hdl.cgbn)
 
 \subsection{Specifying graphNEL objects}
  
-\noindent One way to specify a known network is to provide the graph structure directly as an input (a graphNEL object) to the fit methods. The following example illustrates how to input a known graph structure using the \code{fit.dbn} function. Consider a discrete bayesian network implementation of HDL network. Assume that the HDL network structure is known. We will input the structure that we learnt in the previous section to \code{fit.dbn}.
+\noindent One way to specify a known network is by providing the graph structure as an input (a graphNEL object) to the fit methods. The following example illustrates how to input a known graph structure using the \code{fit.dbn} function. Consider a discrete bayesian network implementation of HDL network. Assume that the HDL network structure is known. We will input the structure that we learnt in the previous section to \code{fit.dbn}.
 
 <<L, eval=FALSE>>=
 ## Convert the RHugindomain to a graphNEL object
