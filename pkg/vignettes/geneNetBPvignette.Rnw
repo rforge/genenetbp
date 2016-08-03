@@ -187,7 +187,6 @@ mousepheno<-mouse[,6:19]
 
 \begin{Schunk}
 \begin{Sinput}
-> data(mouse)
 > fit.gnbp(mousegeno,mousepheno)
 \end{Sinput}
 \begin{Soutput}
@@ -369,7 +368,7 @@ attr(,"class")
 <<B,fig=FALSE,eval=FALSE>>=
 mouse.cgbn<-fit.gnbp(mousegeno,mousepheno,alpha = 0.1)
 ## plot method for graph objects
-plot.cgbn(mouse.cgbn) 
+plot(mouse.cgbn) 
 @
 \end{center}
 
@@ -443,7 +442,7 @@ plot(yeast.dbn)
 
 \begin{center}
 <<G,figs.only=TRUE,eval=FALSE>>=
-yeast.dbn<-fit.dbn(yeastgeno,yeastpheno_dis,method="mmhc")
+yeast.dbn<-fit.dbn(yeastgeno,yeastpheno,method="mmhc")
 @
 \end{center}
 
