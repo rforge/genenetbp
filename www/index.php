@@ -41,7 +41,7 @@ The geneNetBP package provides functions to fit Conditional Gaussian Bayesian ne
 <hr />
 <h2> Download </h2>
 
-The <code>geneNetBP</code> package version 2.0.0 is now available and can be downloaded from <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>. 
+Download the latest version 2.0.1 of <code>geneNetBP</code> from  <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>.  
 
 <p>The <code>geneNetBP</code> package version 1.0.0 is archived and will no longer be supported. It is however available for download on <a href="https://cran.r-project.org/web/packages/geneNetBP/">CRAN</a>.</p>
 <hr />
@@ -54,8 +54,8 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
 
 <dl><h3> Installation Steps</h3> 
 	<dt><b> 1. Install Hugin Decision Engine:</b> </dt>
-	<dd> The <code>geneNetBP</code> package is compatible with 	the free 	demo version of Hugin Researcher/Developer, 	Hugin Lite 	Demo that can be obtained from <a 	href="http://www.hugin.com/productsservices/demo/hugin-	lite"> HUGIN</a>. The free demo version is limited to 	handle only 50 states and 500 cases.    
-	If you do not have Hugin installed in the default location 	you will need to set the HUGINHOME environment variable 	before using the RHugin package. Also, you will need to 	modify the HUGINHOME variable. Please see the instructions 	on the project homepage for <a href="http://rhugin.r-	forge.r-project.org/">RHugin</a>.
+	<dd> The <code>geneNetBP</code> package is compatible with 	the free 	demo version of Hugin Researcher/Developer, 	Hugin Lite Demo that can be obtained from <a 	href="http://www.hugin.com/index.php/hugin-lite/"> Download 	Free HUGIN</a>. You can also access this page by visiting 	Hugin Lite homepage, and navigating to Products -> Services 	-> Training. The ftp site for accessing older versions: <a 	href="ftp://download.hugin.com/Licenses/">here	</a>. Note 	that the free demo version is limited to 	handle 	only 	50 states and 500 cases.</dd> 
+	<dd>If you do not have 	Hugin installed in the default 	location you will need to 	set the HUGINHOME environment 	variable before using the 	RHugin package. Also, you will 	need to modify the 	HUGINHOME variable. Please see the 	instructions 	on the 	project homepage for <a 	href="http://rhugin.r-	forge.r-	project.org/">RHugin	</a>.
 	</dd><br>
 
 	<dt><b> 2. Install RHugin package:</b> </dt>
@@ -73,12 +73,12 @@ For CG-BN implementation, the geneNetBP package makes extensive use of RHugin pa
   	biocLite(c(&quot;graph&quot;, &quot;Rgraphviz&quot;))
 	</pre>
 	
-	<p> Note that <code>geneNetBP v2.0.0</code> does not 	depend on the package <code>scales</code> unlike <code> 	v1.0.0</code>. 	
+	<p> Note that <code>geneNetBP v2.0.0</code> and higher do 	not 	depend on the package <code>scales</code> unlike <code> 	v1.0.0</code>. 	
 	
 	</dd><br>
 	
 	<dt><b> 4. Install the geneNetBP package:</b> </dt>
-	<dd> The geneNetBP package version 2.0.0 can be downloaded 	from <a href="https://cran.r-	project.org/web/packages/geneNetBP/">CRAN</a>. 
+	<dd> The geneNetBP package latest version 2.0.1 can be downloaded 	from <a href="https://cran.r-	project.org/web/packages/geneNetBP/">CRAN</a>. 
 	</dd>
 
 </dl>
